@@ -1,0 +1,268 @@
+import React, {useCallback, useEffect, useState} from "react";
+import {ReactProps} from "../../interfaces/ReactProps";
+import {
+    Drawer,
+    DrawerBody,
+    DrawerHeader,
+    DrawerOverlay,
+    DrawerContent,
+    DrawerFooter,
+    useDisclosure,
+} from '@chakra-ui/react'
+import {SampleProfileGalleryImages} from "../images/gallery/SampleProfileGalleryImages";
+import {DesigneraTitle} from "../../assets/svg/DesigneraTitle";
+import {PrivacyPolicyModal} from "../modals/PrivacyPolicyModal";
+import {TermsOfUseModal} from "../modals/TermsOfUseModal";
+import {settingsSlice, settingsStore} from "./Settings";
+import {faChevronLeft, faGear} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {sidemenuStore} from "./SidemenuToggle";
+import { ImageWithFallback } from '../images/ImageWithFallback';
+import useAuth from '../../hooks/auth/useAuth';
+import {SimpleButton} from "../button/SimpleButton";
+import {useRouter} from "next/router";
+import {DynamicObject} from "../../constants/DynamicObject";
+import axios from 'axios';
+import toast from 'react-hot-toast';
+
+interface Sidemenu extends ReactProps {
+    isOpen: boolean,
+    onOpen: () => void,
+    onClose: () => void,
+}
+
+interface ObjMap {
+    [key: string]: any
+}
+
+export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu) => {
+    const [profileGalleryTab, setProfileGalleryTab] = useState("Images")
+    const {isOpen: PrivacyPolicyIsOpen, onOpen: PrivacyPolicyOnOpen, onClose: PrivacyPolicyOnClose} = useDisclosure()
+    const {isOpen: TermsOfUseIsOpen, onOpen: TermsOfUseOnOpen, onClose: TermsOfUseOnClose} = useDisclosure()
+    const [settingsIsOpen, setSettingsIsOpen] = useState(false)
+    const [selectedImage, setSelectedImage] = useState("");
+    const [selectedImageObject, setSelectedImageObject] = useState({} as DynamicObject);
+    const [menu, setMenu] = useState({
+        currentMenu: {} as ObjMap,
+        previousMenu: {},
+        currentTitle: "",
+        previousTitle: ""
+    })
+    const {userData} = useAuth()
+    const router = useRouter()
+    // SIDEBAR MENU SYSTEM
+
+    useEffect(() => {
+        settingsStore.subscribe(() => {
+            setMenu(settingsStore.getState())
+        })
+    }, [])
+
+    function changeMenu(v: string) {
+        settingsStore.dispatch(settingsSlice.actions.changeMenu({v: v}))
+    }
+
+    // SIDEBAR CONTROLLER
+
+    useEffect(() => {
+        sidemenuStore.subscribe(() => {
+            if (sidemenuStore.getState().isOpen) {
+                onOpen()
+            } else {
+                onClose()
+            }
+        })
+    }, [])
+
+    return (
+        <>
+            <Drawer
+                isOpen={isOpen}
+                placement='right'
+                onClose={() => {
+                    onClose();
+                    settingsStore.dispatch(settingsSlice.actions.reset())
+                }}
+                closeOnOverlayClick={true}
+                closeOnEsc={true}
+                preserveScrollBarGap={true}
+            >
+                <DrawerOverlay/>
+                <DrawerContent style={{backgroundColor: "black", color: "white", width: "286px"}}>
+                    <DrawerHeader className={"flex flex-row justify-between"}>
+                        <button onClick={onClose}><FontAwesomeIcon icon={faChevronLeft} color={"#AAA7A5"} size={"xl"}
+                                                                   style={{width: 20, height: 20}}/></button>
+                        <button onClick={(e) => {
+                            settingsStore.dispatch(settingsSlice.actions.reset())
+                            if (menu.currentTitle == "Settings") {
+                                setSettingsIsOpen(!settingsIsOpen)
+                            } else if (!settingsIsOpen) {
+                                setSettingsIsOpen(true)
+                            }
+                        }}>
+                            <FontAwesomeIcon
+                                icon={faGear}
+                                color={"#AAA7A5"}
+                                size={"xl"}
+                                style={{width: 20, height: 20}}
+                            />
+                        </button>
+                    </DrawerHeader>
+
+                    <DrawerBody className={"scrollbar-hide"} style={{
+                        paddingLeft: settingsIsOpen ? 0 : "0.375rem",
+                        paddingRight: settingsIsOpen ? 0 : "0.375rem"
+                    }}>
+                        <div className={"flex flex-col gap-4"}>
+                            <div id={"DrawerPersonalInfos"} className={"flex flex-col items-center gap-4"}>
+                                <input
+                                  onChange={(e) => {
+                                      // Get the image and upload it to the server using multipart/form-data
+
+                                      if ( !e.target.files || e.target.files.length === 0) {
+                                        return;
+                                      }
+
+                                      const file = e.target.files[0]
+                                      const formData = new FormData()
+                                      formData.append('file', file)
+                                      axios.put('https://52b0-176-88-45-167.ngrok-free.app/user/avatar', formData, {
+                                          headers: {
+                                              'Content-Type': 'multipart/form-data',
+                                              Authorization: `Bearer ${localStorage.getItem('token')}`
+                                          }
+                                      }).then((res) => {
+                                          toast.success('Profile picture updated successfully');
+                                          setTimeout(() => {
+                                              router.reload()
+                                          }, 1000)
+                                      }).catch((err) => {
+                                          toast.error('An error occurred while updating your profile picture')
+                                          setTimeout(() => {
+                                              router.reload()
+                                          }
+                                          , 1000)
+                                      })
+                                  }}
+                                  type="file" id="avatar-file-input" style={{ display: 'none' }} />
+                                <div className={'rounded-full border-4 border-gray-600 hover:border-orange-400 hover:border-dashed'} >
+                                  <ImageWithFallback
+                                    onClick={() => {
+                                      document.getElementById('avatar-file-input')?.click()
+                                    }}
+                                    width={116}
+                                    height={116}
+                                    className={'rounded-full'}
+                                    src={'https://cdn.designera.app/avatar/' + userData?.id}
+                                    alt={"Profile Picture"}
+                                    fallbackUrl={"/assets/images/unknown.png"}
+                                  />
+                              </div>
+                                <span className={"font-semibold"}>{ userData?.firstName + ' ' + userData?.lastName }</span>
+                                { !userData?.subscription && <div id={"CreditsContainer"} className={"flex flex-row gap-2"}>
+                                    <div
+                                        className={"bg-stone-700 px-3 designera-rounded designera-box-shadow font-bold flex items-center text-lg"}>
+                                        {userData?.credits?.length > 0 && userData?.credits[0]?.balance}
+                                    </div>
+                                    <button
+                                        className="bg-blue-600 designera-rounded p-1 px-3 text-white designera-box-shadow font-semibold">Subscribe
+                                    </button>
+                                </div>}
+                            </div>
+                            {!settingsIsOpen ?
+                                <>
+                                    <div>
+                                        <div className={"flex flex-row justify-center items-center gap-2"}>
+                                            <span className={"cursor-pointer font-semibold"}
+                                                  style={{color: profileGalleryTab == "Images" ? "white" : "#333333"}}
+                                                  onClick={() => {
+                                                      setProfileGalleryTab("Images")
+                                                  }}>
+                                                Images
+                                            </span>
+                                            <span className={"cursor-pointer font-semibold"}
+                                                  style={{color: profileGalleryTab == "Likes" ? "white" : "#333333"}}
+                                                  onClick={() => {
+                                                      setProfileGalleryTab("Likes")
+                                                  }}>
+                                                Likes
+                                            </span>
+                                            <span className={"cursor-pointer font-semibold"}
+                                                  style={{color: profileGalleryTab == "Publishes" ? "white" : "#333333"}}
+                                                  onClick={() => {
+                                                      setProfileGalleryTab("Publishes")
+                                                  }}>
+                                                Publishes
+                                            </span>
+                                        </div>
+                                        <hr className={"bg-stone-400 border-none h-px"}/>
+                                    </div>
+                                    <div className={"flex flex-row flex-wrap gap-1.5 justify-start"}>
+                                        <SampleProfileGalleryImages tab={profileGalleryTab}/>
+                                    </div>
+                                </>
+                                :
+                                <>
+                                    <div>
+                                        <span className={"block font-semibold text-white text-center"}>
+                                            {menu.currentTitle}
+                                        </span>
+                                        <hr className={"bg-stone-400 border-none h-px"}/>
+                                    </div>
+                                    {
+                                        React.isValidElement(menu.currentMenu) ?
+                                            menu.currentMenu
+                                            :
+                                            <div className="flex flex-col Font-Light">
+                                                {Object.keys(menu.currentMenu).map((v, i) => {
+                                                    return (
+                                                        <>
+                                                            <div
+                                                                className={`Font-Medium cursor-pointer border-white text-stone-300 ${i == 0 ? "p-4 pt-0" : "p-4"}`}
+                                                                onClick={(e) => {
+                                                                    changeMenu(v)
+                                                                }}
+                                                            >
+                                                                {v}
+                                                            </div>
+                                                            <hr className={"bg-stone-400 border-none h-px"}/>
+                                                        </>
+                                                    )
+                                                })}
+                                            </div>
+                                    }
+                                </>
+                            }
+                        </div>
+                    </DrawerBody>
+                    <DrawerFooter style={{justifyContent: "center"}}>
+                        <div className={"w-full flex flex-col justify-center font-semibold items-center"}>
+                            { !userData?.subscription && <div className={"w-full flex flex-row justify-center"}>
+                                <SimpleButton type={"colorless"} text={"Apply Promo Code"} className={"mb-4 bg-[#FF8924] w-4/5"}
+                                    onClick={() => { router.replace('/apply-promo-code') }}
+                                />
+                            </div>
+                            }
+                            <div className={"my-5 flex flex-col justify-center items-center"}>
+                                <small className="text-[#979797] hover:text-[#c7c7c7] block cursor-pointer"
+                                       onClick={PrivacyPolicyOnOpen}><u>Privacy
+                                    Policy</u></small>
+                                <small className="text-[#979797] hover:text-[#c7c7c7] block cursor-pointer"
+                                       onClick={TermsOfUseOnOpen}><u>Terms of
+                                    Use</u></small>
+                            </div>
+
+                            <div style={{height: "fit-content"}}>
+                                <DesigneraTitle/>
+                            </div>
+                        </div>
+                    </DrawerFooter>
+                </DrawerContent>
+            </Drawer>
+
+            <PrivacyPolicyModal isOpen={PrivacyPolicyIsOpen} onOpen={PrivacyPolicyOnOpen}
+                                onClose={PrivacyPolicyOnClose}/>
+            <TermsOfUseModal isOpen={TermsOfUseIsOpen} onOpen={TermsOfUseOnOpen} onClose={TermsOfUseOnClose}/>
+        </>
+    )
+}

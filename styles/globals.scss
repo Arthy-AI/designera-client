@@ -1,0 +1,134 @@
+// TAILWIND
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// FONTS
+@import "/assets/fonts/Fonts";
+@import "react-tooltip/dist/react-tooltip.css";
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Inter-SemiBold !important;
+  background: #2F2F2F !important;
+}
+
+#MainPage {
+  background-image: url("../assets/images/background.png") !important;
+  background-size: cover !important;
+  background-repeat: repeat !important;
+}
+
+#CheckoutPage {
+  background-image: url("../assets/images/background2.png") !important;
+  background-size: cover !important;
+  background-repeat: repeat !important;
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #777777;
+}
+
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #777777;
+}
+
+.separator:not(:empty)::before {
+  margin-right: 1.5em;
+}
+
+.separator:not(:empty)::after {
+  margin-left: 1.5em;
+}
+
+input::placeholder {
+  color: gray !important;
+}
+
+.placeholder-white::placeholder {
+  color: white !important;
+}
+
+.designera-box-shadow {
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.designera-text-shadow {
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.designera-rounded {
+  border-radius: 10px;
+}
+
+.react-photo-gallery--gallery > div > img {
+  border-radius: 10px;
+}
+
+.react-images__view {
+  display: flex;
+  justify-content: center;
+}
+
+.react-images__blanket {
+  z-index: 9999 !important;
+}
+
+.react-images__positioner {
+  z-index: 10000 !important;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+#keywords {
+  max-height: calc(25 * 4px);
+  overflow: hidden;
+}
+
+.react-tooltip {
+  max-width: 300px;
+  z-index: 9999;
+  border-radius: 10px;
+}
+
+button:disabled {
+  background-color: #4F4F4F !important;
+  cursor: not-allowed;
+}
+
+.chakra-modal__content {
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.react-images__pager {
+  z-index: 9999;
+}
