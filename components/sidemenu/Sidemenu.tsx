@@ -24,6 +24,7 @@ import {useRouter} from "next/router";
 import {DynamicObject} from "../../constants/DynamicObject";
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { NetworkConfig } from '../../hooks/useAxios';
 
 interface Sidemenu extends ReactProps {
     isOpen: boolean,
@@ -129,7 +130,7 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
                                       const file = e.target.files[0]
                                       const formData = new FormData()
                                       formData.append('file', file)
-                                      axios.put('https://52b0-176-88-45-167.ngrok-free.app/user/avatar', formData, {
+                                      axios.put(NetworkConfig.API_URL+ 'user/avatar', formData, {
                                           headers: {
                                               'Content-Type': 'multipart/form-data',
                                               Authorization: `Bearer ${localStorage.getItem('token')}`

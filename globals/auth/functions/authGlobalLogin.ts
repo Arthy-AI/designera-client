@@ -2,12 +2,13 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import {AuthBody, AuthMap} from "../interfaces/AuthTypes";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { NetworkConfig } from '../../../hooks/useAxios';
 
 export const authGlobalLogin = createAsyncThunk(
   'authGlobal/login-register',
   async (userData: AuthBody, thunkAPI) => {
     try {
-      let loginResponse = await axios.post("https://52b0-176-88-45-167.ngrok-free.app/auth/login", {
+      let loginResponse = await axios.post(NetworkConfig.API_URL + "auth/login", {
         email: userData.email,
         password: userData.password
       })

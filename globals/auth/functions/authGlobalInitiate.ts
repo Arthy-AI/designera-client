@@ -3,6 +3,7 @@ import {AuthBody, AuthMap} from "../interfaces/AuthTypes";
 import axios from "axios";
 import toast from "react-hot-toast";
 import {DynamicObject} from "../../../constants/DynamicObject";
+import { NetworkConfig } from '../../../hooks/useAxios';
 
 export const authGlobalInitiate = createAsyncThunk(
   'authGlobal/initiate',
@@ -14,7 +15,7 @@ export const authGlobalInitiate = createAsyncThunk(
 
       if (keepMeSignedIn || firstTime) {
         let token = localStorage.getItem('token')
-        let meResponse = await axios.get("https://52b0-176-88-45-167.ngrok-free.app/user/me", {
+        let meResponse = await axios.get(NetworkConfig.API_URL + "user/me", {
           headers: {
             Authorization: `Bearer ${token}`
           }

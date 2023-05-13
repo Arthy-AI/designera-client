@@ -6,6 +6,7 @@ import {Formik} from 'formik';
 import {FormikError} from '../input/FormikError';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { NetworkConfig } from '../../hooks/useAxios';
 
 interface ObjMap {
   [key: string]: any;
@@ -58,7 +59,7 @@ const menus = {
           onSubmit={(values, {setSubmitting, resetForm}) => {
             const token = localStorage.getItem('token');
 
-            axios.patch('https://52b0-176-88-45-167.ngrok-free.app/user/me', {
+            axios.patch( NetworkConfig.API_URL + 'user/me', {
               firstName: values.firstName,
               lastName: values.lastName,
             }, {
@@ -116,7 +117,7 @@ const menus = {
           onSubmit={(values, {setSubmitting, resetForm}) => {
             const token = localStorage.getItem('token');
 
-            axios.patch('https://52b0-176-88-45-167.ngrok-free.app/auth/update-password', {
+            axios.patch(NetworkConfig.API_URL + 'auth/update-password', {
               ...values,
             }, {
               headers: {
@@ -222,7 +223,7 @@ const menus = {
         <div className={`flex flex-row justify-center items-center p-4`} onClick={() => {
           const token = localStorage.getItem('token');
 
-          axios.patch('https://52b0-176-88-45-167.ngrok-free.app/subscription/cancel', {}, {
+          axios.patch( NetworkConfig.API_URL + 'subscription/cancel', {}, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

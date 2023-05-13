@@ -4,14 +4,14 @@ import {DynamicObject} from "../constants/DynamicObject";
 import useAuth from "./auth/useAuth";
 
 export const NetworkConfig = {
-  api_url: "https://52b0-176-88-45-167.ngrok-free.app/"
+  API_URL: "https://api.designera.app/"
 }
 
 export function useAxios() {
   const {userData} = useAuth()
 
   async function GET(url: string, body: DynamicObject): Promise<DynamicObject> {
-    let response = await axios.get(NetworkConfig.api_url + url, {
+    let response = await axios.get(NetworkConfig.API_URL + url, {
       params: body,
       headers: {
         "Authorization": `Bearer ${localStorage.getItem("token")}`
@@ -21,7 +21,7 @@ export function useAxios() {
   }
 
   async function POST(url: string, body: DynamicObject): Promise<DynamicObject> {
-    let response = await axios.post(NetworkConfig.api_url + url, body, {
+    let response = await axios.post(NetworkConfig.API_URL + url, body, {
       headers: {
         "Authorization": `Bearer ${localStorage.getItem("token")}`
       },
@@ -30,7 +30,7 @@ export function useAxios() {
   }
 
   async function PATCH(url: string, body: DynamicObject): Promise<DynamicObject> {
-    let response = await axios.patch(NetworkConfig.api_url + url, body, {
+    let response = await axios.patch(NetworkConfig.API_URL + url, body, {
       headers: {
         "Authorization": `Bearer ${localStorage.getItem("token")}`
       },
@@ -39,7 +39,7 @@ export function useAxios() {
   }
 
   async function DELETE(url: string, body: DynamicObject): Promise<DynamicObject> {
-    let response = await axios.delete(NetworkConfig.api_url + url, {
+    let response = await axios.delete(NetworkConfig.API_URL + url, {
       params: body,
       headers: {
         "Authorization": `Bearer ${localStorage.getItem("token")}`
@@ -49,7 +49,7 @@ export function useAxios() {
   }
 
   async function FILEPOST(url: string, formData: FormData): Promise<DynamicObject> {
-    let response = await axios.post(NetworkConfig.api_url + url, formData, {
+    let response = await axios.post(NetworkConfig.API_URL + url, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         "Authorization": `Bearer ${localStorage.getItem("token")}`
