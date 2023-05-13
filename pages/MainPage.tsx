@@ -141,7 +141,7 @@ export default function MainPage() {
       generateImageFormData.append("imageId", selectedResult.id || resultData.id)
     }
 
-    let response = await FILEPOST(Object.keys(userData.subscription).length > 0 ? "generate-image/premium" : "generate-image", generateImageFormData)
+    let response = await FILEPOST((userData?.subscription?.isActive) ? "generate-image/premium" : "generate-image", generateImageFormData)
 
     // let response = {
     //   "referenceId": "865ffaf0-a99b-a286-18da-fc9a3aba12e2",
