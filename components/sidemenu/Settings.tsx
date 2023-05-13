@@ -1,9 +1,9 @@
-import { configureStore, createSlice } from '@reduxjs/toolkit';
-import { SimpleButton } from '../button/SimpleButton';
+import {configureStore, createSlice} from '@reduxjs/toolkit';
+import {SimpleButton} from '../button/SimpleButton';
 import React from 'react';
 import * as Yup from 'yup';
-import { Formik } from 'formik';
-import { FormikError } from '../input/FormikError';
+import {Formik} from 'formik';
+import {FormikError} from '../input/FormikError';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
@@ -180,6 +180,11 @@ const menus = {
         </Formik>
         <hr className={'bg-stone-400 border-none h-px'}/>
       </div>,
+    "Logout": () => {
+      localStorage.removeItem(`token`)
+      localStorage.removeItem(`keepMeSignedIn`)
+      location.reload()
+    }
     /*"Delete Account":
         <div className="flex flex-col">
         <span
@@ -286,6 +291,11 @@ const settingsSlice = createSlice({
       tempMenu.previousTitle = '';
       state = {...tempMenu};
     },
+    triggerFunction: (state, action) => {
+      localStorage.removeItem(`token`)
+      localStorage.removeItem(`keepMeSignedIn`)
+      location.reload()
+    }
   },
 });
 

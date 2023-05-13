@@ -61,6 +61,9 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
     function changeMenu(v: string) {
         settingsStore.dispatch(settingsSlice.actions.changeMenu({v: v}))
     }
+    function triggerFunction(v: string) {
+        settingsStore.dispatch(settingsSlice.actions.triggerFunction({v: v}))
+    }
 
     // SIDEBAR CONTROLLER
 
@@ -220,7 +223,7 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
                                                             <div
                                                                 className={`Font-Medium cursor-pointer border-white text-stone-300 ${i == 0 ? "p-4 pt-0" : "p-4"}`}
                                                                 onClick={(e) => {
-                                                                    changeMenu(v)
+                                                                    typeof menu.currentMenu[v] == "function" ? triggerFunction(v) : changeMenu(v)
                                                                 }}
                                                             >
                                                                 {v}
