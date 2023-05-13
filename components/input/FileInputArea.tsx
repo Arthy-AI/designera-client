@@ -11,7 +11,7 @@ export const FileInputArea = ({children, body, id, onValueChange, ...props}: Fil
     return (
         <div>
             <div
-                className="h-72 w-full bg-[#5E5E5E] designera-rounded designera-box-shadow flex items-center justify-center cursor-pointer"
+                className="h-72 w-full bg-[#5E5E5E] designera-rounded designera-box-shadow flex items-center justify-center cursor-pointer overflow-hidden"
                 onClick={(e) => {
                     (document.getElementById(id) as HTMLInputElement).click()
                 }}

@@ -130,7 +130,6 @@ export default function MainPage() {
   async function renderProcess(createVariants: boolean = false) {
     setResulted(false)
     setLoaderShow(true)
-    await new Promise((r) => setTimeout(r, 3000))
 
     let generateImageFormData = new FormData();
     generateImageFormData.append("file", selectedImageObject as File)
