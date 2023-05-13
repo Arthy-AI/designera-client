@@ -468,7 +468,7 @@ export default function MainPage() {
                       backgroundImage: resultData.id ? `url("https://cdn.designera.app/generated/${resultData.id}")` : `url("${selectedResult.url}")`,
                     }}
                     onClick={(e: any) => {
-                      if ([...e.target.classList].includes("black-zone") || !selectedResult.url.includes("reference")) return openLightbox(e, {
+                      if ([...e.target.classList].includes("black-zone") || !selectedResult?.url?.includes("reference")) return openLightbox(e, {
                         photo: selectedResult.url,
                         index: 0
                       })
@@ -478,7 +478,7 @@ export default function MainPage() {
                       className={"h-full w-full opacity-0 hover:opacity-100 transition duration-300 ease-in-out"}>
                       <div className={"black-zone h-1/2"}>
                         <div className={"overflow-x-scroll md:overflow-x-hidden"}>
-                          {!selectedResult.url.includes("reference") &&
+                          {!selectedResult?.url?.includes("reference") &&
                               <div
                                   className={"w-fit flex flex-row items-start justify-center sm:w-full md:justify-start md:flex-col md:items-end gap-4 p-4"}>
                                   <IconButton
@@ -525,7 +525,7 @@ export default function MainPage() {
                       </div>
                       <div
                         className={"black-zone h-1/2 w-full flex flex-col justify-end items-center"}>
-                        {!(selectedResult.url.includes("reference") || publisheds.includes(selectedResult.id)) &&
+                        {!(selectedResult?.url?.includes("reference") || publisheds.includes(selectedResult.id)) &&
                             <div className={"w-11/12 xl:w-2/3 flex justify-center"}>
                                 <AnimatedSimpleInput
                                     labelText={"Give your design a name"}
