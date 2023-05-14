@@ -152,7 +152,7 @@ export default function MainPage() {
     imagesGlobalStore.dispatch(imagesGlobal.actions.changeGeneratedImages({
       images: [...
         response.id ?
-          [{src: `https://cdn.designera.app/generated/${resultData.id}`, id: resultData.id}] :
+          [{src: `https://cdn.designera.app/generated/${response.id}`, id: response.id}] :
           response.images ? response.images.map((v: any) => {
             return {src: `https://cdn.designera.app/generated/${v}`, id: v}
           }) : []
@@ -163,6 +163,12 @@ export default function MainPage() {
       setSelectedResult({
         id: response.images[0],
         url: "https://cdn.designera.app/generated/" + response.images[0],
+        index: 1
+      })
+    } else {
+      setSelectedResult({
+        id: response.id,
+        url: "https://cdn.designera.app/generated/" + response.id,
         index: 1
       })
     }
@@ -399,16 +405,6 @@ export default function MainPage() {
                     )}
                   </div>
                   <div>
-                    {/* <RadioButtons title={"Quality"} choices={["Low", "Standard", "Extreme"]}
-                                            active={0} /> */}
-                    {/*<RadioButtons
-                      title={"Variants"}
-                      choices={["1", "3", "6"]}
-                      active={variant}
-                      onValueChange={(value, index) => {
-                        setVariant(index);
-                      }}
-                    />*/}
                     {isLoggedIn ?
                       (
                         <div className={"flex flex-row gap-3"}>
@@ -467,7 +463,7 @@ export default function MainPage() {
                       backgroundImage: resultData.id ? `url("https://cdn.designera.app/generated/${resultData.id}")` : `url("${selectedResult.url}")`,
                     }}
                     onClick={(e: any) => {
-                      if ([...e.target.classList].includes("black-zone") || !selectedResult?.url?.includes("reference")) return openLightbox(e, {
+                      if ([...e.target.classList].includes("black-zone")) return openLightbox(e, {
                         photo: selectedResult.url,
                         index: 0
                       })
@@ -644,7 +640,7 @@ export default function MainPage() {
               // @ts-ignore
               views={[...
                 resultData.id ?
-                  [{src: `https://cdn.designera.app/generated/${resultData.id}`, id:resultData.id}] :
+                  [{src: `https://cdn.designera.app/generated/${resultData.id}`, id: resultData.id}] :
                   resultData.images ? resultData.images.map((v: any) => {
                     return {src: `https://cdn.designera.app/generated/${v}`, id: v}
                   }) : []
