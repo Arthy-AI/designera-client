@@ -12,6 +12,7 @@ import {ForceDownload} from "../../../constants/ForceDownload";
 import toast from "react-hot-toast";
 import {useAxios} from "../../../hooks/useAxios";
 import {UseAsThemeLogo} from "../../../assets/svg/UseAsThemeLogo";
+import {imagesGlobal, imagesGlobalStore} from "../../../globals/images/images";
 
 interface SampleCommunityGalleryImages extends ReactProps {
     images: any[]
@@ -48,7 +49,8 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
                         title: image.description,
                         username: image.user.firstName + ' ' + image.user.lastName,
                         userAvatar: image.user.id,
-                        likes: image.upvoteCount
+                        likes: image.upvoteCount,
+                        style: image.roomStyle
                     }
                 })
             }
@@ -81,6 +83,16 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
         } catch (err) {
             toast.error("Can not vote.")
         }
+    }
+
+    function themeAdd(id: string, url: string, style: string) {
+        imagesGlobalStore.dispatch(imagesGlobal.actions.addTheme({
+            image: {
+                id,
+                url: id,
+                style
+            }
+        }))
     }
 
     // @ts-ignore
@@ -137,7 +149,7 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
                                                                             style={{width: 25, height: 25}}/>}
                                                      onClick={() => vote(true, index)}
                                          />
-                                         <IconButton icon={<UseAsThemeLogo/>}/>
+                                         <IconButton icon={<UseAsThemeLogo/>} onClick={() => themeAdd(photos[index]?.data?.id, photos[index]?.src, photos[index]?.data?.style)}/>
                                          <div className={"absolute right-0 bottom-0 pr-2 pb-2"}>
                                              <div
                                                  className={"sticky text-white font-semibold z-10 text-right flex flex-col text-xs leading-3"}>

@@ -43,14 +43,15 @@ import {ImageWithFallback} from "../components/images/ImageWithFallback";
 import {ForceDownload} from "../constants/ForceDownload";
 import {imagesGlobal, imagesGlobalStore} from "../globals/images/images";
 import {UseAsThemeLogo} from "../assets/svg/UseAsThemeLogo";
+import useAsTheme from "../hooks/themes/useAsTheme";
 
 export default function MainPage() {
   const {GET, FILEPOST, POST, PATCH} = useAxios()
   const {userData} = useAuth()
+  const {themes, addImage, removeImage} = useAsTheme()
   const {isLoggedIn, toggleModal, changeSection} = useAuth()
   const [galleryOrderBy, setGalleryOrderBy] = useState(0);
   const [themeSelectToggle, setThemeSelectToggle] = useState(false);
-  const [themes, setThemes] = useState([false, false, false]);
   const [loaderShow, setLoaderShow] = useState(false);
   const [resulted, setResulted] = useState(false);
   const [resultData, setResultData] = useState({} as DynamicObject);
@@ -134,7 +135,7 @@ export default function MainPage() {
     let generateImageFormData = new FormData();
     generateImageFormData.append("file", selectedImageObject as File)
     generateImageFormData.append("roomType", roomType)
-    generateImageFormData.append("roomStyle", roomStyle)
+    generateImageFormData.append("roomStyle", `${roomStyle}, ${themes.map((v) => v.style).join(", ")}`)
 
     if (createVariants) {
       generateImageFormData.append("imageId", selectedResult.id || resultData.id)
@@ -152,9 +153,9 @@ export default function MainPage() {
     imagesGlobalStore.dispatch(imagesGlobal.actions.changeGeneratedImages({
       images: [...
         response.id ?
-          [{src: `https://cdn.designera.app/generated/${response.id}`, id: response.id}] :
+          [{src: `https://cdn.designera.app/generated/${response.id}`, id: response.id, style: roomStyle}] :
           response.images ? response.images.map((v: any) => {
-            return {src: `https://cdn.designera.app/generated/${v}`, id: v}
+            return {src: `https://cdn.designera.app/generated/${v}`, id: v, style: roomStyle}
           }) : []
       ]
     }))
@@ -252,7 +253,6 @@ export default function MainPage() {
       setLoaderShow(false)
       toast.success("Upscale successful.")
     } catch (err) {
-      console.log(err)
       toast.error("Can not upscale.")
     }
   }
@@ -330,30 +330,24 @@ export default function MainPage() {
                     </div>
                     {themeSelectToggle ? (
                       <div className="flex flex-row justify-between my-2 gap-3 px-2">
-                        {themes.map((v, i) => {
+                        {[themes[0] || undefined, themes[1] || undefined, themes[2] || undefined].map((v, i) => {
                           return (
-                            v ?
+                            v?.url ? (
                               <div
                                 key={i}
                                 onClick={(e) => {
-                                  let tempThemes = themes;
-                                  tempThemes[i] = false;
-                                  setThemes([...tempThemes])
+                                  removeImage(i)
                                 }}
-                                className="w-1/3 flex items-center text-center bg-stone-600 h-24 designera-rounded cursor-pointer overflow-hidden">
-                                <img
-                                  className="w-full h-full"
-                                  src="https://media.discordapp.net/attachments/551764588136497152/1060539168813502515/00065-117673994-bohemian_modern_1.png"/>
+                                className="w-1/3 h-24 bg-transparent designera-rounded cursor-pointer"
+                                style={{ backgroundImage: `url("https://cdn.designera.app/generated/${v.url}")`, backgroundSize: "cover", backgroundPosition: 'center' }}
+                              >
                               </div>
-                              :
+                            ) : (
                               <div
                                 key={i}
                                 onClick={(e) => {
-                                  let tempThemes = themes;
-                                  tempThemes[i] = true;
-                                  setThemes([...tempThemes])
                                 }}
-                                className="w-1/3 flex items-center text-center bg-stone-600 h-24 designera-rounded cursor-pointer flex justify-center items-center">
+                                className="w-1/3 flex items-center text-center bg-stone-600 h-24 designera-rounded cursor-not-allowed justify-center">
                                 <FontAwesomeIcon icon={faPlus} color={"#AAA7A5"}
                                                  style={{
                                                    width: 50,
@@ -361,6 +355,7 @@ export default function MainPage() {
                                                    color: "#AAA7A5"
                                                  }}/>
                               </div>
+                            )
                           )
                         })}
                       </div>
@@ -412,12 +407,12 @@ export default function MainPage() {
                               <div
                                   className={"flex flex-row bg-stone-700 text-white designera-rounded designera-box-shadow items-center justify-center gap-2 p-2 h-16 w-24"}>
                                   <div
-                                      className="flex justify-center items-center font-bold text-4xl">
+                                      className="flex justify-center items-center font-bold text-4xl select-none">
                                       <span
                                           className={"h-max"}>{userData?.credits ? userData?.credits[0].balance : 0}</span>
                                   </div>
                                   <div
-                                      className="flex justify-center items-center text-sm pt-1 leading-4 text-xs font-thin">Credits<br/>Available
+                                      className="flex justify-center items-center text-sm pt-1 leading-4 text-xs font-thin select-none">Credits<br/>Available
                                   </div>
                               </div>
                           }
@@ -429,7 +424,7 @@ export default function MainPage() {
                               onClick={(e) => {
                                 renderProcess()
                               }}
-                              className={"h-16 text-lg lg:text-sm"}
+                              className={"h-16 text-lg lg:text-sm select-none"}
                             />
                           </div>
                         </div>
@@ -489,7 +484,7 @@ export default function MainPage() {
                                     vote(true)
                                   }}/>
                                   <IconButton
-                                      icon={<UseAsThemeLogo/>}/>
+                                      icon={<UseAsThemeLogo/>} onClick={() => addImage({ id: selectedResult.id, url: selectedResult.id, style: roomStyle })}/>
                                   <IconButton
                                       icon={<FontAwesomeIcon icon={faArrowUpRightFromSquare}
                                                              color={"#AAA7A5"} size={"xl"}

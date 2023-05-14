@@ -14,8 +14,11 @@ import {imagesGlobalStore} from "../../../globals/images/images";
 import toast from "react-hot-toast";
 import {useAxios} from "../../../hooks/useAxios";
 import {ForceDownload} from "../../../constants/ForceDownload";
+import {UseAsThemeLogo} from "../../../assets/svg/UseAsThemeLogo";
+import useAsTheme from "../../../hooks/themes/useAsTheme";
 
 export const GeneratedImageModalFooter = ({innerProps, isModal, currentIndex}: DynamicObject) => {
+  const {addImage} = useAsTheme()
   const {POST, PATCH} = useAxios()
   const [photos, setPhotos] = useState([] as any[])
   const [publishDescription, setPublishDescription] = useState("")
@@ -95,6 +98,8 @@ export const GeneratedImageModalFooter = ({innerProps, isModal, currentIndex}: D
           }
           onClick={() => vote(true)}
         />
+        <IconButton
+          icon={<UseAsThemeLogo/>} onClick={() => addImage({ id: photos[currentIndex].id, url: photos[currentIndex].id, style: photos[currentIndex].style })}/>
       </div>
     </div>
   ) : null;

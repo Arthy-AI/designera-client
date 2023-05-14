@@ -35,7 +35,6 @@ export default function CheckoutPage() {
     async function authCheck() {
       let plans = await GET("plan/list", {})
       setPlans(plans.sort((a: any, b: any) => a.centAmount - b.centAmount))
-      console.log(plans.sort((a: any, b: any) => a.centAmount - b.centAmount))
 
       if (!isLoggedIn) {
         router.push('/')
@@ -47,7 +46,6 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     if (plans.length < 1) return;
-    console.log(plans[Number(selectedSubscription) - 1].id)
     setSelectedPlanId(plans[Number(selectedSubscription) - 1].id)
   }, [plans, selectedSubscription])
 

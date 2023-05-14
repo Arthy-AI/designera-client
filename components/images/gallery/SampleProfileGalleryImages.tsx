@@ -6,10 +6,10 @@ import {sidemenuSlice, sidemenuStore} from "../../sidemenu/SidemenuToggle";
 import useAuth from '../../../hooks/auth/useAuth';
 
 export const SampleProfileGalleryImages = ({tab}: { tab: string }) => {
+    const { userData } = useAuth()
     const [photos, setPhotos] = useState([])
     const [currentImage, setCurrentImage] = useState(0);
     const [viewerIsOpen, setViewerIsOpen] = useState(false);
-    const { userData } = useAuth()
 
     // @ts-ignore
     const openLightbox = useCallback((event, {photo, index}) => {
@@ -22,23 +22,40 @@ export const SampleProfileGalleryImages = ({tab}: { tab: string }) => {
         setViewerIsOpen(false);
     };
 
+    useEffect(() => {
+        setPhotos((tab == `Likes` ? userData?.upvotedImages : userData?.images as any[])?.filter((v: any) =>
+          tab == `Images` ? !v.description :
+            tab == `Publishes` ? v.description :
+              true
+        ).map((value: any, index: number) => {
+            return {
+                src: "https://cdn.designera.app/generated/" + value.id,
+                data: {
+                    id: value.id,
+                    title: value.description,
+                    username: undefined,
+                    userAvatar: undefined,
+                    createdAt: value.createdAt,
+                    style: value.roomStyle
+                }
+            }
+        }))
+    }, [tab])
+
     return (
         <>
-            {(tab == `Likes` ? userData?.upvotedImages : userData?.images as any[])?.filter((v: any) =>
-                tab == `Images` ? !v.description :
-                  tab == `Publishes` ? v.description :
-                    true
-            ).map((v: any, index: number) => {
+            {photos?.map((v: any, index: number) => {
                 return (
-                    <div key={index} className={"w-16 h-16"}>
-                        <Image
-                          // onClick={(e) => openLightbox(e, {photo: v.id, index})}
-                               src={"https://cdn.designera.app/generated/" + v.id}
-                               alt="Designera Photo"
-                               width={200}
-                               height={200}
-                        />
-                    </div>
+                    <div key={index} className={"w-16 h-16 overflow-hidden object-contain"} style={{
+                        backgroundImage: `url(${v.src})`,
+                        backgroundSize: `cover`,
+                        backgroundPosition: `center`
+                    }} onClick={(e: any) => {
+                        return openLightbox(e, {
+                            photo: v.src,
+                            index
+                        })
+                    }}/>
                 )
             })
             }

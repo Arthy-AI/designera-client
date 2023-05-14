@@ -13,9 +13,12 @@ import {ForceDownload} from "../../../constants/ForceDownload";
 import {useAxios} from "../../../hooks/useAxios";
 import toast from "react-hot-toast";
 import {UseAsThemeLogo} from "../../../assets/svg/UseAsThemeLogo";
+import useAsTheme from "../../../hooks/themes/useAsTheme";
+import Image from 'next/image';
 
 export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicObject) => {
     const [photos, setPhotos] = useState([] as any[])
+    const {addImage} = useAsTheme()
     const { PATCH } = useAxios()
 
     useEffect(() => {
@@ -39,6 +42,16 @@ export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicO
         }
     }
 
+    function themeAdd(id: string, url: string, style: string) {
+        imagesGlobalStore.dispatch(imagesGlobal.actions.addTheme({
+            image: {
+                id,
+                url: id,
+                style
+            }
+        }))
+    }
+
     return isModal ? (
     <div {...innerProps}>
         <div
@@ -60,6 +73,7 @@ export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicO
                 icon={
                     <UseAsThemeLogo/>
                 }
+                onClick={() => themeAdd(photos[currentIndex]?.data?.id, photos[currentIndex]?.src, photos[currentIndex]?.data?.style)}
             />
         </div>
         <div className={"absolute right-0 bottom-0 pr-2 pb-2 flex flex-col items-end"}>
@@ -67,13 +81,12 @@ export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicO
                 <IconButton
                     icon={
                         <div className={"overflow-hidden designera-rounded"}>
-                            <ImageWithFallback
+                            <Image
                               width={50}
                               height={50}
                               src={`https://cdn.designera.app/avatar/${photos[currentIndex]?.data?.userAvatar}`}
                               alt={photos[currentIndex]?.data?.userAvatar || "No info found"}
                               style={{objectFit:'contain'}}
-                              fallbackUrl={"/assets/images/unknown.png"}
                             />
                         </div>
                     }
