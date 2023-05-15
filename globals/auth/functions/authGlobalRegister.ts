@@ -17,6 +17,8 @@ export const authGlobalRegister = createAsyncThunk(
         promoCode: registerData.promoCode
       })
 
+      toast.success(`Check your mailbox for verification link.`)
+
       return (
         {
           currentSection: "login",

@@ -15,6 +15,7 @@ import toast from "react-hot-toast";
 import {UseAsThemeLogo} from "../../../assets/svg/UseAsThemeLogo";
 import useAsTheme from "../../../hooks/themes/useAsTheme";
 import Image from 'next/image';
+import {UseAsThemeFlatLogo} from "../../../assets/svg/UseAsThemeFlatLogo";
 
 export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicObject) => {
     const [photos, setPhotos] = useState([] as any[])
@@ -71,7 +72,7 @@ export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicO
             />
             <IconButton
                 icon={
-                    <UseAsThemeLogo/>
+                    <UseAsThemeFlatLogo/>
                 }
                 onClick={() => themeAdd(photos[currentIndex]?.data?.id, photos[currentIndex]?.src, photos[currentIndex]?.data?.style)}
             />
@@ -81,12 +82,13 @@ export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicO
                 <IconButton
                     icon={
                         <div className={"overflow-hidden designera-rounded"}>
-                            <Image
+                            <ImageWithFallback
                               width={50}
                               height={50}
                               src={`https://cdn.designera.app/avatar/${photos[currentIndex]?.data?.userAvatar}`}
                               alt={photos[currentIndex]?.data?.userAvatar || "No info found"}
                               style={{objectFit:'contain'}}
+                              fallbackUrl={"/assets/images/unknown.png"}
                             />
                         </div>
                     }

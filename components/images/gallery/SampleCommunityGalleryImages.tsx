@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 import {useAxios} from "../../../hooks/useAxios";
 import {UseAsThemeLogo} from "../../../assets/svg/UseAsThemeLogo";
 import {imagesGlobal, imagesGlobalStore} from "../../../globals/images/images";
+import {UseAsThemeFlatLogo} from "../../../assets/svg/UseAsThemeFlatLogo";
 
 interface SampleCommunityGalleryImages extends ReactProps {
     images: any[]
@@ -149,7 +150,7 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
                                                                             style={{width: 25, height: 25}}/>}
                                                      onClick={() => vote(true, index)}
                                          />
-                                         <IconButton icon={<UseAsThemeLogo/>} onClick={() => themeAdd(photos[index]?.data?.id, photos[index]?.src, photos[index]?.data?.style)}/>
+                                         <IconButton icon={<UseAsThemeFlatLogo/>} onClick={() => themeAdd(photos[index]?.data?.id, photos[index]?.src, photos[index]?.data?.style)}/>
                                          <div className={"absolute right-0 bottom-0 pr-2 pb-2"}>
                                              <div
                                                  className={"sticky text-white font-semibold z-10 text-right flex flex-col text-xs leading-3"}>

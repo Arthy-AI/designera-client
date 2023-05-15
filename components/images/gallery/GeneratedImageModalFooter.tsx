@@ -16,6 +16,7 @@ import {useAxios} from "../../../hooks/useAxios";
 import {ForceDownload} from "../../../constants/ForceDownload";
 import {UseAsThemeLogo} from "../../../assets/svg/UseAsThemeLogo";
 import useAsTheme from "../../../hooks/themes/useAsTheme";
+import {UseAsThemeFlatLogo} from "../../../assets/svg/UseAsThemeFlatLogo";
 
 export const GeneratedImageModalFooter = ({innerProps, isModal, currentIndex}: DynamicObject) => {
   const {addImage} = useAsTheme()
@@ -99,7 +100,7 @@ export const GeneratedImageModalFooter = ({innerProps, isModal, currentIndex}: D
           onClick={() => vote(true)}
         />
         <IconButton
-          icon={<UseAsThemeLogo/>} onClick={() => addImage({ id: photos[currentIndex].id, url: photos[currentIndex].id, style: photos[currentIndex].style })}/>
+          icon={<UseAsThemeFlatLogo/>} onClick={() => addImage({ id: photos[currentIndex].id, url: photos[currentIndex].id, style: photos[currentIndex].style })}/>
       </div>
     </div>
   ) : null;

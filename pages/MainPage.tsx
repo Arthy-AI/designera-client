@@ -42,12 +42,12 @@ import {GetBase64} from "../constants/GetBase64";
 import {ImageWithFallback} from "../components/images/ImageWithFallback";
 import {ForceDownload} from "../constants/ForceDownload";
 import {imagesGlobal, imagesGlobalStore} from "../globals/images/images";
-import {UseAsThemeLogo} from "../assets/svg/UseAsThemeLogo";
 import useAsTheme from "../hooks/themes/useAsTheme";
+import {UseAsThemeFlatLogo} from "../assets/svg/UseAsThemeFlatLogo";
 
 export default function MainPage() {
   const {GET, FILEPOST, POST, PATCH} = useAxios()
-  const {userData} = useAuth()
+  const {userData, decrementCreditBalance} = useAuth()
   const {themes, addImage, removeImage} = useAsTheme()
   const {isLoggedIn, toggleModal, changeSection} = useAuth()
   const [galleryOrderBy, setGalleryOrderBy] = useState(0);
@@ -72,26 +72,30 @@ export default function MainPage() {
   const [images, setImages] = useState([] as any[]);
   const [loadingImages, setLoadingImages] = useState(false);
   const [search, setSearch] = useState("");
+  const [searchTemp, setSearchTemp] = useState("");
   const [paginationData, setPaginationData] = useState({
-    query: "" || null,
+    query: null,
     pageIndex: 0,
-    pageSize: 20
+    pageSize: 20,
+    orderBy: galleryOrderBy == 0 ? 'upvoteCount' : 'createdAt'
   });
 
-  async function searchChange(text: string) {
-    setSearch(text)
-  }
-
   useEffect(() => {
-    if (search.length < 1) return;
-
     setImages([])
 
     let tempPaginationData = paginationData;
     tempPaginationData.pageIndex = 0
-    tempPaginationData.query = search as any
+    tempPaginationData.query = search as any || null
     setPaginationData({...tempPaginationData})
   }, [search]);
+
+  useEffect(() => {
+    setImages([])
+
+    let tempPaginationData = paginationData;
+    tempPaginationData.orderBy = galleryOrderBy == 0 ? 'upvoteCount' : 'createdAt'
+    setPaginationData({...tempPaginationData})
+  }, [galleryOrderBy]);
 
 
   useEffect(() => {
@@ -110,16 +114,6 @@ export default function MainPage() {
   useEffect(() => {
     dispatch(authGlobalInitiate({}))
     setStyleSuggestionPills(ShuffleArray(styleSuggestionPills))
-
-    /*let scrollHandler = (event: Event) => {
-      const {scrollY} = window;
-      if (document.body.clientHeight - scrollY < 970) {
-        if (loadingImages) return;
-        let tempPaginationData = paginationData
-        tempPaginationData.pageIndex += 1
-        setPaginationData({...tempPaginationData})
-      }
-    }*/
   }, []);
 
   useEffect(() => {
@@ -142,6 +136,8 @@ export default function MainPage() {
     }
 
     let response = await FILEPOST((userData?.subscription?.isActive) ? "generate-image/premium" : "generate-image", generateImageFormData)
+
+    decrementCreditBalance()
 
     // let response = {
     //   "referenceId": "865ffaf0-a99b-a286-18da-fc9a3aba12e2",
@@ -263,8 +259,8 @@ export default function MainPage() {
       <div className="flex justify-center items-center min-h-screen">
         <div className="w-4/5 flex flex-col items-center">
           <Heading>
-            Design your <span className="text-orange-400">own</span> interior in{" "}
-            seconds
+            <div className={"hidden md:block mb-6"}>Design your <span className="text-[#FF9900]">own</span> interior in{" "}
+            seconds</div>
           </Heading>
           <div className="w-full">
             <StandardLayout>
@@ -319,13 +315,13 @@ export default function MainPage() {
                                    }}
                                    className={"placeholder-white"}/>
                       <button
-                        className="bg-transparent text-stone-400 p-2 pl-3 font-semibold hover:text-white border border-stone-500 designera-rounded ml-2 flex items-center justify-center"
-                        style={{height: 40, width: 50}}
+                        className="bg-[#3E3E3E] text-stone-400 p-2.5 font-semibold hover:text-white border border-stone-500 designera-rounded ml-2 flex items-center justify-center"
+                        style={{height: 42, width: 42}}
                         onClick={() => {
                           setThemeSelectToggle(!themeSelectToggle);
                         }}
                       >
-                        <UseAsThemeLogo/>
+                        <UseAsThemeFlatLogo/>
                       </button>
                     </div>
                     {themeSelectToggle ? (
@@ -378,7 +374,8 @@ export default function MainPage() {
                                   return (
                                     <div key={i}>
                                       <div id={`suggestion-${i}`}
-                                           className="bg-[#515151] rounded px-1 text-stone-100 designera-box-shadow cursor-pointer Font-ExtraLight text-sm select-none"
+                                           className="bg-[#515151] rounded px-1 text-stone-100 designera-box-shadow cursor-pointer Font-ExtraLight select-none"
+                                           style={{ fontSize: "0.850rem" }}
                                            onClick={(e) => {
                                              setRoomStyle(roomStyle.length > 0 ? roomStyle + ", " + v.name : v.name)
                                            }}
@@ -437,7 +434,7 @@ export default function MainPage() {
                           changeSection("login")
                           toggleModal(true)
                         }}
-                        className={"h-16"}
+                        className={"h-16 text-xl"}
                       />)
                     }
                   </div>
@@ -484,7 +481,7 @@ export default function MainPage() {
                                     vote(true)
                                   }}/>
                                   <IconButton
-                                      icon={<UseAsThemeLogo/>} onClick={() => addImage({ id: selectedResult.id, url: selectedResult.id, style: roomStyle })}/>
+                                      icon={<UseAsThemeFlatLogo/>} onClick={() => addImage({ id: selectedResult.id, url: selectedResult.id, style: roomStyle })}/>
                                   <IconButton
                                       icon={<FontAwesomeIcon icon={faArrowUpRightFromSquare}
                                                              color={"#AAA7A5"} size={"xl"}
@@ -520,6 +517,8 @@ export default function MainPage() {
                                 <AnimatedSimpleInput
                                     labelText={"Give your design a name"}
                                     className={"w-10/12 xl:w-11/12"}
+                                    labelClassname={"ml-5 text-white text-base"}
+                                    inputClassname={"bg-[#1E1E1E] hover:bg-[#242424] focus:bg-[#242424] opacity-90 pl-7 pt-6"}
                                     value={publishDescription}
                                     onValueChange={(text) => {
                                       setPublishDescription(text)
@@ -530,10 +529,10 @@ export default function MainPage() {
                                       publish()
                                     }}
                                     disabled={publishDescription.length < 6 || publishDescription.length > 50}
-                                    className="w-2/12 xl:w-1/12 h-full text-stone-400 p-2 bg-[#3E3E3E] border border-[#6F6B6A] font-semibold hover:text-white designera-rounded ml-2 flex items-center justify-center"
-                                    style={{height: 52}}
+                                    className="xl:w-1/12 block text-stone-400 p-2 bg-[#1E1E1E] hover:bg-[#242424] focus:bg-[#242424] opacity-90 border border-[#6F6B6A] font-semibold hover:text-white designera-rounded ml-2 flex items-center justify-center"
+                                    style={{height: 56, width: 56}}
                                 >
-                                    <FontAwesomeIcon icon={faPaperPlane} color={"#AAA7A5"} height={30} width={30}/>
+                                    <FontAwesomeIcon icon={faPaperPlane} color={"#AAA7A5"} size={"xl"} style={{ paddingRight: 2 }}/>
                                 </button>
                             </div>
                         }
@@ -547,7 +546,7 @@ export default function MainPage() {
                                 <div key={i} onClick={(e) => {
                                   switchImage(v, e, i)
                                 }}
-                                     className="w-32 xl:w-1/6 flex items-center text-center bg-stone-600 h-20 designera-rounded designera cursor-pointer overflow-hidden">
+                                     className="w-32 xl:w-1/6 flex items-center text-center bg-stone-600 h-20 designera-rounded designera-box-shadow border-2 border-transparent hover:border-white cursor-pointer overflow-hidden">
                                   <ImageWithFallback
                                     className="w-full h-full"
                                     src={`https://cdn.designera.app/generated/${v}`}
@@ -588,21 +587,25 @@ export default function MainPage() {
       <div className="flex justify-center min-h-screen">
         <div className="w-4/5 flex flex-col items-center">
           <Heading>
-            Get <span className="text-red-600">inspired</span> by the community
-            of <span className="text-orange-400">Designera</span>
+            Get <span className="text-[#FF0000]">inspired</span> by the community
+            of <span className="text-[#FF9900]">Designera</span>
           </Heading>
           <div className="w-full flex justify-center mb-4">
             <AnimatedSimpleInput
               labelText={"Search Designs"}
               placeholderText={"Ex. Ikea, Scandinavian, Cyberpunk, Batcave"}
               className={"w-full md:w-4/5 lg:w-3/5 xl:w-2/5"}
-              onInputBlur={searchChange}
+              inputClassname={"bg-[#1E1E1E] hover:bg-[#242424] focus:bg-[#242424] pl-7 pt-6 rounded-full"}
+              labelClassname={"ml-5 text-white text-base"}
+              onValueChange={(text) => text.length < 1 ? setSearch("") : setSearchTemp(text)}
+              onSubmit={() => setSearch(searchTemp)}
             />
           </div>
           <div className="w-4/5 sm:w-3/5 md:w-2/5 xl:w-1/6">
             <RadioButtons
               title={"Tabs"}
               choices={["Most Liked", "Recent"]}
+
               active={galleryOrderBy}
               titleShow={false}
               column={2}
@@ -650,7 +653,7 @@ export default function MainPage() {
       </ModalGateway>
 
       <AuthModal/>
-      <Toaster containerStyle={{zIndex: 999999}}/>
+      <Toaster containerStyle={{zIndex: 999999}} toastOptions={{ style: { backgroundColor: "#2F2F2F", color: "#fff" } }}/>
     </main>
   );
 }

@@ -23,13 +23,13 @@ export const Header = ({children, ...props}: ReactProps) => {
     <div id={"Header"}
          className={"h-11 w-full fixed top-0 flex items-center pl-3 pr-4 bg-[#2f2f2f] designera-box-shadow z-50"}>
       <div id={"HeaderContainer"} className={"w-full flex justify-between items-center"}>
-        <div className={"ml-2 mt-1"} id={"HeaderLogoContainer"} style={{height: "fit-content"}}>
+        <div className={"ml-2 mt-1 cursor-pointer"} id={"HeaderLogoContainer"} style={{height: "fit-content"}} onClick={() => window.location.reload()}>
           <DesigneraTitleLarge/>
         </div>
         <div id={"HeaderButtonGroup"} className={`flex flex-row ${isLoggedIn ? "gap-4" : "md:gap-10 gap-4"}`}>
           {isLoggedIn ?
             <div
-              className={"rounded-full w-9 h-9 cursor-pointer rounded-full border-0 border-transparent hover:border-2 hover:ring-stone-400 hover:border-stone-400 overflow-hidden"}
+              className={"rounded-full w-9 h-9 cursor-pointer rounded-full border-2 border-transparent hover:border-2 hover:ring-stone-400 hover:border-stone-400 overflow-hidden"}
               onClick={() => {
                 SidemenuOnOpen()
               }}>

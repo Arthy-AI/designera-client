@@ -56,6 +56,10 @@ export default function useAuth() {
     ))
   }
 
+  function decrementCreditBalance() {
+    authGlobalStore.dispatch(authGlobal.actions.decrementCreditBalance({}))
+  }
+
   return {
     currentSection: values.currentSection,
     statusMessage: values.statusMessage,
@@ -67,6 +71,7 @@ export default function useAuth() {
     register,
     logout,
     toggleModal,
-    changeSection
+    changeSection,
+    decrementCreditBalance
   }
 }

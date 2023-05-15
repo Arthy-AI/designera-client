@@ -30,6 +30,9 @@ const authGlobal = createSlice({
     toggleModal: (state, action) => {
       let {status} = action.payload;
       state.modalShow = status
+    },
+    decrementCreditBalance: (state, action) => {
+      state.userData.credits[0].balance -= 1
     }
   },
   extraReducers: (builder) => {

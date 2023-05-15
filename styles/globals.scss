@@ -49,6 +49,28 @@ body {
   margin-left: 1.5em;
 }
 
+.separator-white {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+}
+
+.separator-white::before,
+.separator-white::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #fff;
+}
+
+.separator-white:not(:empty)::before {
+  margin-right: 1.5em;
+}
+
+.separator-white:not(:empty)::after {
+  margin-left: 1.5em;
+}
+
 input::placeholder {
   color: gray !important;
 }
@@ -120,7 +142,6 @@ input::placeholder {
 }
 
 button:disabled {
-  background-color: #4F4F4F !important;
   cursor: not-allowed;
 }
 

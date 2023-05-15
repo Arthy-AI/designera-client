@@ -87,9 +87,7 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
                     onClose();
                     settingsStore.dispatch(settingsSlice.actions.reset())
                 }}
-                closeOnOverlayClick={true}
                 closeOnEsc={true}
-                preserveScrollBarGap={true}
             >
                 <DrawerOverlay/>
                 <DrawerContent style={{backgroundColor: "black", color: "white", width: "286px"}}>
@@ -149,7 +147,7 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
                                       })
                                   }}
                                   type="file" id="avatar-file-input" style={{ display: 'none' }} />
-                                <div className={'rounded-full border-4 border-gray-600 hover:border-orange-400 hover:border-dashed'} >
+                                <div className={'rounded-full border-4 border-gray-600 hover:border-white cursor-pointer'} >
                                   <ImageWithFallback
                                     onClick={() => {
                                       document.getElementById('avatar-file-input')?.click()
@@ -249,11 +247,13 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
                             }
                             <div className={"my-5 flex flex-col justify-center items-center"}>
                                 <small className="text-[#979797] hover:text-[#c7c7c7] block cursor-pointer"
-                                       onClick={PrivacyPolicyOnOpen}><u>Privacy
+                                       onClick={() => { router.push('/privacy-policy') }}><u>Privacy
                                     Policy</u></small>
                                 <small className="text-[#979797] hover:text-[#c7c7c7] block cursor-pointer"
-                                       onClick={TermsOfUseOnOpen}><u>Terms of
+                                       onClick={() => { router.push('/terms-of-use') }}><u>Terms of
                                     Use</u></small>
+                                <small className="text-[#979797] hover:text-[#c7c7c7] block cursor-pointer"
+                                       onClick={() => { router.push('/about-us-contact') }}><u>About Us & Contact</u></small>
                             </div>
 
                             <div style={{height: "fit-content"}}>
