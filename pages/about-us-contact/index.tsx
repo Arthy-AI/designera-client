@@ -61,7 +61,7 @@ export default function AboutUsContact() {
           <div className={"Font-Regular text-center"}>
             <div>As a team of dedicated professionals from diverse backgrounds, we understand the challenges and
               limitations that individuals and businesses face when it comes to space design since our establishment as
-              an architecture company in 2017. That's why we have developed an artificial architect that combines the
+              an architecture company in 2017. That&apos;s why we have developed an artificial architect that combines the
               power of artificial intelligence, design expertise, and advanced algorithms to simplify the entire design
               process.
             </div>

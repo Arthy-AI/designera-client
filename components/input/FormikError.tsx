@@ -8,7 +8,9 @@ interface FormikError extends ReactProps {
 
 export const FormikError = ({touched, error}: FormikError) => {
   if (error) {
-    return (error.length > 0 && <div className="text-xs Font-Regular" >{error}</div>);
+    return (error.length > 0 ? <div className="text-xs Font-Regular" >{error}</div> : <div className={'hidden'}></div>);
+  } else {
+    return <div className={'hidden'}></div>
   }
 };
 
