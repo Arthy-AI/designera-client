@@ -7,7 +7,8 @@ import {
   faDownload,
   faHeart,
   faPaperPlane,
-  faPlus,
+  faPlus, faWandMagicSparkles,
+  faUpRightAndDownLeftFromCenter, faArrowsRotate
 } from "@fortawesome/free-solid-svg-icons";
 import {Tooltip as ReactTooltip} from "react-tooltip";
 
@@ -330,7 +331,7 @@ export default function MainPage() {
                           setThemeSelectToggle(!themeSelectToggle);
                         }}
                       >
-                        <UseAsThemeFlatLogo/>
+                        <FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"} style={{width: 25, height: 25}}/>
                       </button>
                     </div>
                     {themeSelectToggle ? (
@@ -490,9 +491,10 @@ export default function MainPage() {
                                     vote(true)
                                   }}/>
                                   <IconButton
-                                      icon={<UseAsThemeFlatLogo/>} onClick={() => addImage({ id: selectedResult.id, url: selectedResult.id, style: roomStyle })}/>
+                                      icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
+                                                             style={{width: 25, height: 25}}/>} onClick={() => addImage({ id: selectedResult.id, url: selectedResult.id, style: roomStyle })}/>
                                   <IconButton
-                                      icon={<FontAwesomeIcon icon={faArrowUpRightFromSquare}
+                                      icon={<FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter}
                                                              color={"#AAA7A5"} size={"xl"}
                                                              style={{width: 25, height: 25}}/>}
                                       onClick={() => {
@@ -500,7 +502,7 @@ export default function MainPage() {
                                       }}
                                   />
                                   <IconButton
-                                      icon={<FontAwesomeIcon icon={faArrowRotateLeft}
+                                      icon={<FontAwesomeIcon icon={faArrowsRotate}
                                                              color={"#AAA7A5"} size={"xl"}
                                                              style={{width: 25, height: 25}}/>}
                                       onClick={() => {

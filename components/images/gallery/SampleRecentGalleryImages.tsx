@@ -2,7 +2,7 @@ import React, {ReactElement, useCallback, useEffect, useState} from "react";
 import Image from 'next/image';
 import {IconButton} from "../../button/IconButton";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faDownload, faHeart} from "@fortawesome/free-solid-svg-icons";
+import {faDownload, faHeart, faWandMagicSparkles} from "@fortawesome/free-solid-svg-icons";
 import Carousel, {Modal, ModalGateway} from "react-images";
 import {GalleryModalFooter} from "./GalleryModalFooter";
 import {ReactProps} from "../../../interfaces/ReactProps";
@@ -130,7 +130,10 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => vote(true, 0)}
                               />
-                              <IconButton icon={<UseAsThemeFlatLogo/>} onClick={() => themeAdd(photos[0]?.data?.id, photos[0]?.src, photos[0]?.data?.style)}/>
+                              <IconButton icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
+                                                                 style={{width: 25, height: 25}}/>}
+                                          onClick={() => themeAdd(photos[0]?.data?.id, photos[0]?.src, photos[0]?.data?.style)}
+                              />
                           </div>
                       </div>
                       <div className={"absolute right-0 bottom-0 pr-2 pb-2"}>
@@ -189,7 +192,10 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => vote(true, 1)}
                               />
-                              <IconButton icon={<UseAsThemeFlatLogo/>} onClick={() => themeAdd(photos[1]?.data?.id, photos[1]?.src, photos[1]?.data?.style)}/>
+                              <IconButton icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
+                                                                 style={{width: 25, height: 25}}/>}
+                                          onClick={() => themeAdd(photos[1]?.data?.id, photos[1]?.src, photos[1]?.data?.style)}
+                              />
                           </div>
                       </div>
                       <div className={"absolute right-0 bottom-0 pr-2 pb-2"}>
@@ -252,7 +258,10 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => vote(true, 2)}
                               />
-                              <IconButton icon={<UseAsThemeFlatLogo/>} onClick={() => themeAdd(photos[2]?.data?.id, photos[2]?.src, photos[2]?.data?.style)}/>
+                              <IconButton icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
+                                                                 style={{width: 25, height: 25}}/>}
+                                          onClick={() => themeAdd(photos[2]?.data?.id, photos[2]?.src, photos[2]?.data?.style)}
+                              />
                           </div>
                       </div>
                       <div className={"absolute right-0 bottom-0 pr-2 pb-2"}>
@@ -311,7 +320,10 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => vote(true, 3)}
                               />
-                              <IconButton icon={<UseAsThemeFlatLogo/>} onClick={() => themeAdd(photos[3]?.data?.id, photos[3]?.src, photos[3]?.data?.style)}/>
+                              <IconButton icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
+                                                                 style={{width: 25, height: 25}}/>}
+                                          onClick={() => themeAdd(photos[3]?.data?.id, photos[3]?.src, photos[3]?.data?.style)}
+                              />
                           </div>
                       </div>
                       <div className={"absolute right-0 bottom-0 pr-2 pb-2"}>
@@ -374,7 +386,10 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => vote(true, 4)}
                               />
-                              <IconButton icon={<UseAsThemeFlatLogo/>} onClick={() => themeAdd(photos[4]?.data?.id, photos[4]?.src, photos[4]?.data?.style)}/>
+                              <IconButton icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
+                                                                 style={{width: 25, height: 25}}/>}
+                                          onClick={() => themeAdd(photos[4]?.data?.id, photos[4]?.src, photos[4]?.data?.style)}
+                              />
                           </div>
                       </div>
                       <div className={"absolute right-0 bottom-0 pr-2 pb-2"}>
@@ -433,7 +448,10 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => vote(true, 5)}
                               />
-                              <IconButton icon={<UseAsThemeFlatLogo/>} onClick={() => themeAdd(photos[5]?.data?.id, photos[5]?.src, photos[5]?.data?.style)}/>
+                              <IconButton icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
+                                                                 style={{width: 25, height: 25}}/>}
+                                          onClick={() => themeAdd(photos[5]?.data?.id, photos[5]?.src, photos[5]?.data?.style)}
+                              />
                           </div>
                       </div>
                       <div className={"absolute right-0 bottom-0 pr-2 pb-2"}>

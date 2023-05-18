@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from "react";
 import Gallery from "react-photo-gallery";
 import {IconButton} from "../../button/IconButton";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faDownload, faHeart} from "@fortawesome/free-solid-svg-icons";
+import {faDownload, faHeart, faWandMagicSparkles} from "@fortawesome/free-solid-svg-icons";
 import Carousel, {Modal, ModalGateway} from "react-images";
 import {GalleryModalFooter} from "./GalleryModalFooter";
 import {ReactProps} from "../../../interfaces/ReactProps";
@@ -156,7 +156,10 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
                                                                             style={{width: 25, height: 25}}/>}
                                                      onClick={() => vote(true, index)}
                                          />
-                                         <IconButton icon={<UseAsThemeFlatLogo/>} onClick={() => themeAdd(photos[index]?.data?.id, photos[index]?.src, photos[index]?.data?.style)}/>
+                                         <IconButton icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
+                                                                            style={{width: 25, height: 25}}/>}
+                                                     onClick={() => themeAdd(photos[index]?.data?.id, photos[index]?.src, photos[index]?.data?.style)}
+                                         />
                                          <div className={"absolute right-0 bottom-0 pr-2 pb-2"}>
                                              <div
                                                  className={"sticky text-white font-semibold z-10 text-right flex flex-col text-xs leading-3"}>

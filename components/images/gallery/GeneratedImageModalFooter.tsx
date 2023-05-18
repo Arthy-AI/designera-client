@@ -5,7 +5,7 @@ import {
   faArrowUpRightFromSquare, faCopy,
   faDownload,
   faHeart,
-  faPaperPlane
+  faPaperPlane, faWandMagicSparkles
 } from "@fortawesome/free-solid-svg-icons";
 import {IconButton} from "../../button/IconButton";
 import {AnimatedSimpleInput} from "../../input/AnimatedSimpleInput";
@@ -109,7 +109,8 @@ export const GeneratedImageModalFooter = ({innerProps, isModal, currentIndex}: D
           onClick={() => vote(true)}
         />
         <IconButton
-          icon={<UseAsThemeFlatLogo/>} onClick={() => addImage({ id: photos[currentIndex].id, url: photos[currentIndex].id, style: photos[currentIndex].style })}/>
+          icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
+                                 style={{width: 25, height: 25}}/>} onClick={() => addImage({ id: photos[currentIndex].id, url: photos[currentIndex].id, style: photos[currentIndex].style })}/>
       </div>
     </div>
   ) : null;

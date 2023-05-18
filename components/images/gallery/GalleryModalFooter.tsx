@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   faDownload,
-  faHeart,
+  faHeart, faWandMagicSparkles,
 } from "@fortawesome/free-solid-svg-icons";
 import {IconButton} from "../../button/IconButton";
 import moment from "moment/moment";
@@ -74,7 +74,7 @@ export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicO
           />
           <IconButton
             icon={
-              <UseAsThemeFlatLogo/>
+              <FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"} style={{width: 25, height: 25}}/>
             }
             onClick={() => themeAdd(photos[currentIndex]?.data?.id, photos[currentIndex]?.src, photos[currentIndex]?.data?.style)}
           />
