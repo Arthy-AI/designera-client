@@ -29,7 +29,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
 
   useEffect(() => {
-    if (images.length < 1) return;
+    if (images?.length < 1) return;
 
     const formattedPhotos = images.map((value, index) => {
       return {
@@ -40,14 +40,11 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
           username: value.user.firstName + ' ' + value.user.lastName,
           userAvatar: value.user.id,
           createdAt: value.createdAt,
-          style: value.roomStyle
+          style: value.roomStyle,
+          type: value.roomType
         }
       }
     })
-
-    imagesGlobalStore.dispatch(imagesGlobal.actions.changeCommunityImages({
-      images: [...formattedPhotos]
-    }))
 
     setPhotos(formattedPhotos)
   }, [images]);

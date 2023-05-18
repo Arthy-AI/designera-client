@@ -17,10 +17,14 @@ import {ForceDownload} from "../../../constants/ForceDownload";
 import {UseAsThemeLogo} from "../../../assets/svg/UseAsThemeLogo";
 import useAsTheme from "../../../hooks/themes/useAsTheme";
 import {UseAsThemeFlatLogo} from "../../../assets/svg/UseAsThemeFlatLogo";
+import useAuth from "../../../hooks/auth/useAuth";
+import useSubscription from "../../../hooks/subscription/useSubscription";
 
-export const GeneratedImageModalFooter = ({innerProps, isModal, currentIndex}: DynamicObject) => {
+export const GeneratedImageModalFooter = ({innerProps, isModal, currentIndex}: DynamicObject, closeLB: () => void) => {
   const {addImage} = useAsTheme()
   const {POST, PATCH} = useAxios()
+  const { userData } = useAuth()
+  const { toggleModal: subscriptionToggleModal } = useSubscription()
   const [photos, setPhotos] = useState([] as any[])
   const [publishDescription, setPublishDescription] = useState("")
   const [publisheds, setPublisheds] = useState([] as String[]);
@@ -74,7 +78,12 @@ export const GeneratedImageModalFooter = ({innerProps, isModal, currentIndex}: D
               />
               <button
                   onClick={() => {
-                    publish()
+                    if ((userData?.subscription?.isActive)) {
+                      publish()
+                    } else {
+                      closeLB()
+                      subscriptionToggleModal(true)
+                    }
                   }}
                   disabled={publishDescription.length < 6 || publishDescription.length > 50}
                   className="w-10/12 xl:w-1/12 h-full text-stone-400 p-2 bg-[#3E3E3E] border border-[#6F6B6A] font-semibold hover:text-white designera-rounded ml-2 flex items-center justify-center"

@@ -31,7 +31,7 @@ export default function PrivacyPolicy() {
 
       <div className="flex flex-col justify-center items-center min-h-screen">
         <div
-          className={"group absolute top-28 left-24 flex flex-row items-center cursor-pointer"}
+          className={"group fixed top-28 left-24 flex flex-row items-center cursor-pointer"}
           onClick={() => {
             router.push("/")
           }}>

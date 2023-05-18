@@ -37,7 +37,10 @@ interface ObjMap {
 }
 
 export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu) => {
-    const [profileGalleryTab, setProfileGalleryTab] = useState("Images")
+    const [profileGalleryTab, setProfileGalleryTab] = useState({
+        tab: "Images",
+        trigger: Date.now()
+    })
     const {isOpen: PrivacyPolicyIsOpen, onOpen: PrivacyPolicyOnOpen, onClose: PrivacyPolicyOnClose} = useDisclosure()
     const {isOpen: TermsOfUseIsOpen, onOpen: TermsOfUseOnOpen, onClose: TermsOfUseOnClose} = useDisclosure()
     const [settingsIsOpen, setSettingsIsOpen] = useState(false)
@@ -58,6 +61,21 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
             setMenu(settingsStore.getState())
         })
     }, [])
+
+    useEffect(() => {
+        if (isOpen) {
+            console.log('girdim')
+            let tempProfileGalleryTab = profileGalleryTab
+            tempProfileGalleryTab.trigger = Date.now()
+            setProfileGalleryTab({...tempProfileGalleryTab})
+        }
+    }, [isOpen])
+
+    function changeTab(tab: string) {
+        let tempProfileGalleryTab = profileGalleryTab
+        tempProfileGalleryTab.tab = tab
+        setProfileGalleryTab({...tempProfileGalleryTab})
+    }
 
     function changeMenu(v: string) {
         settingsStore.dispatch(settingsSlice.actions.changeMenu({v: v}))
@@ -147,7 +165,7 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
                                       })
                                   }}
                                   type="file" id="avatar-file-input" style={{ display: 'none' }} />
-                                <div className={'rounded-full border-4 border-gray-600 hover:border-white cursor-pointer'} >
+                                <div className={'rounded-full flex justify-center items-center overflow-hidden w-[116px] h-[116px] border-4 border-gray-600 hover:border-white cursor-pointer'}>
                                   <ImageWithFallback
                                     onClick={() => {
                                       document.getElementById('avatar-file-input')?.click()
@@ -167,7 +185,7 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
                                         {userData?.credits?.length > 0 && userData?.credits[0]?.balance}
                                     </div>
                                     <button
-                                        className="bg-blue-600 designera-rounded p-1 px-3 text-white designera-box-shadow font-semibold">Subscribe
+                                        className="bg-blue-600 designera-rounded p-1 px-3 text-white designera-box-shadow font-semibold transition-colors ease-in-out duration-150 hover:bg-white hover:text-black">Subscribe
                                     </button>
                                 </div>}
                             </div>
@@ -176,23 +194,23 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
                                     <div>
                                         <div className={"flex flex-row justify-center items-center gap-2"}>
                                             <span className={"cursor-pointer font-semibold"}
-                                                  style={{color: profileGalleryTab == "Images" ? "white" : "#333333"}}
+                                                  style={{color: profileGalleryTab.tab == "Images" ? "white" : "#333333"}}
                                                   onClick={() => {
-                                                      setProfileGalleryTab("Images")
+                                                      changeTab("Images")
                                                   }}>
                                                 Images
                                             </span>
                                             <span className={"cursor-pointer font-semibold"}
-                                                  style={{color: profileGalleryTab == "Likes" ? "white" : "#333333"}}
+                                                  style={{color: profileGalleryTab.tab == "Likes" ? "white" : "#333333"}}
                                                   onClick={() => {
-                                                      setProfileGalleryTab("Likes")
+                                                      changeTab("Likes")
                                                   }}>
                                                 Likes
                                             </span>
                                             <span className={"cursor-pointer font-semibold"}
-                                                  style={{color: profileGalleryTab == "Publishes" ? "white" : "#333333"}}
+                                                  style={{color: profileGalleryTab.tab == "Publishes" ? "white" : "#333333"}}
                                                   onClick={() => {
-                                                      setProfileGalleryTab("Publishes")
+                                                      changeTab("Publishes")
                                                   }}>
                                                 Publishes
                                             </span>
@@ -200,7 +218,7 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
                                         <hr className={"bg-stone-400 border-none h-px"}/>
                                     </div>
                                     <div className={"flex flex-row flex-wrap gap-1.5 justify-start"}>
-                                        <SampleProfileGalleryImages tab={profileGalleryTab}/>
+                                        <SampleProfileGalleryImages tab={profileGalleryTab.tab} trigger={profileGalleryTab.trigger}/>
                                     </div>
                                 </>
                                 :

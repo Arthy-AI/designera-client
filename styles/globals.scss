@@ -153,3 +153,7 @@ button:disabled {
 .react-images__pager {
   z-index: 9999;
 }
+
+.alwaysOnTop {
+  z-index: 99999999;
+}

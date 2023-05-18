@@ -9,32 +9,33 @@ import {
 import {SimpleButton} from "../button/SimpleButton";
 import {SubscriptionCards} from "./SubscriptionCards";
 import {useRouter} from "next/router";
+import useSubscription from "../../hooks/subscription/useSubscription";
 
 interface SubscriptionModal extends ReactProps {
-    isOpen: boolean,
-    onOpen: () => void,
-    onClose: () => void,
-    selected: number,
-    onSelect: (index: number) => void,
 }
 
-export const SubscriptionModal = ({children, isOpen, onClose, onOpen, selected, onSelect, ...props}: SubscriptionModal) => {
+export const SubscriptionModal = ({children, ...props}: SubscriptionModal) => {
     const router = useRouter()
+    const { toggleModal, changeSelection, data } = useSubscription()
+
+    function changeSubscription(index: number) {
+        changeSelection(index)
+    }
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose} size={"4xl"}>
+        <Modal isOpen={data.subscriptionModalShow} onClose={() => toggleModal(false)} size={"4xl"}>
             <ModalOverlay/>
             <ModalContent
                 style={{backgroundColor: "transparent", display: "flex", alignItems: "flex-end"}}>
                 <ModalBody>
-                    <SubscriptionCards selected={selected} onSelect={onSelect}/>
+                    <SubscriptionCards selected={data.selectedSubscription} onSelect={changeSubscription}/>
                     <div className={"flex justify-center"}>
                         <SimpleButton
                             text={"Select Plan"}
                             type={"colorless"}
-                            disabled={selected < 1}
+                            disabled={data.selectedSubscription < 1}
                             className={"w-1/2 bg-[#2563eb] hover:bg-white hover:text-black transition-colors ease-in-out duration-150 mt-2"}
-                            onClick={() => { router.replace('/checkout', { query: {selected: selected} }) }}
+                            onClick={() => { router.replace('/checkout', { query: {selected: data.selectedSubscription} }) }}
                         />
                     </div>
                 </ModalBody>

@@ -5,7 +5,7 @@ import {GalleryModalFooter} from "./GalleryModalFooter";
 import {sidemenuSlice, sidemenuStore} from "../../sidemenu/SidemenuToggle";
 import useAuth from '../../../hooks/auth/useAuth';
 
-export const SampleProfileGalleryImages = ({tab}: { tab: string }) => {
+export const SampleProfileGalleryImages = ({tab, trigger}: { tab: string, trigger: number }) => {
     const { userData } = useAuth()
     const [photos, setPhotos] = useState([])
     const [currentImage, setCurrentImage] = useState(0);
@@ -40,7 +40,7 @@ export const SampleProfileGalleryImages = ({tab}: { tab: string }) => {
                 }
             }
         }))
-    }, [tab])
+    }, [tab, trigger])
 
     return (
         <>

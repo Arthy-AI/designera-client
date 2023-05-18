@@ -31,7 +31,7 @@ export default function TermsOfUse() {
 
       <div className="flex flex-col justify-center items-center min-h-screen">
         <div
-          className={"group absolute top-28 left-24 flex flex-row items-center cursor-pointer"}
+          className={"group fixed top-28 left-24 flex flex-row items-center cursor-pointer"}
           onClick={() => {
             router.push("/")
           }}>
@@ -131,7 +131,7 @@ Designera uses "Cookies" to identify the areas of our website that you have visi
 
 Changes To Our Terms & Conditions
 
-You acknowledge and agree that <?=Designera;?> may stop (permanently or temporarily) providing the Service (or any features within the Service) to you or to users generally at <?=Designera;?>’s sole discretion, without prior notice to you. You may stop using the Service at any time. You do not need to specifically inform <?=Designera;?> when you stop using the Service. You acknowledge and agree that if <?=Designera;?> disables access to your account, you may be prevented from accessing the Service, your account details or any files or other materials which is contained in your account.
+You acknowledge and agree that Designera may stop (permanently or temporarily) providing the Service (or any features within the Service) to you or to users generally at Designera’s sole discretion, without prior notice to you. You may stop using the Service at any time. You do not need to specifically inform Designera when you stop using the Service. You acknowledge and agree that if Designera disables access to your account, you may be prevented from accessing the Service, your account details or any files or other materials which is contained in your account.
 
 If we decide to change our Terms & Conditions, we will post those changes on this page, and/or update the Terms & Conditions modification date below.
 

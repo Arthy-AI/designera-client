@@ -21,13 +21,13 @@ interface SampleCommunityGalleryImages extends ReactProps {
 
 export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryImages) => {
     const [photos, setPhotos] = useState([{
-        src: "https://source.unsplash.com/2ShvY8Lf6l0/800x599",
+        src: "",
         width: 4,
         height: 3,
         data: {
-            title: "Placeholder",
-            username: "Username",
-            likes: 0
+            title: "",
+            username: "",
+            likes: null
         }
     }] as any)
     const [currentImage, setCurrentImage] = useState(0);
@@ -49,12 +49,18 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
                         id: image.id,
                         title: image.description,
                         username: image.user.firstName + ' ' + image.user.lastName,
+                        createdAt: image.createdAt,
                         userAvatar: image.user.id,
                         likes: image.upvoteCount,
-                        style: image.roomStyle
+                        style: image.roomStyle,
+                        type: image.roomType
                     }
                 })
             }
+
+            imagesGlobalStore.dispatch(imagesGlobal.actions.changeCommunityImages({
+                images: [...data]
+            }))
 
             setPhotos([...data])
         }
@@ -101,7 +107,7 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
         <div>
             <Gallery photos={photos} direction={"column"} margin={5}
                      renderImage={({index, left, top, photo}) => {
-                         return (
+                         return photo.src ? (
                              <div key={index}
                                  onClick={(e: any) => {
                                      if ([...e.target.classList].includes("black-zone")) return openLightbox(e, {
@@ -168,7 +174,7 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
                                      </div>
                                  </div>
                              </div>
-                         )
+                         ) : <div/>
                      }}/>
             { /* @ts-ignore */}
             <ModalGateway>

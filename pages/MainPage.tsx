@@ -44,12 +44,14 @@ import {ForceDownload} from "../constants/ForceDownload";
 import {imagesGlobal, imagesGlobalStore} from "../globals/images/images";
 import useAsTheme from "../hooks/themes/useAsTheme";
 import {UseAsThemeFlatLogo} from "../assets/svg/UseAsThemeFlatLogo";
+import {SubscriptionModal} from "../components/subscription/SubscriptionModal";
+import useSubscription from "../hooks/subscription/useSubscription";
 
 export default function MainPage() {
   const {GET, FILEPOST, POST, PATCH} = useAxios()
-  const {userData, decrementCreditBalance} = useAuth()
+  const {userData, decrementCreditBalance, isLoggedIn, toggleModal, changeSection} = useAuth()
   const {themes, addImage, removeImage} = useAsTheme()
-  const {isLoggedIn, toggleModal, changeSection} = useAuth()
+  const { toggleModal: subscriptionToggleModal } = useSubscription()
   const [galleryOrderBy, setGalleryOrderBy] = useState(0);
   const [themeSelectToggle, setThemeSelectToggle] = useState(false);
   const [loaderShow, setLoaderShow] = useState(false);
@@ -70,6 +72,7 @@ export default function MainPage() {
 
   // IMAGE FILTER
   const [images, setImages] = useState([] as any[]);
+  const [recentImages, setRecentImages] = useState([] as any[]);
   const [loadingImages, setLoadingImages] = useState(false);
   const [search, setSearch] = useState("");
   const [searchTemp, setSearchTemp] = useState("");
@@ -101,8 +104,10 @@ export default function MainPage() {
   useEffect(() => {
     async function fetchImages() {
       setLoadingImages(true)
-      let data = await GET("image/filter", paginationData)
+      let recentImagesResponse = await GET("image/filter", { query: null, pageIndex: 0, pageSize: 6, orderBy: "createdAt" })
+      setRecentImages(recentImagesResponse.items)
 
+      let data = await GET("image/filter", paginationData)
       let newImages = [...(images), ...(data.items)]
       setImages([...newImages])
       setLoadingImages(false)
@@ -251,6 +256,10 @@ export default function MainPage() {
     } catch (err) {
       toast.error("Can not upscale.")
     }
+  }
+
+  function closeLB() {
+    closeLightbox()
   }
 
   return (
@@ -402,7 +411,7 @@ export default function MainPage() {
                         <div className={"flex flex-row gap-3"}>
                           {!userData.subscription &&
                               <div
-                                  className={"flex flex-row bg-stone-700 text-white designera-rounded designera-box-shadow items-center justify-center gap-2 p-2 h-16 w-24"}>
+                                  className={"flex flex-row bg-stone-700 text-white designera-rounded designera-box-shadow items-center justify-center gap-2 p-2 h-16 w-fit"}>
                                   <div
                                       className="flex justify-center items-center font-bold text-4xl select-none">
                                       <span
@@ -526,7 +535,11 @@ export default function MainPage() {
                                 />
                                 <button
                                     onClick={() => {
-                                      publish()
+                                      if ((userData?.subscription?.isActive)) {
+                                        publish()
+                                      } else {
+                                        subscriptionToggleModal(true)
+                                      }
                                     }}
                                     disabled={publishDescription.length < 6 || publishDescription.length > 50}
                                     className="xl:w-1/12 block text-stone-400 p-2 bg-[#1E1E1E] hover:bg-[#242424] focus:bg-[#242424] opacity-90 border border-[#6F6B6A] font-semibold hover:text-white designera-rounded ml-2 flex items-center justify-center"
@@ -570,7 +583,7 @@ export default function MainPage() {
                     :
                     <div className={"h-full"}>
                       <div className={"h-full hidden md:block"}>
-                        <SampleRecentGalleryImages images={images}/>
+                        <SampleRecentGalleryImages images={recentImages}/>
                       </div>
                       <div
                         className={"w-full h-96 flex items-center justify-center font-semibold bg-stone-600 designera-rounded text-white md:hidden"}>
@@ -645,7 +658,7 @@ export default function MainPage() {
               ]}
               components={{
                 // @ts-ignore
-                Footer: GeneratedImageModalFooter
+                Footer: (props, context) => GeneratedImageModalFooter(props, closeLB)
               }}
             />
           </Modal>
@@ -653,6 +666,7 @@ export default function MainPage() {
       </ModalGateway>
 
       <AuthModal/>
+      <SubscriptionModal/>
       <Toaster containerStyle={{zIndex: 999999}} toastOptions={{ style: { backgroundColor: "#2F2F2F", color: "#fff" } }}/>
     </main>
   );
