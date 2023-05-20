@@ -7,6 +7,12 @@
 @import "/assets/fonts/Fonts";
 @import "react-tooltip/dist/react-tooltip.css";
 
+*,
+::before,
+::after {
+  box-sizing: border-box !important;
+}
+
 html,
 body {
   padding: 0;
@@ -91,6 +97,10 @@ input::placeholder {
   border-radius: 10px;
 }
 
+.designera-rounded-2 {
+  border-radius: 20px;
+}
+
 .react-photo-gallery--gallery > div > img {
   border-radius: 10px;
 }
@@ -155,5 +165,23 @@ button:disabled {
 }
 
 .alwaysOnTop {
-  z-index: 99999999;
+  z-index: 9999;
+}
+
+.icon-button:hover {
+  background-color: rgba(16, 16, 16, 0.75) !important;
+
+  * {
+    fill: #ffffff;
+  }
+}
+
+.svg-change:hover {
+  * {
+    fill: #ffffff;
+  }
+}
+
+.chakra-modal__overlay {
+  background-color: rgba(0, 0, 0, 0.70) !important;
 }

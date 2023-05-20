@@ -148,15 +148,15 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
                                          />
                                      </div>
                                      <div className={"black-zone flex flex-col w-1/2 items-end gap-0.5 md:gap-4"}>
-                                         <IconButton icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
+                                         <IconButton description={"Download"} icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
                                                                             style={{width: 25, height: 25}}/>}
                                                      onClick={() => ForceDownload(photos[index]?.src, "designera-" + photos[index]?.data?.id)}
                                          />
-                                         <IconButton icon={<FontAwesomeIcon icon={faHeart} color={"#AAA7A5"} size={"xl"}
+                                         <IconButton description={"Like"} icon={<FontAwesomeIcon icon={faHeart} color={"#AAA7A5"} size={"xl"}
                                                                             style={{width: 25, height: 25}}/>}
                                                      onClick={() => vote(true, index)}
                                          />
-                                         <IconButton icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
+                                         <IconButton description={"Copy Style"} icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
                                                                             style={{width: 25, height: 25}}/>}
                                                      onClick={() => themeAdd(photos[index]?.data?.id, photos[index]?.src, photos[index]?.data?.style)}
                                          />
@@ -169,7 +169,7 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
                                              </div>
                                              <div className={"black-zone absolute w-60 h-32 bottom-0 right-0 z-0"}
                                                   style={{
-                                                      backgroundImage: 'url("https://media.discordapp.net/attachments/551764588136497152/1062682746914349098/Rectangle_9.png")',
+                                                      backgroundImage: 'url("/assets/images/Rectangle_9.png")',
                                                       backgroundSize: "cover"
                                                   }}/>
                                          </div>

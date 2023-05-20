@@ -1,5 +1,5 @@
 import {ReactProps} from "../../interfaces/ReactProps";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {DesigneraLogo} from "../../assets/svg/DesigneraLogo";
 import {Sidemenu} from "../sidemenu/Sidemenu";
 import {useDisclosure} from "@chakra-ui/react";
@@ -29,13 +29,16 @@ export const Header = ({children, ...props}: ReactProps) => {
               onClick={() => {
                 SidemenuOnOpen()
               }}>
-              <ImageWithFallback
-                alt={"Avatar"}
-                width={36}
-                height={36}
-                src={`https://cdn.designera.app/avatar/${userData.id}`}
-                fallbackUrl={"/assets/images/unknown.png"}
-              />
+              {
+                userData.id &&
+                <ImageWithFallback
+                  alt={"Avatar"}
+                  width={36}
+                  height={36}
+                  src={`https://cdn.designera.app/avatar/${userData.id}`}
+                  fallbackUrl={"/assets/images/unknown.png"}
+                />
+              }
             </div> :
             <button className="text-white font-semibold select-none" onClick={() => {
               changeSection("login");

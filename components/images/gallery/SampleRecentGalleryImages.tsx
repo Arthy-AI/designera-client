@@ -41,7 +41,9 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
           userAvatar: value.user.id,
           createdAt: value.createdAt,
           style: value.roomStyle,
-          type: value.roomType
+          type: value.roomType,
+          referenceId: value.referenceId,
+          referenceToggle: false
         }
       }
     })
@@ -92,6 +94,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                   <div className="bg-stone-400 designera-rounded relative overflow-hidden" style={{
                     backgroundImage: `url("${photos[0]?.src || ""}")`,
                     backgroundSize: "cover",
+                    backgroundPosition: "center",
                     height: "45%"
                   }}>
                       <div
@@ -122,15 +125,15 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                               />
                           </div>
                           <div className={"black-zone flex flex-col w-1/2 items-end gap-4"}>
-                              <IconButton icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Download"} icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => ForceDownload(photos[0]?.src, "designera-" + photos[0]?.data?.id)}
                               />
-                              <IconButton icon={<FontAwesomeIcon icon={faHeart} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Like"} icon={<FontAwesomeIcon icon={faHeart} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => vote(true, 0)}
                               />
-                              <IconButton icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Copy Style"} icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => themeAdd(photos[0]?.data?.id, photos[0]?.src, photos[0]?.data?.style)}
                               />
@@ -145,7 +148,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                                   className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[0]?.data?.createdAt))?.valueOf()).format(`D [Days], H [Hours], m [Minutes], s [Seconds]`)} Ago</small>
                           </div>
                           <div className={"black-zone absolute w-60 h-32 right-0 z-0"} style={{
-                            backgroundImage: 'url("https://media.discordapp.net/attachments/551764588136497152/1062682746914349098/Rectangle_9.png")',
+                            backgroundImage: 'url("/assets/images/Rectangle_9.png")',
                             backgroundSize: "cover",
                             bottom: -13
                           }}/>
@@ -154,6 +157,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                   <div className="bg-stone-400 designera-rounded relative overflow-hidden" style={{
                     backgroundImage: `url("${photos[1]?.src || ""}")`,
                     backgroundSize: "cover",
+                    backgroundPosition: "center",
                     height: "55%"
                   }}>
                       <div
@@ -184,15 +188,15 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                               />
                           </div>
                           <div className={"black-zone flex flex-col w-1/2 items-end gap-4"}>
-                              <IconButton icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Download"} icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => ForceDownload(photos[1]?.src, "designera-" + photos[1]?.data?.id)}
                               />
-                              <IconButton icon={<FontAwesomeIcon icon={faHeart} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Like"} icon={<FontAwesomeIcon icon={faHeart} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => vote(true, 1)}
                               />
-                              <IconButton icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Copy Style"} icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => themeAdd(photos[1]?.data?.id, photos[1]?.src, photos[1]?.data?.style)}
                               />
@@ -207,7 +211,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                                   className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[1]?.data?.createdAt))?.valueOf()).format(`D [Days], H [Hours], m [Minutes], s [Seconds]`)} Ago</small>
                           </div>
                           <div className={"black-zone absolute w-60 h-32 right-0 z-0"} style={{
-                            backgroundImage: 'url("https://media.discordapp.net/attachments/551764588136497152/1062682746914349098/Rectangle_9.png")',
+                            backgroundImage: 'url("/assets/images/Rectangle_9.png")',
                             backgroundSize: "cover",
                             bottom: -13
                           }}/>
@@ -220,6 +224,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                   <div className="bg-stone-400 designera-rounded relative overflow-hidden" style={{
                     backgroundImage: `url("${photos[2]?.src || ""}")`,
                     backgroundSize: "cover",
+                    backgroundPosition: "center",
                     height: "55%"
                   }}>
                       <div
@@ -250,15 +255,15 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                               />
                           </div>
                           <div className={"black-zone flex flex-col w-1/2 items-end gap-4"}>
-                              <IconButton icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Download"} icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => ForceDownload(photos[2]?.src, "designera-" + photos[2]?.data?.id)}
                               />
-                              <IconButton icon={<FontAwesomeIcon icon={faHeart} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Like"} icon={<FontAwesomeIcon icon={faHeart} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => vote(true, 2)}
                               />
-                              <IconButton icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Copy Style"} icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => themeAdd(photos[2]?.data?.id, photos[2]?.src, photos[2]?.data?.style)}
                               />
@@ -273,7 +278,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                                   className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[2]?.data?.createdAt))?.valueOf()).format(`D [Days], H [Hours], m [Minutes], s [Seconds]`)} Ago</small>
                           </div>
                           <div className={"black-zone absolute w-60 h-32 right-0 z-0"} style={{
-                            backgroundImage: 'url("https://media.discordapp.net/attachments/551764588136497152/1062682746914349098/Rectangle_9.png")',
+                            backgroundImage: 'url("/assets/images/Rectangle_9.png")',
                             backgroundSize: "cover",
                             bottom: -13
                           }}/>
@@ -282,6 +287,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                   <div className="bg-stone-400 designera-rounded relative overflow-hidden" style={{
                     backgroundImage: `url("${photos[3]?.src || ""}")`,
                     backgroundSize: "cover",
+                    backgroundPosition: "center",
                     height: "45%"
                   }}>
                       <div
@@ -312,15 +318,15 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                               />
                           </div>
                           <div className={"black-zone flex flex-col w-1/2 items-end gap-4"}>
-                              <IconButton icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Download"} icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => ForceDownload(photos[3]?.src, "designera-" + photos[3]?.data?.id)}
                               />
-                              <IconButton icon={<FontAwesomeIcon icon={faHeart} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Like"} icon={<FontAwesomeIcon icon={faHeart} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => vote(true, 3)}
                               />
-                              <IconButton icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Copy Style"} icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => themeAdd(photos[3]?.data?.id, photos[3]?.src, photos[3]?.data?.style)}
                               />
@@ -335,7 +341,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                                   className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[3]?.data?.createdAt))?.valueOf()).format(`D [Days], H [Hours], m [Minutes], s [Seconds]`)} Ago</small>
                           </div>
                           <div className={"black-zone absolute w-60 h-32 right-0 z-0"} style={{
-                            backgroundImage: 'url("https://media.discordapp.net/attachments/551764588136497152/1062682746914349098/Rectangle_9.png")',
+                            backgroundImage: 'url("/assets/images/Rectangle_9.png")',
                             backgroundSize: "cover",
                             bottom: -13
                           }}/>
@@ -348,6 +354,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                   <div className="bg-stone-400 designera-rounded relative overflow-hidden" style={{
                     backgroundImage: `url("${photos[4]?.src || ""}")`,
                     backgroundSize: "cover",
+                    backgroundPosition: "center",
                     height: "45%"
                   }}>
                       <div
@@ -378,15 +385,15 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                               />
                           </div>
                           <div className={"black-zone flex flex-col w-1/2 items-end gap-4"}>
-                              <IconButton icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Download"} icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => ForceDownload(photos[4]?.src, "designera-" + photos[4]?.data?.id)}
                               />
-                              <IconButton icon={<FontAwesomeIcon icon={faHeart} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Like"} icon={<FontAwesomeIcon icon={faHeart} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => vote(true, 4)}
                               />
-                              <IconButton icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Copy Style"} icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => themeAdd(photos[4]?.data?.id, photos[4]?.src, photos[4]?.data?.style)}
                               />
@@ -401,7 +408,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                                   className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[4]?.data?.createdAt))?.valueOf()).format(`D [Days], H [Hours], m [Minutes], s [Seconds]`)} Ago</small>
                           </div>
                           <div className={"black-zone absolute w-60 h-32 right-0 z-0"} style={{
-                            backgroundImage: 'url("https://media.discordapp.net/attachments/551764588136497152/1062682746914349098/Rectangle_9.png")',
+                            backgroundImage: 'url("/assets/images/Rectangle_9.png")',
                             backgroundSize: "cover",
                             bottom: -13
                           }}/>
@@ -410,6 +417,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                   <div className="bg-stone-400 designera-rounded relative overflow-hidden" style={{
                     backgroundImage: `url("${photos[5]?.src || ""}")`,
                     backgroundSize: "cover",
+                    backgroundPosition: "center",
                     height: "55%"
                   }}>
                       <div
@@ -440,15 +448,15 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                               />
                           </div>
                           <div className={"black-zone flex flex-col w-1/2 items-end gap-4"}>
-                              <IconButton icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Download"} icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => ForceDownload(photos[5]?.src, "designera-" + photos[5]?.data?.id)}
                               />
-                              <IconButton icon={<FontAwesomeIcon icon={faHeart} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Like"} icon={<FontAwesomeIcon icon={faHeart} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => vote(true, 5)}
                               />
-                              <IconButton icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Copy Style"} icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => themeAdd(photos[5]?.data?.id, photos[5]?.src, photos[5]?.data?.style)}
                               />
@@ -463,7 +471,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                                   className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[5]?.data?.createdAt))?.valueOf()).format(`D [Days], H [Hours], m [Minutes], s [Seconds]`)} Ago</small>
                           </div>
                           <div className={"black-zone absolute w-60 h-32 right-0 z-0"} style={{
-                            backgroundImage: 'url("https://media.discordapp.net/attachments/551764588136497152/1062682746914349098/Rectangle_9.png")',
+                            backgroundImage: 'url("/assets/images/Rectangle_9.png")',
                             backgroundSize: "cover",
                             bottom: -13
                           }}/>

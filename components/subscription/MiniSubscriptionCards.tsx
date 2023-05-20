@@ -23,7 +23,7 @@ export const MiniSubscriptionCards = ({children, selected, onSelect, ...props}: 
                 <div className={"SubscriptionThumbnailContainer relative my-10"}>
                     <div className={"relative w-full h-36 bg-[#414141] z-20 rounded-3xl p-4"}>
                         <img
-                            src="https://media.discordapp.net/attachments/551764588136497152/1060558899612221542/Interior-vector_1.png"/>
+                            src="/assets/images/Interior-vector_1.png"/>
                     </div>
                     <div className={"top-0 absolute w-full h-36 bg-[#69343F] z-10 rounded-3xl"}
                          style={{zIndex: 2, rotate: "-15deg"}}>
@@ -66,7 +66,7 @@ export const MiniSubscriptionCards = ({children, selected, onSelect, ...props}: 
                     <div
                         className={"relative w-full h-36 bg-[#414141] z-20 rounded-3xl flex justify-center items-center"}>
                         <img
-                            src="https://media.discordapp.net/attachments/551764588136497152/1060558899033411665/Interior-vector_2.png"/>
+                            src="/assets/images/Interior-vector_2.png"/>
                     </div>
                     <div className={"top-0 absolute w-full h-36 bg-[#7A673D] z-10 rounded-3xl"}
                          style={{zIndex: 2, rotate: "-15deg"}}>
@@ -109,7 +109,7 @@ export const MiniSubscriptionCards = ({children, selected, onSelect, ...props}: 
                     <div
                         className={"relative w-full h-36 bg-[#414141] z-20 rounded-3xl flex justify-center items-center"}>
                         <img
-                            src="https://cdn.discordapp.com/attachments/551764588136497152/1060558898613977148/Interior-vector_3.png"/>
+                            src="/assets/images/Interior-vector_3.png"/>
                     </div>
                     <div className={"top-0 absolute w-full h-36 bg-[#767B52] z-10 rounded-3xl"}
                          style={{zIndex: 2, rotate: "-15deg"}}>

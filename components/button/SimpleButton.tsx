@@ -24,8 +24,7 @@ export const SimpleButton = ({children, text, type, className, disabled, onClick
         <button
             type={"submit"}
             disabled={disabled}
-            style={{backgroundColor: colors[type]}}
-            className={`${!className?.includes("h-") ? "h-12" : ""} ${!className?.includes("w-") ? "w-full" : ""} flex items-center justify-center text-white font-bold designera-rounded designera-box-shadow transition-colors ease-in-out duration-150 hover:bg-white hover:text-black ${className}`}
+            className={`${!className?.includes("h-") ? "h-12" : ""} ${!className?.includes("w-") ? "w-full" : ""} bg-[${colors[type]}] flex items-center justify-center text-white font-bold designera-rounded designera-box-shadow transition-colors ease-in-out duration-150 hover:bg-white hover:text-black ${className}`}
             onClick={(e) => {
                 return onClick && onClick(e)
             }}

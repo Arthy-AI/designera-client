@@ -258,7 +258,7 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
                     <DrawerFooter style={{justifyContent: "center"}}>
                         <div className={"w-full flex flex-col justify-center font-semibold items-center"}>
                             { !userData?.subscription && <div className={"w-full flex flex-row justify-center"}>
-                                <SimpleButton type={"colorless"} text={"Apply Promo Code"} className={"mb-4 bg-[#FF8924] w-4/5"}
+                                <SimpleButton type={"primary"} text={"Apply Promo Code"} className={"w-4/5 text-sm h-fit w-fit p-2"}
                                     onClick={() => { router.replace('/apply-promo-code') }}
                                 />
                             </div>

@@ -11,6 +11,7 @@ import {
   faUpRightAndDownLeftFromCenter, faArrowsRotate
 } from "@fortawesome/free-solid-svg-icons";
 import {Tooltip as ReactTooltip} from "react-tooltip";
+import * as Scroll from 'react-scroll';
 
 import {Heading} from "../components/heading/Heading";
 import {Small} from "../components/text/small/Small";
@@ -120,6 +121,12 @@ export default function MainPage() {
   useEffect(() => {
     dispatch(authGlobalInitiate({}))
     setStyleSuggestionPills(ShuffleArray(styleSuggestionPills))
+
+    Scroll.Events.scrollEvent.register("end", (to, element) => {
+      console.log(to, element)
+    })
+
+    Scroll.scrollSpy.update()
   }, []);
 
   useEffect(() => {
@@ -325,13 +332,13 @@ export default function MainPage() {
                                    }}
                                    className={"placeholder-white"}/>
                       <button
-                        className="bg-[#3E3E3E] text-stone-400 p-2.5 font-semibold hover:text-white border border-stone-500 designera-rounded ml-2 flex items-center justify-center"
-                        style={{height: 42, width: 42}}
+                        className="svg-change bg-[#3E3E3E] text-stone-400 font-semibold hover:text-white border border-stone-500 designera-rounded ml-1.5 flex justify-center items-center"
+                        style={{minHeight: "42px", minWidth: "42px"}}
                         onClick={() => {
                           setThemeSelectToggle(!themeSelectToggle);
                         }}
                       >
-                        <FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"} style={{width: 25, height: 25}}/>
+                        <FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xs"} style={{width: 25, height: 25}}/>
                       </button>
                     </div>
                     {themeSelectToggle ? (
@@ -409,7 +416,7 @@ export default function MainPage() {
                   <div>
                     {isLoggedIn ?
                       (
-                        <div className={"flex flex-row gap-3"}>
+                        <div className={"flex flex-row gap-2"}>
                           {!userData.subscription &&
                               <div
                                   className={"flex flex-row bg-stone-700 text-white designera-rounded designera-box-shadow items-center justify-center gap-2 p-2 h-16 w-fit"}>
@@ -479,21 +486,25 @@ export default function MainPage() {
                               <div
                                   className={"w-fit flex flex-row items-start justify-center sm:w-full md:justify-start md:flex-col md:items-end gap-4 p-4"}>
                                   <IconButton
+                                      description={"Download"}
                                       icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"}
                                                              size={"xl"}
                                                              style={{width: 25, height: 25}}/>} onClick={() => {
                                     ForceDownload(selectedResult.url, "designera-" + selectedResult.id)
                                   }}/>
                                   <IconButton
+                                      description={"Like"}
                                       icon={<FontAwesomeIcon icon={faHeart} color={"#AAA7A5"}
                                                              size={"xl"}
                                                              style={{width: 25, height: 25}}/>} onClick={() => {
                                     vote(true)
                                   }}/>
                                   <IconButton
+                                      description={"Copy Style"}
                                       icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
                                                              style={{width: 25, height: 25}}/>} onClick={() => addImage({ id: selectedResult.id, url: selectedResult.id, style: roomStyle })}/>
                                   <IconButton
+                                      description={"Upscale"}
                                       icon={<FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter}
                                                              color={"#AAA7A5"} size={"xl"}
                                                              style={{width: 25, height: 25}}/>}
@@ -502,6 +513,7 @@ export default function MainPage() {
                                       }}
                                   />
                                   <IconButton
+                                      description={"Regenerate"}
                                       icon={<FontAwesomeIcon icon={faArrowsRotate}
                                                              color={"#AAA7A5"} size={"xl"}
                                                              style={{width: 25, height: 25}}/>}
@@ -510,6 +522,7 @@ export default function MainPage() {
                                       }}
                                   />
                                   <IconButton
+                                      description={"Create Variants"}
                                       icon={<FontAwesomeIcon icon={faCopy} color={"#AAA7A5"}
                                                              size={"xl"}
                                                              style={{width: 25, height: 25}}/>}
@@ -527,7 +540,7 @@ export default function MainPage() {
                             <div className={"w-11/12 xl:w-2/3 flex justify-center"}>
                                 <AnimatedSimpleInput
                                     labelText={"Give your design a name"}
-                                    className={"w-10/12 xl:w-11/12"}
+                                    className={"w-8/12 xl:w-9/12"}
                                     labelClassname={"ml-5 text-white text-base"}
                                     inputClassname={"bg-[#1E1E1E] hover:bg-[#242424] focus:bg-[#242424] opacity-90 pl-7 pt-6"}
                                     value={publishDescription}
@@ -535,7 +548,14 @@ export default function MainPage() {
                                       setPublishDescription(text)
                                     }}
                                 />
+                                <ReactTooltip
+                                    anchorId={"publishButton"}
+                                    place="top"
+                                    content={"Publish"}
+                                    delayShow={500}
+                                />
                                 <button
+                                    id={"publishButton"}
                                     onClick={() => {
                                       if ((userData?.subscription?.isActive)) {
                                         publish()
@@ -547,14 +567,14 @@ export default function MainPage() {
                                     className="xl:w-1/12 block text-stone-400 p-2 bg-[#1E1E1E] hover:bg-[#242424] focus:bg-[#242424] opacity-90 border border-[#6F6B6A] font-semibold hover:text-white designera-rounded ml-2 flex items-center justify-center"
                                     style={{height: 56, width: 56}}
                                 >
-                                    <FontAwesomeIcon icon={faPaperPlane} color={"#AAA7A5"} size={"xl"} style={{ paddingRight: 2 }}/>
+                                    <FontAwesomeIcon icon={faPaperPlane} color={"#AAA7A5"} style={{ paddingRight: 2, height: 30, width: 30 }}/>
                                 </button>
                             </div>
                         }
                         <div
                           className={"w-full overflow-x-scroll xl:overflow-x-hidden xl:flex xl:justify-center"}>
                           <div
-                            className="px-4 w-fit flex flex-row flex-nowrap justify-between my-2 gap-3 xl:px-0 xl:w-11/12 2xl:w-2/3">
+                            className="px-4 w-fit flex flex-row flex-nowrap justify-center my-2 gap-1.5 xl:px-0 xl:w-11/12 2xl:w-2/3">
 
                             {resultData.images && [resultData.referenceId, ...resultData.images].map((v, i) => {
                               return (

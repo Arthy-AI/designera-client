@@ -56,15 +56,16 @@ export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicO
   return isModal ? (
     <div {...innerProps}>
       <div
-        className={"absolute alwaysOnTop left-0 top-5 sm:bottom-12 pl-5 pb-5 gap-4 items-end"}>
-        <div className={"flex items-end flex-row flex-wrap gap-4 h-full"}>
-          <IconButton icon={
+        className={"absolute alwaysOnTop left-0 top-5 sm:top-auto sm:bottom-0 pl-2 pb-2 gap-4 items-end h-fit"}>
+        <div className={"flex items-end flex-row flex-wrap gap-4"}>
+          <IconButton description={"Download"} icon={
             <FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
                              style={{width: 25, height: 25}}
                              onClick={() => ForceDownload(photos[currentIndex]?.src, "designera-" + photos[currentIndex]?.data?.id)}/>
           }
           />
           <IconButton
+            description={"Like"}
             icon={
               <FontAwesomeIcon icon={faHeart} color={"#AAA7A5"} size={"xl"} style={{width: 25, height: 25}}/>
             }
@@ -73,6 +74,7 @@ export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicO
             }}
           />
           <IconButton
+            description={"Copy Style"}
             icon={
               <FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"} style={{width: 25, height: 25}}/>
             }
@@ -88,15 +90,18 @@ export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicO
         <div className={"mb-1"}>
           <IconButton
             icon={
+              photos[currentIndex]?.data?.userAvatar ?
               <div className={"overflow-hidden designera-rounded"}>
-                <Image
+                <ImageWithFallback
                   width={50}
                   height={50}
                   src={`https://cdn.designera.app/avatar/${photos[currentIndex]?.data?.userAvatar}`}
                   alt={photos[currentIndex]?.data?.userAvatar || "No info found"}
                   style={{objectFit: 'contain'}}
+                  fallbackUrl={"/assets/images/unknown.png"}
                 />
               </div>
+              : <div className={'hidden'}></div>
             }
             className={"p-0.5"}
           />
@@ -110,7 +115,7 @@ export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicO
             className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[currentIndex]?.data?.createdAt))?.valueOf()).format(`D [Days], H [Hours], m [Minutes], s [Seconds]`, {trim: "both"})} Ago</small>
         </div>
         <div className={"absolute w-60 h-32 bottom-0 right-0 z-0"} style={{
-          backgroundImage: 'url("https://media.discordapp.net/attachments/551764588136497152/1062682746914349098/Rectangle_9.png")',
+          backgroundImage: 'url("/assets/images/Rectangle_9.png")',
           backgroundSize: "cover",
           rotate: "-10deg",
           bottom: -20,
