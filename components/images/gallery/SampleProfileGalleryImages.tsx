@@ -4,10 +4,12 @@ import Carousel, {Modal, ModalGateway} from "react-images";
 import {GalleryModalFooter} from "./GalleryModalFooter";
 import {sidemenuSlice, sidemenuStore} from "../../sidemenu/SidemenuToggle";
 import useAuth from '../../../hooks/auth/useAuth';
+import {ProfileImagesGalleryModalFooter} from "./ProfileImagesGalleryModalFooter";
 
 export const SampleProfileGalleryImages = ({tab, trigger}: { tab: string, trigger: number }) => {
     const { userData } = useAuth()
     const [photos, setPhotos] = useState([])
+    const [lightboxPhotos, setLightboxPhotos] = useState([])
     const [currentImage, setCurrentImage] = useState(0);
     const [viewerIsOpen, setViewerIsOpen] = useState(false);
 
@@ -36,11 +38,38 @@ export const SampleProfileGalleryImages = ({tab, trigger}: { tab: string, trigge
                     username: undefined,
                     userAvatar: undefined,
                     createdAt: value.createdAt,
-                    style: value.roomStyle
+                    style: value.roomStyle,
+                    referenceId: value.referenceId,
+                    referenceToggle: false
                 }
             }
         }))
     }, [tab, trigger])
+
+    useEffect(() => {
+        console.log(userData)
+
+        setLightboxPhotos((tab == `Likes` ? userData?.upvotedImages : userData?.images as any[])?.filter((v: any) =>
+          tab == `Images` ? !v.description :
+            tab == `Publishes` ? v.description :
+              true
+        ).map((value: any, index: number) => {
+            return {
+                src: `https://cdn.designera.app/${value.id?.includes("reference") ? "reference" : "generated"}/${value.id.split("|")[0]}` ,
+                data: {
+                    id: value.id,
+                    title: value.description,
+                    username: undefined,
+                    userAvatar: undefined,
+                    createdAt: value.createdAt,
+                    style: value.roomStyle,
+                    type: value.roomType,
+                    referenceId: value.referenceId,
+                    referenceToggle: false
+                }
+            }
+        }))
+    }, [userData, tab])
 
     return (
         <>
@@ -67,10 +96,10 @@ export const SampleProfileGalleryImages = ({tab, trigger}: { tab: string, trigge
                         <Carousel
                             currentIndex={currentImage}
                             // @ts-ignore
-                            views={photos}
+                            views={lightboxPhotos}
                             components={{
                                 // @ts-ignore
-                                Footer: GalleryModalFooter
+                                Footer: (props, context) => ProfileImagesGalleryModalFooter(props, tab)
                             }}
                         />
                     </Modal>

@@ -29,12 +29,14 @@ export const IconButton = ({children, icon, className, description, onClick, ...
         >
             {icon || "-"}
         </button>
-        <ReactTooltip
-          anchorId={String(random)}
-          place="left"
-          content={description || "Placeholder"}
-          delayShow={500}
-        />
+        { description &&
+          <ReactTooltip
+            anchorId={String(random)}
+            place="left"
+            content={description || "Placeholder"}
+            delayShow={500}
+          />
+        }
       </>
     )
 }

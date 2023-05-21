@@ -31,6 +31,10 @@ const authGlobal = createSlice({
       let {status} = action.payload;
       state.modalShow = status
     },
+    changeProfileImageByIndex: (state, action) => {
+      let {image, index, type} = action.payload;
+      state.userData[type][index] = image;
+    },
     decrementCreditBalance: (state, action) => {
       state.userData.credits[0].balance -= 1
     }

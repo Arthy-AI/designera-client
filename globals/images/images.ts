@@ -6,6 +6,7 @@ const imagesGlobal = createSlice({
     communityImages: [] as any[],
     generatedImages: [] as any[],
     profileImages: [] as any[],
+    recentImages: [] as any[],
     themes: [] as any[]
   },
   reducers: {
@@ -20,6 +21,18 @@ const imagesGlobal = createSlice({
     changeProfileImages: (state, action) => {
       let {images} = action.payload;
       state.profileImages = [...images]
+    },
+    changeRecentImages: (state, action) => {
+      let {images} = action.payload;
+      state.recentImages = [...images];
+    },
+    changeRecentImageByIndex: (state, action) => {
+      let {image, index} = action.payload;
+      state.recentImages[index] = image;
+    },
+    changeCommunityImageByIndex: (state, action) => {
+      let {image, index} = action.payload;
+      state.communityImages[index] = image;
     },
     addTheme: (state, action) => {
       let {image} = action.payload;

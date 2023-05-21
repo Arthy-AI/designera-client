@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-  faDownload, faEye,
-  faHeart, faWandMagicSparkles,
+  faDownload,
+  faHeart, faWandMagicSparkles, faEye
 } from "@fortawesome/free-solid-svg-icons";
 import {IconButton} from "../../button/IconButton";
 import moment from "moment/moment";
@@ -12,21 +12,18 @@ import {ImageWithFallback} from "../ImageWithFallback";
 import {ForceDownload} from "../../../constants/ForceDownload";
 import {useAxios} from "../../../hooks/useAxios";
 import toast from "react-hot-toast";
-import {UseAsThemeLogo} from "../../../assets/svg/UseAsThemeLogo";
 import useAsTheme from "../../../hooks/themes/useAsTheme";
-import Image from 'next/image';
-import {UseAsThemeFlatLogo} from "../../../assets/svg/UseAsThemeFlatLogo";
 
-export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicObject) => {
+export const RecentImagesGalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicObject) => {
   const [photos, setPhotos] = useState([] as any[])
   const {addImage} = useAsTheme()
   const {PATCH} = useAxios()
 
   useEffect(() => {
-    setPhotos(imagesGlobalStore.getState().communityImages)
+    setPhotos(imagesGlobalStore.getState().recentImages)
 
     imagesGlobalStore.subscribe(() => {
-      setPhotos(imagesGlobalStore.getState().communityImages)
+      setPhotos(imagesGlobalStore.getState().recentImages)
     })
   }, []);
 
@@ -76,7 +73,8 @@ export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicO
           <IconButton
             description={"Copy Style"}
             icon={
-              <FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"} style={{width: 25, height: 25}}/>
+              <FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
+                               style={{width: 25, height: 25}}/>
             }
             onClick={() => themeAdd(photos[currentIndex]?.data?.id, photos[currentIndex]?.src, photos[currentIndex]?.data?.style)}
           />
@@ -93,7 +91,7 @@ export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicO
             }
             onClick={() => {
               if (photos[currentIndex]?.src?.includes("generate")) {
-                imagesGlobalStore.dispatch(imagesGlobal.actions.changeCommunityImageByIndex({
+                imagesGlobalStore.dispatch(imagesGlobal.actions.changeRecentImageByIndex({
                   image: {
                     ...photos[currentIndex],
                     src: "https://cdn.designera.app/reference/" + photos[currentIndex]?.data.referenceId
@@ -101,7 +99,7 @@ export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicO
                   index: currentIndex
                 }))
               } else {
-                imagesGlobalStore.dispatch(imagesGlobal.actions.changeCommunityImageByIndex({
+                imagesGlobalStore.dispatch(imagesGlobal.actions.changeRecentImageByIndex({
                   image: {
                     ...photos[currentIndex],
                     src: "https://cdn.designera.app/generated/" + photos[currentIndex]?.data.id
@@ -113,8 +111,10 @@ export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicO
           />
         </div>
         <div className={'flex flex-col gap-0.5 mt-3 text-white Font-Bold'}>
-          <div>Room Type <span className={"text-[#a8a29e] Font-ExtraLight ml-1"}>{photos[currentIndex]?.data?.type}</span></div>
-          <div>Room Style <span className={"text-[#a8a29e] Font-ExtraLight ml-1"}>{photos[currentIndex]?.data?.style}</span></div>
+          <div>Room Type <span
+            className={"text-[#a8a29e] Font-ExtraLight ml-1"}>{photos[currentIndex]?.data?.type}</span></div>
+          <div>Room Style <span
+            className={"text-[#a8a29e] Font-ExtraLight ml-1"}>{photos[currentIndex]?.data?.style}</span></div>
         </div>
       </div>
       <div className={"absolute right-0 bottom-0 pr-2 pb-2 flex flex-col items-end alwaysOnTop"}>
@@ -122,17 +122,17 @@ export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicO
           <IconButton
             icon={
               photos[currentIndex]?.data?.userAvatar ?
-              <div className={"overflow-hidden designera-rounded"}>
-                <ImageWithFallback
-                  width={50}
-                  height={50}
-                  src={`https://cdn.designera.app/avatar/${photos[currentIndex]?.data?.userAvatar}`}
-                  alt={photos[currentIndex]?.data?.userAvatar || "No info found"}
-                  style={{objectFit: 'contain'}}
-                  fallbackUrl={"/assets/images/unknown.png"}
-                />
-              </div>
-              : <div className={'hidden'}></div>
+                <div className={"overflow-hidden designera-rounded"}>
+                  <ImageWithFallback
+                    width={50}
+                    height={50}
+                    src={`https://cdn.designera.app/avatar/${photos[currentIndex]?.data?.userAvatar}`}
+                    alt={photos[currentIndex]?.data?.userAvatar || "No info found"}
+                    style={{objectFit: 'contain'}}
+                    fallbackUrl={"/assets/images/unknown.png"}
+                  />
+                </div>
+                : <div className={'hidden'}></div>
             }
             className={"p-0.5"}
           />

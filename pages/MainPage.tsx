@@ -8,7 +8,7 @@ import {
   faHeart,
   faPaperPlane,
   faPlus, faWandMagicSparkles,
-  faUpRightAndDownLeftFromCenter, faArrowsRotate
+  faUpRightAndDownLeftFromCenter, faArrowsRotate, faArrowUpFromBracket
 } from "@fortawesome/free-solid-svg-icons";
 import {Tooltip as ReactTooltip} from "react-tooltip";
 import * as Scroll from 'react-scroll';
@@ -53,7 +53,7 @@ export default function MainPage() {
   const {GET, FILEPOST, POST, PATCH} = useAxios()
   const {userData, decrementCreditBalance, isLoggedIn, toggleModal, changeSection} = useAuth()
   const {themes, addImage, removeImage} = useAsTheme()
-  const { toggleModal: subscriptionToggleModal } = useSubscription()
+  const {toggleModal: subscriptionToggleModal} = useSubscription()
   const [galleryOrderBy, setGalleryOrderBy] = useState(0);
   const [themeSelectToggle, setThemeSelectToggle] = useState(false);
   const [loaderShow, setLoaderShow] = useState(false);
@@ -106,8 +106,15 @@ export default function MainPage() {
   useEffect(() => {
     async function fetchImages() {
       setLoadingImages(true)
-      let recentImagesResponse = await GET("image/filter", { query: null, pageIndex: 0, pageSize: 6, orderBy: "createdAt" })
+      let recentImagesResponse = await GET("image/filter", {
+        query: null,
+        pageIndex: 0,
+        pageSize: 6,
+        orderBy: "createdAt"
+      })
       setRecentImages(recentImagesResponse.items)
+
+
 
       let data = await GET("image/filter", paginationData)
       let newImages = [...(images), ...(data.items)]
@@ -121,12 +128,6 @@ export default function MainPage() {
   useEffect(() => {
     dispatch(authGlobalInitiate({}))
     setStyleSuggestionPills(ShuffleArray(styleSuggestionPills))
-
-    Scroll.Events.scrollEvent.register("end", (to, element) => {
-      console.log(to, element)
-    })
-
-    Scroll.scrollSpy.update()
   }, []);
 
   useEffect(() => {
@@ -151,12 +152,6 @@ export default function MainPage() {
     let response = await FILEPOST((userData?.subscription?.isActive) ? "generate-image/premium" : "generate-image", generateImageFormData)
 
     decrementCreditBalance()
-
-    // let response = {
-    //   "referenceId": "865ffaf0-a99b-a286-18da-fc9a3aba12e2",
-    //   "images": ["5ca5c320-3107-4557-a2d9-869f275d8438", "65b2f26a-5230-40ab-9058-102c5c16ac23", "ade28c9b-aaba-4e31-9b55-32e5af9f9711", "0b1db891-40ee-49c1-b8d7-e07eed28201d"]
-    // } as any
-
     setResultData(response)
 
     imagesGlobalStore.dispatch(imagesGlobal.actions.changeGeneratedImages({
@@ -204,6 +199,9 @@ export default function MainPage() {
 
   async function selectImage(files: FileList | undefined) {
     if (files) {
+      if (!["png", "jfif", "jpg", "jpeg", "pjpeg"].includes(String(files[0]?.name?.split(".")?.pop()))) {
+        return toast.error("Please just upload images.")
+      }
       let photo = await GetBase64(files[0])
       setSelectedImageObject(files[0])
       setSelectedImage(photo)
@@ -276,8 +274,10 @@ export default function MainPage() {
       <div className="flex justify-center items-center min-h-screen">
         <div className="w-4/5 flex flex-col items-center">
           <Heading>
-            <div className={"hidden md:block mb-6"}>Design your <span className="text-[#FF9900]">own</span> interior in{" "}
-            seconds</div>
+            <div className={"hidden md:block mb-6"}>Design your <span className="text-[#FF9900]">own</span> interior
+              in{" "}
+              seconds
+            </div>
           </Heading>
           <div className="w-full">
             <StandardLayout>
@@ -292,13 +292,17 @@ export default function MainPage() {
                             <img src={selectedImage} alt={"Chosen Image"}
                                  style={{objectFit: "contain"}}
                                  width={"480"}/> :
-                            <span
-                              className="text-xs text-white text-center block designera-text-shadow lg:text-md"
-                            >
-                              Drop your image, Tap to select or
-                              <br/>
-                              Take a photo!
-                            </span>
+                            <div className={"flex flex-col items-center gap-4"}>
+                              <FontAwesomeIcon icon={faArrowUpFromBracket} style={{height: 40, width: 40}}
+                                               color={"#fff"}/>
+                              <span
+                                className="text-sm text-white text-center block designera-text-shadow lg:text-md"
+                              >
+                                Drop your image, Tap to select or
+                                <br/>
+                                Take a photo!
+                              </span>
+                            </div>
                         }
 
                       onValueChange={(files) => selectImage(files)}
@@ -338,7 +342,8 @@ export default function MainPage() {
                           setThemeSelectToggle(!themeSelectToggle);
                         }}
                       >
-                        <FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xs"} style={{width: 25, height: 25}}/>
+                        <FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xs"}
+                                         style={{width: 25, height: 25}}/>
                       </button>
                     </div>
                     {themeSelectToggle ? (
@@ -352,7 +357,11 @@ export default function MainPage() {
                                   removeImage(i)
                                 }}
                                 className="w-1/3 h-24 bg-transparent designera-rounded cursor-pointer"
-                                style={{ backgroundImage: `url("https://cdn.designera.app/generated/${v.url}")`, backgroundSize: "cover", backgroundPosition: 'center' }}
+                                style={{
+                                  backgroundImage: `url("https://cdn.designera.app/generated/${v.url}")`,
+                                  backgroundSize: "cover",
+                                  backgroundPosition: 'center'
+                                }}
                               >
                               </div>
                             ) : (
@@ -392,7 +401,7 @@ export default function MainPage() {
                                     <div key={i}>
                                       <div id={`suggestion-${i}`}
                                            className="bg-[#515151] rounded px-1 text-stone-100 designera-box-shadow cursor-pointer Font-ExtraLight select-none"
-                                           style={{ fontSize: "0.850rem" }}
+                                           style={{fontSize: "0.850rem"}}
                                            onClick={(e) => {
                                              setRoomStyle(roomStyle.length > 0 ? roomStyle + ", " + v.name : v.name)
                                            }}
@@ -502,7 +511,12 @@ export default function MainPage() {
                                   <IconButton
                                       description={"Copy Style"}
                                       icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
-                                                             style={{width: 25, height: 25}}/>} onClick={() => addImage({ id: selectedResult.id, url: selectedResult.id, style: roomStyle })}/>
+                                                             style={{width: 25, height: 25}}/>}
+                                      onClick={() => addImage({
+                                        id: selectedResult.id,
+                                        url: selectedResult.id,
+                                        style: roomStyle
+                                      })}/>
                                   <IconButton
                                       description={"Upscale"}
                                       icon={<FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter}
@@ -567,7 +581,8 @@ export default function MainPage() {
                                     className="xl:w-1/12 block text-stone-400 p-2 bg-[#1E1E1E] hover:bg-[#242424] focus:bg-[#242424] opacity-90 border border-[#6F6B6A] font-semibold hover:text-white designera-rounded ml-2 flex items-center justify-center"
                                     style={{height: 56, width: 56}}
                                 >
-                                    <FontAwesomeIcon icon={faPaperPlane} color={"#AAA7A5"} style={{ paddingRight: 2, height: 30, width: 30 }}/>
+                                    <FontAwesomeIcon icon={faPaperPlane} color={"#AAA7A5"}
+                                                     style={{paddingRight: 2, height: 30, width: 30}}/>
                                 </button>
                             </div>
                         }
@@ -689,7 +704,7 @@ export default function MainPage() {
 
       <AuthModal/>
       <SubscriptionModal/>
-      <Toaster containerStyle={{zIndex: 999999}} toastOptions={{ style: { backgroundColor: "#2F2F2F", color: "#fff" } }}/>
+      <Toaster containerStyle={{zIndex: 999999}} toastOptions={{style: {backgroundColor: "#2F2F2F", color: "#fff"}}}/>
     </main>
   );
 }

@@ -60,6 +60,12 @@ export default function useAuth() {
     authGlobalStore.dispatch(authGlobal.actions.decrementCreditBalance({}))
   }
 
+  function changeProfileImageByIndex(image: any, index:number, type: "upvotedImages" | "images") {
+    authGlobalStore.dispatch(authGlobal.actions.changeProfileImageByIndex(
+      {image, index, type}
+    ))
+  }
+
   return {
     currentSection: values.currentSection,
     statusMessage: values.statusMessage,
@@ -72,6 +78,7 @@ export default function useAuth() {
     logout,
     toggleModal,
     changeSection,
-    decrementCreditBalance
+    decrementCreditBalance,
+    changeProfileImageByIndex
   }
 }

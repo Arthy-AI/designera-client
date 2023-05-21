@@ -30,13 +30,13 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
             likes: null
         }
     }] as any)
+    const [lightboxPhotos, setLightboxPhotos] = useState([] as any[])
     const [currentImage, setCurrentImage] = useState(0);
     const [viewerIsOpen, setViewerIsOpen] = useState(false);
     const { PATCH } = useAxios();
 
     useEffect(() => {
-        if (images.length < 1) return;
-
+        if (images?.length < 1) return;
         async function formatImages() {
             let data = []
             for await (let image of images) {
@@ -53,7 +53,9 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
                         userAvatar: image.user.id,
                         likes: image.upvoteCount,
                         style: image.roomStyle,
-                        type: image.roomType
+                        type: image.roomType,
+                        referenceId: image.referenceId,
+                        referenceToggle: false
                     }
                 })
             }
@@ -67,6 +69,12 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
 
         formatImages()
     }, [images]);
+
+    useEffect(() => {
+        imagesGlobalStore.subscribe(() => {
+            setLightboxPhotos(imagesGlobalStore.getState().communityImages)
+        })
+    }, [])
 
     // @ts-ignore
     const openLightbox = useCallback((event, {photo, index}) => {
@@ -186,9 +194,7 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
                         <Carousel
                             currentIndex={currentImage}
                             // @ts-ignore
-                            views={photos.map((value, index) => {
-                                return ({...value})
-                            })}
+                            views={lightboxPhotos}
                             components={{
                                 // @ts-ignore
                                 Footer: GalleryModalFooter

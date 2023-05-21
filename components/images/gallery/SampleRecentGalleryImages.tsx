@@ -4,7 +4,6 @@ import {IconButton} from "../../button/IconButton";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faDownload, faHeart, faWandMagicSparkles} from "@fortawesome/free-solid-svg-icons";
 import Carousel, {Modal, ModalGateway} from "react-images";
-import {GalleryModalFooter} from "./GalleryModalFooter";
 import {ReactProps} from "../../../interfaces/ReactProps";
 import moment from "moment";
 import "moment-duration-format";
@@ -13,16 +12,16 @@ import {imagesGlobal, imagesGlobalStore} from "../../../globals/images/images";
 import {ForceDownload} from "../../../constants/ForceDownload";
 import toast from "react-hot-toast";
 import {useAxios} from "../../../hooks/useAxios";
-import {UseAsThemeLogo} from "../../../assets/svg/UseAsThemeLogo";
 import useAsTheme from "../../../hooks/themes/useAsTheme";
-import {UseAsThemeFlatLogo} from "../../../assets/svg/UseAsThemeFlatLogo";
+import {RecentImagesGalleryModalFooter} from "./RecentImagesGalleryModalFooter";
 
 interface SampleRecentGalleryImages extends ReactProps {
   images: any[]
 }
 
 export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) => {
-  const [photos, setPhotos] = useState([] as any)
+  const [photos, setPhotos] = useState([] as any[])
+  const [lightboxPhotos, setLightboxPhotos] = useState([] as any[])
   const {PATCH} = useAxios()
   const {addImage} = useAsTheme()
   const [currentImage, setCurrentImage] = useState(0);
@@ -30,7 +29,6 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
 
   useEffect(() => {
     if (images?.length < 1) return;
-
     const formattedPhotos = images.map((value, index) => {
       return {
         src: "https://cdn.designera.app/generated/" + value.id,
@@ -48,9 +46,18 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
       }
     })
 
-    setPhotos(formattedPhotos)
+    setPhotos([...formattedPhotos])
+
+    imagesGlobalStore.dispatch(imagesGlobal.actions.changeRecentImages({
+      images: [...formattedPhotos]
+    }))
   }, [images]);
 
+  useEffect(() => {
+    imagesGlobalStore.subscribe(() => {
+      setLightboxPhotos(imagesGlobalStore.getState().recentImages)
+    })
+  }, [])
 
   // @ts-ignore
   const openLightbox = useCallback((event, {photo, index}) => {
@@ -488,10 +495,10 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
             <Carousel
               currentIndex={currentImage}
               // @ts-ignore
-              views={photos}
+              views={lightboxPhotos}
               components={{
                 // @ts-ignore
-                Footer: GalleryModalFooter
+                Footer: RecentImagesGalleryModalFooter
               }}
             />
           </Modal>
