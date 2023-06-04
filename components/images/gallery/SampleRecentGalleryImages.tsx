@@ -7,7 +7,7 @@ import Carousel, {Modal, ModalGateway} from "react-images";
 import {ReactProps} from "../../../interfaces/ReactProps";
 import moment from "moment";
 import "moment-duration-format";
-import {ImageWithBlur} from '../ImageWithBlur';
+import {ImageWithFallback} from '../ImageWithFallback';
 import {imagesGlobal, imagesGlobalStore} from "../../../globals/images/images";
 import {ForceDownload} from "../../../constants/ForceDownload";
 import toast from "react-hot-toast";
@@ -146,7 +146,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                               <IconButton
                                   icon={
                                     <div className={"overflow-hidden designera-rounded"}>
-                                      <ImageWithBlur
+                                      <ImageWithFallback
                                         width={50}
                                         height={50}
                                         src={`https://cdn.designera.app/avatar/${photos[0]?.data?.userAvatar}`}
@@ -215,7 +215,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                               <IconButton
                                   icon={
                                     <div className={"overflow-hidden designera-rounded"}>
-                                      <ImageWithBlur
+                                      <ImageWithFallback
                                         width={50}
                                         height={50}
                                         src={`https://cdn.designera.app/avatar/${photos[1]?.data?.userAvatar}`}
@@ -289,7 +289,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                               <IconButton
                                   icon={
                                     <div className={"overflow-hidden designera-rounded"}>
-                                      <ImageWithBlur
+                                      <ImageWithFallback
                                         width={50}
                                         height={50}
                                         src={`https://cdn.designera.app/avatar/${photos[2]?.data?.userAvatar}`}
@@ -359,7 +359,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                               <IconButton
                                   icon={
                                     <div className={"overflow-hidden designera-rounded"}>
-                                      <ImageWithBlur
+                                      <ImageWithFallback
                                         width={50}
                                         height={50}
                                         src={`https://cdn.designera.app/avatar/${photos[3]?.data?.userAvatar}`}
@@ -433,7 +433,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                               <IconButton
                                   icon={
                                     <div className={"overflow-hidden designera-rounded"}>
-                                      <ImageWithBlur
+                                      <ImageWithFallback
                                         width={50}
                                         height={50}
                                         src={`https://cdn.designera.app/avatar/${photos[4]?.data?.userAvatar}`}
@@ -503,7 +503,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                               <IconButton
                                   icon={
                                     <div className={"overflow-hidden designera-rounded"}>
-                                      <ImageWithBlur
+                                      <ImageWithFallback
                                         width={50}
                                         height={50}
                                         src={`https://cdn.designera.app/avatar/${photos[5]?.data?.userAvatar}`}

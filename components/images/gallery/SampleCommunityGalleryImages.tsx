@@ -16,6 +16,7 @@ import {imagesGlobal, imagesGlobalStore} from "../../../globals/images/images";
 import {UseAsThemeFlatLogo} from "../../../assets/svg/UseAsThemeFlatLogo";
 import useAuth from "../../../hooks/auth/useAuth";
 import useAsTheme from "../../../hooks/themes/useAsTheme";
+import {ImageWithFallback} from "../ImageWithFallback";
 
 interface SampleCommunityGalleryImages extends ReactProps {
     images: any[]
@@ -171,7 +172,7 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
                                          <IconButton
                                              icon={
                                                  <div className={"overflow-hidden designera-rounded"}>
-                                                     <ImageWithBlur
+                                                     <ImageWithFallback
                                                        width={50}
                                                        height={50}
                                                        src={`https://cdn.designera.app/avatar/${photos[index]?.data?.userAvatar}`}
