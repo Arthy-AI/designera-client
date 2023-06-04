@@ -296,7 +296,7 @@ export default function MainPage() {
       <div className="flex justify-center items-center min-h-screen">
         <div className="w-4/5 flex flex-col items-center">
           <Heading>
-            <div className={"hidden md:block mb-6"}>Design your <span className="text-[#FF9900]">own</span> interior
+            <div className={"hidden  md:block mb-6"}>Design your <span className="text-[#FF9900]">own</span> interior
               in
               seconds
             </div>
