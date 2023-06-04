@@ -28,7 +28,7 @@ export const SampleProfileGalleryImages = ({tab, trigger}: { tab: string, trigge
         setPhotos((tab == `Likes` ? userData?.upvotedImages : userData?.images as any[])?.filter((v: any) =>
           tab == `Images` ? !v.description :
             tab == `Publishes` ? v.description :
-              true
+              Object.keys(v).includes("description")
         ).map((value: any, index: number) => {
             return {
                 src: "https://cdn.designera.app/generated/" + value.id,

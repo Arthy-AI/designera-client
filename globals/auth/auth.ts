@@ -37,6 +37,14 @@ const authGlobal = createSlice({
     },
     decrementCreditBalance: (state, action) => {
       state.userData.credits[0].balance -= 1
+    },
+    upvoteImageUpdate: (state, action) => {
+      let {image, type} = action.payload;
+      if (type == "vote") {
+        state.userData.upvotedImages.push(image)
+      } else {
+        state.userData.upvotedImages.splice(state.userData.upvotedImages.findIndex((v: any) => v.id == image.id), 1)
+      }
     }
   },
   extraReducers: (builder) => {

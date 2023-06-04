@@ -64,7 +64,6 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
 
     useEffect(() => {
         if (isOpen) {
-            console.log('girdim')
             let tempProfileGalleryTab = profileGalleryTab
             tempProfileGalleryTab.trigger = Date.now()
             setProfileGalleryTab({...tempProfileGalleryTab})

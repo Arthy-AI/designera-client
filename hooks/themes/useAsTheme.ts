@@ -1,13 +1,17 @@
 import {useState, useEffect} from "react";
 import {imagesGlobal, imagesGlobalStore} from "../../globals/images/images";
+
 export default function useAsTheme() {
   const [themes, setThemes] = useState([] as any[])
+  const [themesSectionShow, setThemesSectionShow] = useState(false)
 
   useEffect(() => {
     setThemes(imagesGlobalStore.getState().themes)
+    setThemesSectionShow(imagesGlobalStore.getState().themesSectionShow)
 
     imagesGlobalStore.subscribe(() => {
       setThemes(imagesGlobalStore.getState().themes)
+      setThemesSectionShow(imagesGlobalStore.getState().themesSectionShow)
     })
   }, []);
 
@@ -23,9 +27,24 @@ export default function useAsTheme() {
     }))
   }
 
+  function removeImageById(id: string) {
+    imagesGlobalStore.dispatch(imagesGlobal.actions.removeTheme({
+      index: themes.findIndex((v) => v.id == id)
+    }))
+  }
+
+  function themesSectionToggle(show?: boolean) {
+    imagesGlobalStore.dispatch(imagesGlobal.actions.themesSectionToggle({
+      show
+    }))
+  }
+
   return {
     themes,
+    themesSectionShow,
     addImage,
-    removeImage
+    removeImage,
+    themesSectionToggle,
+    removeImageById
   }
 }

@@ -66,6 +66,12 @@ export default function useAuth() {
     ))
   }
 
+  function upvoteImageUpdate(image: any, type: "vote" | "unvote") {
+    authGlobalStore.dispatch(authGlobal.actions.upvoteImageUpdate(
+      {image, type}
+    ))
+  }
+
   return {
     currentSection: values.currentSection,
     statusMessage: values.statusMessage,
@@ -79,6 +85,7 @@ export default function useAuth() {
     toggleModal,
     changeSection,
     decrementCreditBalance,
-    changeProfileImageByIndex
+    changeProfileImageByIndex,
+    upvoteImageUpdate
   }
 }

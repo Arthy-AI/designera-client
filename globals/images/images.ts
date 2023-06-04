@@ -7,7 +7,8 @@ const imagesGlobal = createSlice({
     generatedImages: [] as any[],
     profileImages: [] as any[],
     recentImages: [] as any[],
-    themes: [] as any[]
+    themes: [] as any[],
+    themesSectionShow: false
   },
   reducers: {
     changeCommunityImages: (state, action) => {
@@ -42,7 +43,11 @@ const imagesGlobal = createSlice({
     removeTheme: (state, action) => {
       let {index} = action.payload;
       state.themes.splice(index, 1)
-    }
+    },
+    themesSectionToggle: (state, action) => {
+      let {show} = action.payload;
+      state.themesSectionShow = show ? show : !state.themesSectionShow;
+    },
   }
 })
 

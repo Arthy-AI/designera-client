@@ -10,21 +10,19 @@ import {
 import {IconButton} from "../../button/IconButton";
 import {AnimatedSimpleInput} from "../../input/AnimatedSimpleInput";
 import {DynamicObject} from "../../../constants/DynamicObject";
-import {imagesGlobalStore} from "../../../globals/images/images";
+import {imagesGlobal, imagesGlobalStore} from "../../../globals/images/images";
 import toast from "react-hot-toast";
 import {useAxios} from "../../../hooks/useAxios";
 import {ForceDownload} from "../../../constants/ForceDownload";
-import {UseAsThemeLogo} from "../../../assets/svg/UseAsThemeLogo";
 import useAsTheme from "../../../hooks/themes/useAsTheme";
-import {UseAsThemeFlatLogo} from "../../../assets/svg/UseAsThemeFlatLogo";
 import useAuth from "../../../hooks/auth/useAuth";
 import useSubscription from "../../../hooks/subscription/useSubscription";
 import {Tooltip as ReactTooltip} from "react-tooltip";
 
 export const GeneratedImageModalFooter = ({innerProps, isModal, currentIndex}: DynamicObject, closeLB: () => void) => {
-  const {addImage} = useAsTheme()
+  const {userData, upvoteImageUpdate} = useAuth()
+  const {themesSectionToggle, themes, removeImageById, addImage} = useAsTheme()
   const {POST, PATCH} = useAxios()
-  const {userData} = useAuth()
   const {toggleModal: subscriptionToggleModal} = useSubscription()
   const [photos, setPhotos] = useState([] as any[])
   const [publishDescription, setPublishDescription] = useState("")
@@ -44,16 +42,40 @@ export const GeneratedImageModalFooter = ({innerProps, isModal, currentIndex}: D
     }
   }
 
-  async function vote(isLike: boolean) {
-    try {
-      const response = await PATCH('image/vote', {
-        "id": photos[currentIndex].id,
-        "type": Number(isLike)
-      })
+  const [voteLoading, setVoteLoading] = useState(false)
 
-      toast.success("Vote successful.")
+  async function vote(isLike: boolean) {
+    let vote;
+    if (voteLoading) return;
+
+    const photoObject = {
+      "id": photos[currentIndex].id,
+    }
+
+    try {
+      if (userData?.upvotedImages?.findIndex((v: any) => v.id == photos[currentIndex].id) == -1) {
+        vote = true
+        upvoteImageUpdate(photoObject, "vote")
+        setVoteLoading(true)
+        const response = await PATCH('image/vote', {
+          "id": photos[currentIndex].id,
+          "type": 1
+        })
+        setVoteLoading(false)
+      } else {
+        upvoteImageUpdate(photoObject, "unvote")
+        vote = false
+
+        setVoteLoading(true)
+        const response = await PATCH('image/vote', {
+          "id": photos[currentIndex].id,
+          "type": 0
+        })
+        setVoteLoading(false)
+      }
     } catch (err) {
-      toast.error("Can not vote.")
+      toast.error(`Can not ${vote ? "vote" : "unvote"}.`)
+      upvoteImageUpdate(photoObject, vote ? "unvote" : "vote")
     }
   }
 
@@ -118,18 +140,29 @@ export const GeneratedImageModalFooter = ({innerProps, isModal, currentIndex}: D
         <IconButton
           description={"Like"}
           icon={
-            <FontAwesomeIcon icon={faHeart} color={"#AAA7A5"} size={"xl"} style={{width: 25, height: 25}}/>
+            <FontAwesomeIcon icon={faHeart} color={
+              userData?.upvotedImages?.findIndex((v: any) => v.id == photos[currentIndex].id) == -1 ? "#AAA7A5" : "#FF6363"
+            } size={"xl"} style={{width: 25, height: 25}}/>
           }
           onClick={() => vote(true)}
         />
         <IconButton
           description={"Copy Style"}
-          icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
-                                 style={{width: 25, height: 25}}/>} onClick={() => addImage({
-          id: photos[currentIndex].id,
-          url: photos[currentIndex].id,
-          style: photos[currentIndex].style
-        })}/>
+          icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={
+            themes.findIndex((v) => v.id == photos[currentIndex].id) == -1 ? "#AAA7A5" : "#61A0FF"
+          } size={"xl"}
+                                 style={{width: 25, height: 25}}/>} onClick={() => {
+          if (themes.findIndex((v) => v.id == photos[currentIndex].id) == -1) {
+            addImage({
+              id: photos[currentIndex].id,
+              url: photos[currentIndex].id,
+              style: photos[currentIndex].style
+            })
+          } else {
+            removeImageById(photos[currentIndex].id)
+          }
+          themesSectionToggle(true)
+        }}/>
       </div>
     </div>
   ) : null;

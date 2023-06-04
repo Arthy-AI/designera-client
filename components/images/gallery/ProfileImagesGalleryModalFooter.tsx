@@ -24,31 +24,69 @@ export const ProfileImagesGalleryModalFooter = ({
                                                   currentIndex,
                                                   views: photos
                                                 }: DynamicObject, tab: string) => {
-  const {changeProfileImageByIndex, userData} = useAuth()
-  const {addImage} = useAsTheme()
+  const {changeProfileImageByIndex, userData, upvoteImageUpdate} = useAuth()
+  const {themesSectionToggle, themes, removeImageById} = useAsTheme()
   const {PATCH} = useAxios()
 
+  const [voteLoading, setVoteLoading] = useState(false)
   async function vote(isLike: boolean) {
-    try {
-      const response = await PATCH('image/vote', {
-        "id": photos[currentIndex]?.data?.id,
-        "type": Number(isLike)
-      })
+    let vote;
+    if (voteLoading) return;
 
-      toast.success("Vote successful.")
+    const photoObject = {
+      "id": photos[currentIndex]?.data?.id?.includes("reference") ? photos[currentIndex]?.data?.referenceId : photos[currentIndex]?.data?.id,
+      "createdAt": photos[currentIndex]?.data?.createdAt,
+      "description": photos[currentIndex]?.data?.title,
+      "roomStyle": photos[currentIndex]?.data?.style,
+      "roomType": photos[currentIndex]?.data?.type,
+      "referenceId": photos[currentIndex]?.data?.referenceId,
+      "user": {
+        id: photos[currentIndex]?.data?.userAvatar,
+        firstName: photos[currentIndex]?.data?.username,
+        lastName: ""
+      }
+    }
+
+    try {
+      if (userData?.upvotedImages?.findIndex((v: any) => v.id == photos[currentIndex]?.data?.id) == -1) {
+        vote = true
+        upvoteImageUpdate(photoObject, "vote")
+        setVoteLoading(true)
+        const response = await PATCH('image/vote', {
+          "id": photos[currentIndex]?.data?.id,
+          "type": 1
+        })
+        setVoteLoading(false)
+      } else {
+        upvoteImageUpdate(photoObject, "unvote")
+        vote = false
+
+        setVoteLoading(true)
+        const response = await PATCH('image/vote', {
+          "id": photos[currentIndex]?.data?.id,
+          "type": 0
+        })
+        setVoteLoading(false)
+      }
     } catch (err) {
-      toast.error("Can not vote.")
+      toast.error(`Can not ${vote ? "vote" : "unvote"}.`)
+      upvoteImageUpdate(photoObject, vote ? "unvote" : "vote")
     }
   }
 
   function themeAdd(id: string, url: string, style: string) {
-    imagesGlobalStore.dispatch(imagesGlobal.actions.addTheme({
-      image: {
-        id,
-        url: id,
-        style
-      }
-    }))
+    if (themes.findIndex((v) => v.id == id) == -1) {
+      imagesGlobalStore.dispatch(imagesGlobal.actions.addTheme({
+        image: {
+          id,
+          url: id,
+          style
+        }
+      }))
+    } else {
+      removeImageById(id)
+    }
+    themesSectionToggle(true)
   }
 
   return isModal ? (
@@ -65,7 +103,9 @@ export const ProfileImagesGalleryModalFooter = ({
           <IconButton
             description={"Like"}
             icon={
-              <FontAwesomeIcon icon={faHeart} color={"#AAA7A5"} size={"xl"} style={{width: 25, height: 25}}/>
+              <FontAwesomeIcon icon={faHeart} color={
+                userData?.upvotedImages?.findIndex((v: any) => v.id == photos[currentIndex]?.data?.id) == -1 ? "#AAA7A5" : "#FF6363"
+              } size={"xl"} style={{width: 25, height: 25}}/>
             }
             onClick={() => {
               vote(true)
@@ -74,7 +114,9 @@ export const ProfileImagesGalleryModalFooter = ({
           <IconButton
             description={"Copy Style"}
             icon={
-              <FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
+              <FontAwesomeIcon icon={faWandMagicSparkles} color={
+                themes.findIndex((v) => v.id == photos[currentIndex]?.data?.id) == -1 ? "#AAA7A5" : "#61A0FF"
+              } size={"xl"}
                                style={{width: 25, height: 25}}/>
             }
             onClick={() => themeAdd(photos[currentIndex]?.data?.id, photos[currentIndex]?.src, photos[currentIndex]?.data?.style)}

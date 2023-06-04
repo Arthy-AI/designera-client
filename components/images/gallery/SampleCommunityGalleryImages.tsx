@@ -14,12 +14,15 @@ import {useAxios} from "../../../hooks/useAxios";
 import {UseAsThemeLogo} from "../../../assets/svg/UseAsThemeLogo";
 import {imagesGlobal, imagesGlobalStore} from "../../../globals/images/images";
 import {UseAsThemeFlatLogo} from "../../../assets/svg/UseAsThemeFlatLogo";
+import useAuth from "../../../hooks/auth/useAuth";
+import useAsTheme from "../../../hooks/themes/useAsTheme";
 
 interface SampleCommunityGalleryImages extends ReactProps {
     images: any[]
 }
 
 export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryImages) => {
+    const { userData, upvoteImageUpdate } = useAuth()
     const [photos, setPhotos] = useState([{
         src: "",
         width: 4,
@@ -33,6 +36,7 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
     const [lightboxPhotos, setLightboxPhotos] = useState([] as any[])
     const [currentImage, setCurrentImage] = useState(0);
     const [viewerIsOpen, setViewerIsOpen] = useState(false);
+    const {themesSectionToggle, themes, removeImageById} = useAsTheme()
     const { PATCH } = useAxios();
 
     useEffect(() => {
@@ -87,27 +91,51 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
         setViewerIsOpen(false);
     };
 
-    async function vote(isLike: boolean, index:number) {
-        try {
-            const response = await PATCH('image/vote', {
-                "id": photos[index]?.data?.id,
-                "type": Number(isLike)
-            })
+    const [voteLoading, setVoteLoading] = useState(false)
+    async function vote(isLike: boolean, index: number) {
+        let vote;
+        if (voteLoading) return;
 
-            toast.success("Vote successful.")
+        try {
+            if (userData?.upvotedImages?.findIndex((v: any) => v.id == photos[index]?.data?.id) == -1) {
+                vote = true
+                upvoteImageUpdate(images[index],"vote")
+                setVoteLoading(true)
+                const response = await PATCH('image/vote', {
+                    "id": photos[index]?.data?.id,
+                    "type": 1
+                })
+                setVoteLoading(false)
+            } else {
+                upvoteImageUpdate(images[index], "unvote")
+                vote = false
+
+                setVoteLoading(true)
+                const response = await PATCH('image/vote', {
+                    "id": photos[index]?.data?.id,
+                    "type": 0
+                })
+                setVoteLoading(false)
+            }
         } catch (err) {
-            toast.error("Can not vote.")
+            toast.error(`Can not ${vote ? "vote" : "unvote"}.`)
+            upvoteImageUpdate(images[index], vote ? "unvote" : "vote")
         }
     }
 
     function themeAdd(id: string, url: string, style: string) {
-        imagesGlobalStore.dispatch(imagesGlobal.actions.addTheme({
-            image: {
-                id,
-                url: id,
-                style
-            }
-        }))
+        if (themes.findIndex((v) => v.id == id) == -1) {
+            imagesGlobalStore.dispatch(imagesGlobal.actions.addTheme({
+                image: {
+                    id,
+                    url: id,
+                    style
+                }
+            }))
+        } else {
+            removeImageById(id)
+        }
+        themesSectionToggle(true)
     }
 
     // @ts-ignore
@@ -160,11 +188,15 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
                                                                             style={{width: 25, height: 25}}/>}
                                                      onClick={() => ForceDownload(photos[index]?.src, "designera-" + photos[index]?.data?.id)}
                                          />
-                                         <IconButton description={"Like"} icon={<FontAwesomeIcon icon={faHeart} color={"#AAA7A5"} size={"xl"}
+                                         <IconButton description={"Like"} icon={<FontAwesomeIcon icon={faHeart} color={
+                                             userData?.upvotedImages?.findIndex((v: any) => v.id == photos[index]?.data?.id) == -1 ? "#AAA7A5" : "#FF6363"
+                                         } size={"xl"}
                                                                             style={{width: 25, height: 25}}/>}
                                                      onClick={() => vote(true, index)}
                                          />
-                                         <IconButton description={"Copy Style"} icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
+                                         <IconButton description={"Copy Style"} icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={
+                                             themes.findIndex((v) => v.id == photos[index]?.data?.id) == -1 ? "#AAA7A5" : "#61A0FF"
+                                         } size={"xl"}
                                                                             style={{width: 25, height: 25}}/>}
                                                      onClick={() => themeAdd(photos[index]?.data?.id, photos[index]?.src, photos[index]?.data?.style)}
                                          />

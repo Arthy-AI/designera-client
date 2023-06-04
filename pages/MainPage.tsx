@@ -51,11 +51,10 @@ import useSubscription from "../hooks/subscription/useSubscription";
 
 export default function MainPage() {
   const {GET, FILEPOST, POST, PATCH} = useAxios()
-  const {userData, decrementCreditBalance, isLoggedIn, toggleModal, changeSection} = useAuth()
-  const {themes, addImage, removeImage} = useAsTheme()
+  const {userData, decrementCreditBalance, isLoggedIn, toggleModal, changeSection, upvoteImageUpdate} = useAuth()
+  const {themes, addImage, removeImage, themesSectionShow, themesSectionToggle, removeImageById} = useAsTheme()
   const {toggleModal: subscriptionToggleModal} = useSubscription()
   const [galleryOrderBy, setGalleryOrderBy] = useState(0);
-  const [themeSelectToggle, setThemeSelectToggle] = useState(false);
   const [loaderShow, setLoaderShow] = useState(false);
   const [resulted, setResulted] = useState(false);
   const [resultData, setResultData] = useState({} as DynamicObject);
@@ -113,7 +112,6 @@ export default function MainPage() {
         orderBy: "createdAt"
       })
       setRecentImages(recentImagesResponse.items)
-
 
 
       let data = await GET("image/filter", paginationData)
@@ -230,16 +228,40 @@ export default function MainPage() {
     }
   }
 
-  async function vote(isLike: boolean) {
-    try {
-      const response = await PATCH('image/vote', {
-        "id": selectedResult.id,
-        "type": Number(isLike)
-      })
+  const [voteLoading, setVoteLoading] = useState(false)
 
-      toast.success("Vote successful.")
+  async function vote(isLike: boolean) {
+    let vote;
+    if (voteLoading) return;
+
+    const photoObject = {
+      "id": selectedResult.id,
+    }
+
+    try {
+      if (userData?.upvotedImages?.findIndex((v: any) => v.id == selectedResult.id) == -1) {
+        vote = true
+        upvoteImageUpdate(photoObject, "vote")
+        setVoteLoading(true)
+        const response = await PATCH('image/vote', {
+          "id": selectedResult.id,
+          "type": 1
+        })
+        setVoteLoading(false)
+      } else {
+        upvoteImageUpdate(photoObject, "unvote")
+        vote = false
+
+        setVoteLoading(true)
+        const response = await PATCH('image/vote', {
+          "id": selectedResult.id,
+          "type": 0
+        })
+        setVoteLoading(false)
+      }
     } catch (err) {
-      toast.error("Can not vote.")
+      toast.error(`Can not ${vote ? "vote" : "unvote"}.`)
+      upvoteImageUpdate(photoObject, vote ? "unvote" : "vote")
     }
   }
 
@@ -339,14 +361,15 @@ export default function MainPage() {
                         className="svg-change bg-[#3E3E3E] text-stone-400 font-semibold hover:text-white border border-stone-500 designera-rounded ml-1.5 flex justify-center items-center"
                         style={{minHeight: "42px", minWidth: "42px"}}
                         onClick={() => {
-                          setThemeSelectToggle(!themeSelectToggle);
+                          themesSectionToggle()
                         }}
                       >
-                        <FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xs"}
+                        <FontAwesomeIcon icon={faWandMagicSparkles} color={themesSectionShow ? "#61A0FF" : "#AAA7A5"}
+                                         size={"xs"}
                                          style={{width: 25, height: 25}}/>
                       </button>
                     </div>
-                    {themeSelectToggle ? (
+                    {themesSectionShow ? (
                       <div className="flex flex-row justify-between my-2 gap-3 px-2">
                         {[themes[0] || undefined, themes[1] || undefined, themes[2] || undefined].map((v, i) => {
                           return (
@@ -503,20 +526,31 @@ export default function MainPage() {
                                   }}/>
                                   <IconButton
                                       description={"Like"}
-                                      icon={<FontAwesomeIcon icon={faHeart} color={"#AAA7A5"}
+                                      icon={<FontAwesomeIcon icon={faHeart} color={
+                                        userData?.upvotedImages?.findIndex((v: any) => v.id == selectedResult.id) == -1 ? "#AAA7A5" : "#FF6363"
+                                      }
                                                              size={"xl"}
                                                              style={{width: 25, height: 25}}/>} onClick={() => {
                                     vote(true)
                                   }}/>
                                   <IconButton
                                       description={"Copy Style"}
-                                      icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
+                                      icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={
+                                        themes.findIndex((v) => v.id == selectedResult.id) == -1 ? "#AAA7A5" : "#61A0FF"
+                                      } size={"xl"}
                                                              style={{width: 25, height: 25}}/>}
-                                      onClick={() => addImage({
-                                        id: selectedResult.id,
-                                        url: selectedResult.id,
-                                        style: roomStyle
-                                      })}/>
+                                      onClick={() => {
+                                        if (themes.findIndex((v) => v.id == selectedResult.id) == -1) {
+                                          addImage({
+                                            id: selectedResult.id,
+                                            url: selectedResult.id,
+                                            style: roomStyle
+                                          })
+                                        } else {
+                                          removeImageById(selectedResult.id)
+                                        }
+                                        themesSectionToggle(true)
+                                      }}/>
                                   <IconButton
                                       description={"Upscale"}
                                       icon={<FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter}

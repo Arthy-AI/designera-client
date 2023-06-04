@@ -14,16 +14,18 @@ import toast from "react-hot-toast";
 import {useAxios} from "../../../hooks/useAxios";
 import useAsTheme from "../../../hooks/themes/useAsTheme";
 import {RecentImagesGalleryModalFooter} from "./RecentImagesGalleryModalFooter";
+import useAuth from "../../../hooks/auth/useAuth";
 
 interface SampleRecentGalleryImages extends ReactProps {
   images: any[]
 }
 
 export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) => {
+  const {userData, upvoteImageUpdate} = useAuth()
+  const {themesSectionToggle, themes, removeImageById} = useAsTheme()
   const [photos, setPhotos] = useState([] as any[])
   const [lightboxPhotos, setLightboxPhotos] = useState([] as any[])
   const {PATCH} = useAxios()
-  const {addImage} = useAsTheme()
   const [currentImage, setCurrentImage] = useState(0);
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
 
@@ -70,27 +72,52 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
     setViewerIsOpen(false);
   };
 
-  async function vote(isLike: boolean, index: number) {
-    try {
-      const response = await PATCH('image/vote', {
-        "id": photos[index]?.data?.id,
-        "type": Number(isLike)
-      })
+  const [voteLoading, setVoteLoading] = useState(false)
 
-      toast.success("Vote successful.")
+  async function vote(isLike: boolean, index: number) {
+    let vote;
+    if (voteLoading) return;
+
+    try {
+      if (userData?.upvotedImages?.findIndex((v: any) => v.id == photos[index]?.data?.id) == -1) {
+        vote = true
+        upvoteImageUpdate(images[index], "vote")
+        setVoteLoading(true)
+        const response = await PATCH('image/vote', {
+          "id": photos[index]?.data?.id,
+          "type": 1
+        })
+        setVoteLoading(false)
+      } else {
+        upvoteImageUpdate(images[index], "unvote")
+        vote = false
+
+        setVoteLoading(true)
+        const response = await PATCH('image/vote', {
+          "id": photos[index]?.data?.id,
+          "type": 0
+        })
+        setVoteLoading(false)
+      }
     } catch (err) {
-      toast.error("Can not vote.")
+      toast.error(`Can not ${vote ? "vote" : "unvote"}.`)
+      upvoteImageUpdate(images[index], vote ? "unvote" : "vote")
     }
   }
 
   function themeAdd(id: string, url: string, style: string) {
-    imagesGlobalStore.dispatch(imagesGlobal.actions.addTheme({
-      image: {
-        id,
-        url: id,
-        style
-      }
-    }))
+    if (themes.findIndex((v) => v.id == id) == -1) {
+      imagesGlobalStore.dispatch(imagesGlobal.actions.addTheme({
+        image: {
+          id,
+          url: id,
+          style
+        }
+      }))
+    } else {
+      removeImageById(id)
+    }
+    themesSectionToggle(true)
   }
 
   return (
@@ -132,15 +159,21 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                               />
                           </div>
                           <div className={"black-zone flex flex-col w-1/2 items-end gap-4"}>
-                              <IconButton description={"Download"} icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Download"}
+                                          icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => ForceDownload(photos[0]?.src, "designera-" + photos[0]?.data?.id)}
                               />
-                              <IconButton description={"Like"} icon={<FontAwesomeIcon icon={faHeart} color={"#AAA7A5"} size={"xl"}
-                                                                 style={{width: 25, height: 25}}/>}
+                              <IconButton description={"Like"} icon={<FontAwesomeIcon icon={faHeart} color={
+                                userData?.upvotedImages?.findIndex((v: any) => v.id == photos[0]?.data?.id) == -1 ? "#AAA7A5" : "#FF6363"
+                              } size={"xl"}
+                                                                                      style={{width: 25, height: 25}}/>}
                                           onClick={() => vote(true, 0)}
                               />
-                              <IconButton description={"Copy Style"} icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Copy Style"}
+                                          icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={
+                                            themes.findIndex((v) => v.id == photos[0]?.data?.id) == -1 ? "#AAA7A5" : "#61A0FF"
+                                          } size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => themeAdd(photos[0]?.data?.id, photos[0]?.src, photos[0]?.data?.style)}
                               />
@@ -195,15 +228,22 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                               />
                           </div>
                           <div className={"black-zone flex flex-col w-1/2 items-end gap-4"}>
-                              <IconButton description={"Download"} icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Download"}
+                                          icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => ForceDownload(photos[1]?.src, "designera-" + photos[1]?.data?.id)}
                               />
-                              <IconButton description={"Like"} icon={<FontAwesomeIcon icon={faHeart} color={"#AAA7A5"} size={"xl"}
-                                                                 style={{width: 25, height: 25}}/>}
+                              <IconButton description={"Like"} icon={<FontAwesomeIcon icon={faHeart} color={
+                                userData?.upvotedImages?.findIndex((v: any) => v.id == photos[1]?.data?.id) == -1 ? "#AAA7A5" : "#FF6363"
+                              } size={"xl"}
+                                                                                      style={{width: 25, height: 25}}/>}
                                           onClick={() => vote(true, 1)}
                               />
-                              <IconButton description={"Copy Style"} icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Copy Style"}
+                                          icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={
+                                            themes.findIndex((v) => v.id == photos[1]?.data?.id) == -1 ? "#AAA7A5" : "#61A0FF"
+                                          }
+                                                                 size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => themeAdd(photos[1]?.data?.id, photos[1]?.src, photos[1]?.data?.style)}
                               />
@@ -262,15 +302,22 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                               />
                           </div>
                           <div className={"black-zone flex flex-col w-1/2 items-end gap-4"}>
-                              <IconButton description={"Download"} icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Download"}
+                                          icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => ForceDownload(photos[2]?.src, "designera-" + photos[2]?.data?.id)}
                               />
-                              <IconButton description={"Like"} icon={<FontAwesomeIcon icon={faHeart} color={"#AAA7A5"} size={"xl"}
-                                                                 style={{width: 25, height: 25}}/>}
+                              <IconButton description={"Like"} icon={<FontAwesomeIcon icon={faHeart} color={
+                                userData?.upvotedImages?.findIndex((v: any) => v.id == photos[2]?.data?.id) == -1 ? "#AAA7A5" : "#FF6363"
+                              } size={"xl"}
+                                                                                      style={{width: 25, height: 25}}/>}
                                           onClick={() => vote(true, 2)}
                               />
-                              <IconButton description={"Copy Style"} icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Copy Style"}
+                                          icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={
+                                            themes.findIndex((v) => v.id == photos[2]?.data?.id) == -1 ? "#AAA7A5" : "#61A0FF"
+                                          }
+                                                                 size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => themeAdd(photos[2]?.data?.id, photos[2]?.src, photos[2]?.data?.style)}
                               />
@@ -325,15 +372,22 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                               />
                           </div>
                           <div className={"black-zone flex flex-col w-1/2 items-end gap-4"}>
-                              <IconButton description={"Download"} icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Download"}
+                                          icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => ForceDownload(photos[3]?.src, "designera-" + photos[3]?.data?.id)}
                               />
-                              <IconButton description={"Like"} icon={<FontAwesomeIcon icon={faHeart} color={"#AAA7A5"} size={"xl"}
-                                                                 style={{width: 25, height: 25}}/>}
+                              <IconButton description={"Like"} icon={<FontAwesomeIcon icon={faHeart} color={
+                                userData?.upvotedImages?.findIndex((v: any) => v.id == photos[3]?.data?.id) == -1 ? "#AAA7A5" : "#FF6363"
+                              } size={"xl"}
+                                                                                      style={{width: 25, height: 25}}/>}
                                           onClick={() => vote(true, 3)}
                               />
-                              <IconButton description={"Copy Style"} icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Copy Style"}
+                                          icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={
+                                            themes.findIndex((v) => v.id == photos[3]?.data?.id) == -1 ? "#AAA7A5" : "#61A0FF"
+                                          }
+                                                                 size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => themeAdd(photos[3]?.data?.id, photos[3]?.src, photos[3]?.data?.style)}
                               />
@@ -392,15 +446,22 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                               />
                           </div>
                           <div className={"black-zone flex flex-col w-1/2 items-end gap-4"}>
-                              <IconButton description={"Download"} icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Download"}
+                                          icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => ForceDownload(photos[4]?.src, "designera-" + photos[4]?.data?.id)}
                               />
-                              <IconButton description={"Like"} icon={<FontAwesomeIcon icon={faHeart} color={"#AAA7A5"} size={"xl"}
-                                                                 style={{width: 25, height: 25}}/>}
+                              <IconButton description={"Like"} icon={<FontAwesomeIcon icon={faHeart} color={
+                                userData?.upvotedImages?.findIndex((v: any) => v.id == photos[4]?.data?.id) == -1 ? "#AAA7A5" : "#FF6363"
+                              } size={"xl"}
+                                                                                      style={{width: 25, height: 25}}/>}
                                           onClick={() => vote(true, 4)}
                               />
-                              <IconButton description={"Copy Style"} icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Copy Style"}
+                                          icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={
+                                            themes.findIndex((v) => v.id == photos[4]?.data?.id) == -1 ? "#AAA7A5" : "#61A0FF"
+                                          }
+                                                                 size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => themeAdd(photos[4]?.data?.id, photos[4]?.src, photos[4]?.data?.style)}
                               />
@@ -455,15 +516,22 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                               />
                           </div>
                           <div className={"black-zone flex flex-col w-1/2 items-end gap-4"}>
-                              <IconButton description={"Download"} icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Download"}
+                                          icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => ForceDownload(photos[5]?.src, "designera-" + photos[5]?.data?.id)}
                               />
-                              <IconButton description={"Like"} icon={<FontAwesomeIcon icon={faHeart} color={"#AAA7A5"} size={"xl"}
-                                                                 style={{width: 25, height: 25}}/>}
+                              <IconButton description={"Like"} icon={<FontAwesomeIcon icon={faHeart} color={
+                                userData?.upvotedImages?.findIndex((v: any) => v.id == photos[5]?.data?.id) == -1 ? "#AAA7A5" : "#FF6363"
+                              } size={"xl"}
+                                                                                      style={{width: 25, height: 25}}/>}
                                           onClick={() => vote(true, 5)}
                               />
-                              <IconButton description={"Copy Style"} icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={"#AAA7A5"} size={"xl"}
+                              <IconButton description={"Copy Style"}
+                                          icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={
+                                            themes.findIndex((v) => v.id == photos[5]?.data?.id) == -1 ? "#AAA7A5" : "#61A0FF"
+                                          }
+                                                                 size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => themeAdd(photos[5]?.data?.id, photos[5]?.src, photos[5]?.data?.style)}
                               />
