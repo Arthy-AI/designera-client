@@ -7,7 +7,7 @@ import {SubscriptionModal} from "../subscription/SubscriptionModal";
 import {DesigneraTitle} from "../../assets/svg/DesigneraTitle";
 import {DesigneraTitleLarge} from "../../assets/svg/DesigneraTitleLarge";
 import useAuth from "../../hooks/auth/useAuth";
-import { ImageWithFallback } from '../images/ImageWithFallback';
+import { ImageWithBlur } from '../images/ImageWithBlur';
 import useSubscription from "../../hooks/subscription/useSubscription";
 
 export const Header = ({children, ...props}: ReactProps) => {
@@ -31,7 +31,7 @@ export const Header = ({children, ...props}: ReactProps) => {
               }}>
               {
                 userData.id &&
-                <ImageWithFallback
+                <ImageWithBlur
                   alt={"Avatar"}
                   width={36}
                   height={36}

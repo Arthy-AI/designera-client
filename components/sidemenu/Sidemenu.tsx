@@ -17,7 +17,7 @@ import {settingsSlice, settingsStore} from "./Settings";
 import {faChevronLeft, faGear} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {sidemenuStore} from "./SidemenuToggle";
-import { ImageWithFallback } from '../images/ImageWithFallback';
+import { ImageWithBlur } from '../images/ImageWithBlur';
 import useAuth from '../../hooks/auth/useAuth';
 import {SimpleButton} from "../button/SimpleButton";
 import {useRouter} from "next/router";
@@ -165,7 +165,7 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
                                   }}
                                   type="file" id="avatar-file-input" style={{ display: 'none' }} />
                                 <div className={'rounded-full flex justify-center items-center overflow-hidden w-[116px] h-[116px] border-4 border-gray-600 hover:border-white cursor-pointer'}>
-                                  <ImageWithFallback
+                                  <ImageWithBlur
                                     onClick={() => {
                                       document.getElementById('avatar-file-input')?.click()
                                     }}
@@ -256,12 +256,6 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
                     </DrawerBody>
                     <DrawerFooter style={{justifyContent: "center"}}>
                         <div className={"w-full flex flex-col justify-center font-semibold items-center"}>
-                            { !userData?.subscription && <div className={"w-full flex flex-row justify-center"}>
-                                <SimpleButton type={"primary"} text={"Apply Promo Code"} className={"w-4/5 text-sm h-fit w-fit p-2"}
-                                    onClick={() => { router.replace('/apply-promo-code') }}
-                                />
-                            </div>
-                            }
                             <div className={"my-5 flex flex-col justify-center items-center"}>
                                 <small className="text-[#979797] hover:text-[#c7c7c7] block cursor-pointer"
                                        onClick={() => { router.push('/privacy-policy') }}><u>Privacy

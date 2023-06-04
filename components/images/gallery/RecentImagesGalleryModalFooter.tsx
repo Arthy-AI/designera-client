@@ -1,19 +1,22 @@
 import React, {useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-  faDownload,
+  faCircleDown,
   faHeart, faWandMagicSparkles, faEye
 } from "@fortawesome/free-solid-svg-icons";
 import {IconButton} from "../../button/IconButton";
 import moment from "moment/moment";
 import {imagesGlobal, imagesGlobalStore} from "../../../globals/images/images";
 import {DynamicObject} from "../../../constants/DynamicObject";
-import {ImageWithFallback} from "../ImageWithFallback";
+import {ImageWithBlur} from "../ImageWithBlur";
 import {ForceDownload} from "../../../constants/ForceDownload";
 import {useAxios} from "../../../hooks/useAxios";
 import toast from "react-hot-toast";
 import useAsTheme from "../../../hooks/themes/useAsTheme";
 import useAuth from "../../../hooks/auth/useAuth";
+import {CustomDateFormat} from "../../../constants/CustomDateFormat";
+import {ImageWithFallback} from "../ImageWithFallback";
+import Image from "next/image";
 
 export const RecentImagesGalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicObject) => {
   const {userData, upvoteImageUpdate} = useAuth()
@@ -96,7 +99,7 @@ export const RecentImagesGalleryModalFooter = ({innerProps, isModal, currentInde
         className={"absolute alwaysOnTop left-0 top-5 sm:top-auto sm:bottom-0 pl-2 pb-2 gap-4 items-end h-fit"}>
         <div className={"flex items-end flex-row flex-wrap gap-4"}>
           <IconButton description={"Download"} icon={
-            <FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
+            <FontAwesomeIcon icon={faCircleDown} color={"#AAA7A5"} size={"xl"}
                              style={{width: 25, height: 25}}
                              onClick={() => ForceDownload(photos[currentIndex]?.src, "designera-" + photos[currentIndex]?.data?.id)}/>
           }
@@ -167,13 +170,14 @@ export const RecentImagesGalleryModalFooter = ({innerProps, isModal, currentInde
             icon={
               photos[currentIndex]?.data?.userAvatar ?
                 <div className={"overflow-hidden designera-rounded"}>
-                  <ImageWithFallback
+                  <Image
                     width={50}
                     height={50}
-                    src={`https://cdn.designera.app/avatar/${photos[currentIndex]?.data?.userAvatar}`}
+                    src={`https://cdn.designera.app/avatar/${photos[currentIndex]?.data?.userAvatar}?${photos[currentIndex]?.data?.userAvatar}`}
                     alt={photos[currentIndex]?.data?.userAvatar || "No info found"}
                     style={{objectFit: 'contain'}}
-                    fallbackUrl={"/assets/images/unknown.png"}
+                    placeholder={"blur"}
+                    blurDataURL={"/assets/images/unknown.png"}
                   />
                 </div>
                 : <div className={'hidden'}></div>
@@ -187,7 +191,7 @@ export const RecentImagesGalleryModalFooter = ({innerProps, isModal, currentInde
           {photos[currentIndex]?.data?.title}
           <small className={"font-thin"}>By {photos[currentIndex]?.data?.username}</small>
           <small
-            className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[currentIndex]?.data?.createdAt))?.valueOf()).format(`D [Days], H [Hours], m [Minutes], s [Seconds]`, {trim: "both"})} Ago</small>
+            className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[currentIndex]?.data?.createdAt))?.valueOf()).format(CustomDateFormat, {trim: "both"})} Ago</small>
         </div>
         <div className={"absolute w-60 h-32 bottom-0 right-0 z-0"} style={{
           backgroundImage: 'url("/assets/images/Rectangle_9.png")',

@@ -1,14 +1,13 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-  faArrowRotateLeft,
-  faArrowUpRightFromSquare,
   faCopy,
-  faDownload,
+  faCircleDown,
   faHeart,
   faPaperPlane,
   faPlus, faWandMagicSparkles,
-  faUpRightAndDownLeftFromCenter, faArrowsRotate, faArrowUpFromBracket
+  faUpRightAndDownLeftFromCenter, faArrowsRotate, faArrowUpFromBracket,
+  faMagnifyingGlassDollar
 } from "@fortawesome/free-solid-svg-icons";
 import {Tooltip as ReactTooltip} from "react-tooltip";
 import * as Scroll from 'react-scroll';
@@ -41,13 +40,14 @@ import {StyleSuggestionPills} from "../constants/StyleSuggestionPills";
 import {ShuffleArray} from "../constants/ShuffleArray";
 import {DynamicObject} from "../constants/DynamicObject";
 import {GetBase64} from "../constants/GetBase64";
-import {ImageWithFallback} from "../components/images/ImageWithFallback";
+import {ImageWithBlur} from "../components/images/ImageWithBlur";
 import {ForceDownload} from "../constants/ForceDownload";
 import {imagesGlobal, imagesGlobalStore} from "../globals/images/images";
 import useAsTheme from "../hooks/themes/useAsTheme";
 import {UseAsThemeFlatLogo} from "../assets/svg/UseAsThemeFlatLogo";
 import {SubscriptionModal} from "../components/subscription/SubscriptionModal";
 import useSubscription from "../hooks/subscription/useSubscription";
+import {CircularProgress} from "@chakra-ui/react";
 
 export default function MainPage() {
   const {GET, FILEPOST, POST, PATCH} = useAxios()
@@ -297,7 +297,7 @@ export default function MainPage() {
         <div className="w-4/5 flex flex-col items-center">
           <Heading>
             <div className={"hidden md:block mb-6"}>Design your <span className="text-[#FF9900]">own</span> interior
-              in{" "}
+              in
               seconds
             </div>
           </Heading>
@@ -339,6 +339,7 @@ export default function MainPage() {
                       labelText={"Room Type"}
                       labelTagShow={false}
                       className={"placeholder-white"}
+                      secondaryPlaceholderText={"  Ex. Living Room, Kitchen, Office..."}
                       value={roomType}
                       onValueChange={(e) => {
                         setRoomType(e)
@@ -353,6 +354,7 @@ export default function MainPage() {
                       <SimpleInput labelText={"Style"} labelTagShow={false} value={roomStyle} onValueChange={(e) => {
                         setRoomStyle(e)
                       }}
+                                   secondaryPlaceholderText={"  Ex. Minimalist, Gothic, 70’s, Zen, Modern..."}
                                    onFocus={() => {
                                      setShowStyleSuggestionPills(true)
                                    }}
@@ -419,6 +421,26 @@ export default function MainPage() {
                                 id="keywords"
                                 className="flex flex-row flex-wrap gap-x-1.5 gap-y-1 max-w-full my-2 h-24 items-center justify-center font-thin"
                               >
+                                <div>
+                                  <div id={`suggestion-refresh`}
+                                       className="bg-[#515151] p-0.5 rounded px-1 text-stone-100 designera-box-shadow cursor-pointer Font-ExtraLight select-none"
+                                       style={{fontSize: "0.850rem"}}
+                                       onClick={(e) => {
+                                         setStyleSuggestionPills([...ShuffleArray(styleSuggestionPills)])
+                                       }}
+                                  >
+                                    <FontAwesomeIcon icon={faArrowsRotate} color={"#F5F5F4"}
+                                                     style={{
+                                                       width: 15,
+                                                       height: 15,
+                                                     }}/>
+                                  </div>
+                                  <ReactTooltip
+                                    anchorId={`suggestion-refresh`}
+                                    place="bottom"
+                                    content={"Refresh"}
+                                  />
+                                </div>
                                 {styleSuggestionPills.map((v, i) => {
                                   return (
                                     <div key={i}>
@@ -464,7 +486,11 @@ export default function MainPage() {
                           }
                           <div className={"w-full"}>
                             <SimpleButton
-                              disabled={!selectedImage || !selectedImageObject || !(roomType.length > 2 && roomType.length < 1024) || !(roomStyle.length > 2 && roomStyle.length < 1024)}
+                              disabled={
+                              !selectedImage
+                                || !selectedImageObject
+                                || !(roomType.length > 2 && roomType.length < 1024)
+                                || (!(roomStyle.length > 2 && roomStyle.length < 1024) && themes.length < 1)}
                               text={"Run Designera"}
                               type={"primary"}
                               onClick={(e) => {
@@ -512,14 +538,14 @@ export default function MainPage() {
                   >
                     <div
                       className={"h-full w-full opacity-0 hover:opacity-100 transition duration-300 ease-in-out"}>
-                      <div className={"black-zone h-1/2"}>
-                        <div className={"overflow-x-scroll md:overflow-x-hidden"}>
+                      <div className={"h-1/2"}>
+                        <div className={"overflow-x-scroll md:overflow-x-hidden black-zone"}>
                           {!selectedResult?.url?.includes("reference") &&
                               <div
-                                  className={"w-fit flex flex-row items-start justify-center sm:w-full md:justify-start md:flex-col md:items-end gap-4 p-4"}>
+                                  className={"black-zone w-fit flex flex-row items-start justify-center sm:w-full md:justify-start md:flex-col md:items-end gap-4 p-4"}>
                                   <IconButton
                                       description={"Download"}
-                                      icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"}
+                                      icon={<FontAwesomeIcon icon={faCircleDown} color={"#AAA7A5"}
                                                              size={"xl"}
                                                              style={{width: 25, height: 25}}/>} onClick={() => {
                                     ForceDownload(selectedResult.url, "designera-" + selectedResult.id)
@@ -578,6 +604,12 @@ export default function MainPage() {
                                         renderProcess(true)
                                       }}
                                   />
+                                  <IconButton
+                                      description={"Coming Soon"}
+                                      icon={<FontAwesomeIcon icon={faMagnifyingGlassDollar} color={"#AAA7A5"}
+                                                             size={"xl"}
+                                                             style={{width: 25, height: 25}}/>}
+                                  />
                               </div>
                           }
                         </div>
@@ -631,8 +663,8 @@ export default function MainPage() {
                                   switchImage(v, e, i)
                                 }}
                                      className="w-32 xl:w-1/6 flex items-center text-center bg-stone-600 h-20 designera-rounded designera-box-shadow border-2 border-transparent hover:border-white cursor-pointer overflow-hidden">
-                                  <ImageWithFallback
-                                    className="w-full h-full"
+                                  <ImageWithBlur
+                                    className="w-full h-full object-cover"
                                     src={`https://cdn.designera.app/generated/${v}`}
                                     alt={`Generated Image`}
                                     width={100}
@@ -649,8 +681,12 @@ export default function MainPage() {
                   </div>
                   : loaderShow ?
                     <div
-                      className={"w-full flex items-center justify-center font-semibold bg-stone-600 designera-rounded text-white h-96 md:h-full"}
-                    >Rendering...</div>
+                      className={"w-full flex items-center justify-center flex-col font-semibold bg-stone-600 designera-rounded text-white h-96 md:h-full"}>
+                      <span style={{marginBottom: '0.4rem'}}>Rendering...</span>
+                      <div style={{marginTop: '0.4rem'}}>
+                        <CircularProgress isIndeterminate color={"#FF9900"} />
+                      </div>
+                    </div>
                     :
                     <div className={"h-full"}>
                       <div className={"h-full hidden md:block"}>

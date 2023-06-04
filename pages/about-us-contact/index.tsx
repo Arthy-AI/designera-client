@@ -98,7 +98,7 @@ export default function AboutUsContact() {
           <div className="separator-white text-xl select-none">Contact Us!</div>
           <div className={"Font-Regular text-center flex flex-col items-center"}>
             <div className={"mb-8 Font-SemiBold"}>
-              <a href={"mailto:contact@designera.app"} className={"underline hover:text-[#FF9900] transition-colors ease-in-out duration-150"}>contact@designera.app</a>
+              <a href={"mailto:team@arthylabs.com"} className={"underline hover:text-[#FF9900] transition-colors ease-in-out duration-150"}>team@arthylabs.com</a>
             </div>
             <DesigneraTitleLarge/>
           </div>

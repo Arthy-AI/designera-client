@@ -2,12 +2,12 @@ import React, {useCallback, useEffect, useState} from "react";
 import Gallery from "react-photo-gallery";
 import {IconButton} from "../../button/IconButton";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faDownload, faHeart, faWandMagicSparkles} from "@fortawesome/free-solid-svg-icons";
+import {faCircleDown, faHeart, faWandMagicSparkles} from "@fortawesome/free-solid-svg-icons";
 import Carousel, {Modal, ModalGateway} from "react-images";
 import {GalleryModalFooter} from "./GalleryModalFooter";
 import {ReactProps} from "../../../interfaces/ReactProps";
 import {GetMeta} from "../../../constants/GetMeta";
-import {ImageWithFallback} from "../ImageWithFallback";
+import {ImageWithBlur} from "../ImageWithBlur";
 import {ForceDownload} from "../../../constants/ForceDownload";
 import toast from "react-hot-toast";
 import {useAxios} from "../../../hooks/useAxios";
@@ -171,7 +171,7 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
                                          <IconButton
                                              icon={
                                                  <div className={"overflow-hidden designera-rounded"}>
-                                                     <ImageWithFallback
+                                                     <ImageWithBlur
                                                        width={50}
                                                        height={50}
                                                        src={`https://cdn.designera.app/avatar/${photos[index]?.data?.userAvatar}`}
@@ -184,7 +184,7 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
                                          />
                                      </div>
                                      <div className={"black-zone flex flex-col w-1/2 items-end gap-0.5 md:gap-4"}>
-                                         <IconButton description={"Download"} icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
+                                         <IconButton description={"Download"} icon={<FontAwesomeIcon icon={faCircleDown} color={"#AAA7A5"} size={"xl"}
                                                                             style={{width: 25, height: 25}}/>}
                                                      onClick={() => ForceDownload(photos[index]?.src, "designera-" + photos[index]?.data?.id)}
                                          />

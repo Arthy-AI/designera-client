@@ -2,12 +2,12 @@ import React, {ReactElement, useCallback, useEffect, useState} from "react";
 import Image from 'next/image';
 import {IconButton} from "../../button/IconButton";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faDownload, faHeart, faWandMagicSparkles} from "@fortawesome/free-solid-svg-icons";
+import {faCircleDown, faHeart, faWandMagicSparkles} from "@fortawesome/free-solid-svg-icons";
 import Carousel, {Modal, ModalGateway} from "react-images";
 import {ReactProps} from "../../../interfaces/ReactProps";
 import moment from "moment";
 import "moment-duration-format";
-import {ImageWithFallback} from '../ImageWithFallback';
+import {ImageWithBlur} from '../ImageWithBlur';
 import {imagesGlobal, imagesGlobalStore} from "../../../globals/images/images";
 import {ForceDownload} from "../../../constants/ForceDownload";
 import toast from "react-hot-toast";
@@ -15,6 +15,7 @@ import {useAxios} from "../../../hooks/useAxios";
 import useAsTheme from "../../../hooks/themes/useAsTheme";
 import {RecentImagesGalleryModalFooter} from "./RecentImagesGalleryModalFooter";
 import useAuth from "../../../hooks/auth/useAuth";
+import {CustomDateFormat} from "../../../constants/CustomDateFormat";
 
 interface SampleRecentGalleryImages extends ReactProps {
   images: any[]
@@ -145,7 +146,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                               <IconButton
                                   icon={
                                     <div className={"overflow-hidden designera-rounded"}>
-                                      <ImageWithFallback
+                                      <ImageWithBlur
                                         width={50}
                                         height={50}
                                         src={`https://cdn.designera.app/avatar/${photos[0]?.data?.userAvatar}`}
@@ -160,7 +161,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                           </div>
                           <div className={"black-zone flex flex-col w-1/2 items-end gap-4"}>
                               <IconButton description={"Download"}
-                                          icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
+                                          icon={<FontAwesomeIcon icon={faCircleDown} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => ForceDownload(photos[0]?.src, "designera-" + photos[0]?.data?.id)}
                               />
@@ -185,7 +186,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                             {photos[0]?.data?.title}
                               <small className={"font-thin"}>By {photos[0]?.data?.username}</small>
                               <small
-                                  className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[0]?.data?.createdAt))?.valueOf()).format(`D [Days], H [Hours], m [Minutes], s [Seconds]`)} Ago</small>
+                                  className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[0]?.data?.createdAt))?.valueOf()).format(CustomDateFormat)} Ago</small>
                           </div>
                           <div className={"black-zone absolute w-60 h-32 right-0 z-0"} style={{
                             backgroundImage: 'url("/assets/images/Rectangle_9.png")',
@@ -214,7 +215,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                               <IconButton
                                   icon={
                                     <div className={"overflow-hidden designera-rounded"}>
-                                      <ImageWithFallback
+                                      <ImageWithBlur
                                         width={50}
                                         height={50}
                                         src={`https://cdn.designera.app/avatar/${photos[1]?.data?.userAvatar}`}
@@ -229,7 +230,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                           </div>
                           <div className={"black-zone flex flex-col w-1/2 items-end gap-4"}>
                               <IconButton description={"Download"}
-                                          icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
+                                          icon={<FontAwesomeIcon icon={faCircleDown} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => ForceDownload(photos[1]?.src, "designera-" + photos[1]?.data?.id)}
                               />
@@ -255,7 +256,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                             {photos[1]?.data?.title}
                               <small className={"font-thin"}>By {photos[1]?.data?.username}</small>
                               <small
-                                  className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[1]?.data?.createdAt))?.valueOf()).format(`D [Days], H [Hours], m [Minutes], s [Seconds]`)} Ago</small>
+                                  className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[1]?.data?.createdAt))?.valueOf()).format(CustomDateFormat)} Ago</small>
                           </div>
                           <div className={"black-zone absolute w-60 h-32 right-0 z-0"} style={{
                             backgroundImage: 'url("/assets/images/Rectangle_9.png")',
@@ -288,7 +289,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                               <IconButton
                                   icon={
                                     <div className={"overflow-hidden designera-rounded"}>
-                                      <ImageWithFallback
+                                      <ImageWithBlur
                                         width={50}
                                         height={50}
                                         src={`https://cdn.designera.app/avatar/${photos[2]?.data?.userAvatar}`}
@@ -303,7 +304,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                           </div>
                           <div className={"black-zone flex flex-col w-1/2 items-end gap-4"}>
                               <IconButton description={"Download"}
-                                          icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
+                                          icon={<FontAwesomeIcon icon={faCircleDown} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => ForceDownload(photos[2]?.src, "designera-" + photos[2]?.data?.id)}
                               />
@@ -329,7 +330,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                             {photos[2]?.data?.title}
                               <small className={"font-thin"}>By {photos[2]?.data?.username}</small>
                               <small
-                                  className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[2]?.data?.createdAt))?.valueOf()).format(`D [Days], H [Hours], m [Minutes], s [Seconds]`)} Ago</small>
+                                  className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[2]?.data?.createdAt))?.valueOf()).format(CustomDateFormat)} Ago</small>
                           </div>
                           <div className={"black-zone absolute w-60 h-32 right-0 z-0"} style={{
                             backgroundImage: 'url("/assets/images/Rectangle_9.png")',
@@ -358,7 +359,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                               <IconButton
                                   icon={
                                     <div className={"overflow-hidden designera-rounded"}>
-                                      <ImageWithFallback
+                                      <ImageWithBlur
                                         width={50}
                                         height={50}
                                         src={`https://cdn.designera.app/avatar/${photos[3]?.data?.userAvatar}`}
@@ -373,7 +374,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                           </div>
                           <div className={"black-zone flex flex-col w-1/2 items-end gap-4"}>
                               <IconButton description={"Download"}
-                                          icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
+                                          icon={<FontAwesomeIcon icon={faCircleDown} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => ForceDownload(photos[3]?.src, "designera-" + photos[3]?.data?.id)}
                               />
@@ -399,7 +400,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                             {photos[3]?.data?.title}
                               <small className={"font-thin"}>By {photos[3]?.data?.username}</small>
                               <small
-                                  className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[3]?.data?.createdAt))?.valueOf()).format(`D [Days], H [Hours], m [Minutes], s [Seconds]`)} Ago</small>
+                                  className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[3]?.data?.createdAt))?.valueOf()).format(CustomDateFormat)} Ago</small>
                           </div>
                           <div className={"black-zone absolute w-60 h-32 right-0 z-0"} style={{
                             backgroundImage: 'url("/assets/images/Rectangle_9.png")',
@@ -432,7 +433,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                               <IconButton
                                   icon={
                                     <div className={"overflow-hidden designera-rounded"}>
-                                      <ImageWithFallback
+                                      <ImageWithBlur
                                         width={50}
                                         height={50}
                                         src={`https://cdn.designera.app/avatar/${photos[4]?.data?.userAvatar}`}
@@ -447,7 +448,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                           </div>
                           <div className={"black-zone flex flex-col w-1/2 items-end gap-4"}>
                               <IconButton description={"Download"}
-                                          icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
+                                          icon={<FontAwesomeIcon icon={faCircleDown} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => ForceDownload(photos[4]?.src, "designera-" + photos[4]?.data?.id)}
                               />
@@ -473,7 +474,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                             {photos[4]?.data?.title}
                               <small className={"font-thin"}>By {photos[4]?.data?.username}</small>
                               <small
-                                  className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[4]?.data?.createdAt))?.valueOf()).format(`D [Days], H [Hours], m [Minutes], s [Seconds]`)} Ago</small>
+                                  className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[4]?.data?.createdAt))?.valueOf()).format(CustomDateFormat)} Ago</small>
                           </div>
                           <div className={"black-zone absolute w-60 h-32 right-0 z-0"} style={{
                             backgroundImage: 'url("/assets/images/Rectangle_9.png")',
@@ -502,7 +503,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                               <IconButton
                                   icon={
                                     <div className={"overflow-hidden designera-rounded"}>
-                                      <ImageWithFallback
+                                      <ImageWithBlur
                                         width={50}
                                         height={50}
                                         src={`https://cdn.designera.app/avatar/${photos[5]?.data?.userAvatar}`}
@@ -517,7 +518,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                           </div>
                           <div className={"black-zone flex flex-col w-1/2 items-end gap-4"}>
                               <IconButton description={"Download"}
-                                          icon={<FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
+                                          icon={<FontAwesomeIcon icon={faCircleDown} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
                                           onClick={() => ForceDownload(photos[5]?.src, "designera-" + photos[5]?.data?.id)}
                               />
@@ -543,7 +544,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                             {photos[5]?.data?.title}
                               <small className={"font-thin"}>By {photos[5]?.data?.username}</small>
                               <small
-                                  className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[5]?.data?.createdAt))?.valueOf()).format(`D [Days], H [Hours], m [Minutes], s [Seconds]`)} Ago</small>
+                                  className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[5]?.data?.createdAt))?.valueOf()).format(CustomDateFormat)} Ago</small>
                           </div>
                           <div className={"black-zone absolute w-60 h-32 right-0 z-0"} style={{
                             backgroundImage: 'url("/assets/images/Rectangle_9.png")',

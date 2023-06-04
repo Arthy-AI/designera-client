@@ -17,7 +17,7 @@ import axios from "axios";
 import {useAxios} from "../../hooks/useAxios";
 import toast, {Toaster} from "react-hot-toast";
 import {CountryCodes} from "../../constants/CountryCodes";
-import {ImageWithFallback} from "../../components/images/ImageWithFallback";
+import {ImageWithBlur} from "../../components/images/ImageWithBlur";
 
 export default function CheckoutPage() {
   const router = useRouter()
@@ -369,7 +369,7 @@ export default function CheckoutPage() {
                     <div className="separator"></div>
                     <div
                       className={"flex flex-col justify-center items-center gap-8 px-10 mt-5 mb-5"}>
-                      <ImageWithFallback alt={"Iyzico"} fallbackUrl={""} src={'/assets/images/iyzicoicons.png'} width={300} height={30}/>
+                      <ImageWithBlur alt={"Iyzico"} fallbackUrl={""} src={'/assets/images/iyzicoicons.png'} width={300} height={30}/>
                       <div className={"Font-Light text-center text-stone-400 text-xs"}>
                         By confirming your subscription, you allow Designera to charge your card
                         for

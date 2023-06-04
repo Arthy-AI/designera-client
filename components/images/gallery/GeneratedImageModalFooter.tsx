@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   faArrowRotateLeft,
   faArrowUpRightFromSquare, faCopy,
-  faDownload,
+  faCircleDown,
   faHeart,
   faPaperPlane, faWandMagicSparkles
 } from "@fortawesome/free-solid-svg-icons";
@@ -94,7 +94,7 @@ export const GeneratedImageModalFooter = ({innerProps, isModal, currentIndex}: D
               <div className={"w-full flex flex-row absolute bottom-5 justify-center"}>
                   <AnimatedSimpleInput
                       labelText={"Give your design a name"}
-                      className={"w-2/12 xl:w-3/12"}
+                      className={"w-2/12 xl:w-3/12 alwaysOnTop"}
                       labelClassname={"ml-5 text-white text-base"}
                       inputClassname={"bg-[#1E1E1E] hover:bg-[#242424] focus:bg-[#242424] opacity-90 pl-7 pt-6"}
                       value={publishDescription}
@@ -119,7 +119,7 @@ export const GeneratedImageModalFooter = ({innerProps, isModal, currentIndex}: D
                         }
                       }}
                       disabled={publishDescription.length < 6 || publishDescription.length > 50}
-                      className="xl:w-1/12 block text-stone-400 p-2 bg-[#1E1E1E] hover:bg-[#242424] focus:bg-[#242424] opacity-90 border border-[#6F6B6A] font-semibold hover:text-white designera-rounded ml-2 flex items-center justify-center"
+                      className="xl:w-1/12 alwaysOnTop block text-stone-400 p-2 bg-[#1E1E1E] hover:bg-[#242424] focus:bg-[#242424] opacity-90 border border-[#6F6B6A] font-semibold hover:text-white designera-rounded ml-2 flex items-center justify-center"
                       style={{height: 56, width: 56}}
                   >
                       <FontAwesomeIcon icon={faPaperPlane} color={"#AAA7A5"}
@@ -132,7 +132,7 @@ export const GeneratedImageModalFooter = ({innerProps, isModal, currentIndex}: D
         <IconButton
           description={"Download"}
           icon={
-            <FontAwesomeIcon icon={faDownload} color={"#AAA7A5"} size={"xl"}
+            <FontAwesomeIcon icon={faCircleDown} color={"#AAA7A5"} size={"xl"}
                              style={{width: 25, height: 25}}/>
           }
           onClick={() => ForceDownload(photos[currentIndex].src, "designera-" + photos[currentIndex].id)}

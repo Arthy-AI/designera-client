@@ -18,8 +18,6 @@ export const ImageWithFallback = ({alt, fallbackUrl, fill = false, ...props}: Im
       src={src+ "?" + Date.now()}
       alt={alt}
       fill={fill}
-      placeholder={"blur"}
-      blurDataURL={fallbackUrl}
       onError={(e) => { setSrc(fallbackUrl) }}
     />
   );

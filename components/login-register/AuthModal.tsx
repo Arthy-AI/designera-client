@@ -58,12 +58,7 @@ const registerValidation = Yup.object().shape({
     .max(50, "Please shorten your input (maximum length: 50).")
     .min(8, "Please enter more characters (minimum length: 8).")
     .required("Please enter a valid password.")
-    .oneOf([Yup.ref('password'), ""], 'Passwords must match.'),
-
-  promoCode: Yup.string()
-    .optional()
-    .min(4, "Please enter more characters (minimum length: 4).")
-    .max(32, "Please shorten your input (maximum length: 32).")
+    .oneOf([Yup.ref('password'), ""], 'Passwords must match.')
 });
 
 export const AuthModal = ({children, ...props}: AuthModal) => {
@@ -84,7 +79,7 @@ export const AuthModal = ({children, ...props}: AuthModal) => {
                 login(
                   values.email,
                   values.password,
-                  keepMeSignedIn
+                  true
                 )
               }}
             >
@@ -99,10 +94,6 @@ export const AuthModal = ({children, ...props}: AuthModal) => {
                 }) => (
                 <form onSubmit={handleSubmit}>
                   <div className="flex flex-col gap-4">
-                    <div className={"text-xl text-center"}>Login or <u
-                      className={"cursor-pointer hover:text-[#FF9900]"} onClick={() => {
-                      changeSection("register")
-                    }}>Register</u></div>
                     <SimpleInput id={"email"} name={"email"} labelText={"Email"}
                                  placeholderText={"e.g. dexxxxxx@gmail.com"}
                                  className={"LoginInput"} value={values.email}
@@ -116,20 +107,18 @@ export const AuthModal = ({children, ...props}: AuthModal) => {
                     {touched.password && <FormikError touched={touched.password} error={errors.password}/>}
                     <div>
                       <div className="flex items-center mt-5">
-                        <div className="flex items-center justify-center mb-4 w-full gap-3 md:gap-10">
+                        <div className="flex items-center justify-center mb-4 w-full gap-3 md:gap-4">
                           <button
                             type={"submit"}
                             disabled={isLoggingIn}
                             className={"h-12 w-52 bg-[#008BDA] hover:bg-white hover:text-black transition-colors ease-in-out duration-150 designera-rounded designera-box-shadow text-center flex items-center justify-center text-xl"}>
                             {isLoggingIn ? statusMessage : "Login"}
                           </button>
-                          <div className={"flex items-center"}>
-                            <input id="default-checkbox" type="checkbox" value={Number(keepMeSignedIn)} onChange={(e) => { setKeepMeSignedIn(e.target.checked) }}
-                                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 designera-rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                            <label htmlFor="default-checkbox"
-                                   className="Font-Regular ml-2 text-xs lg:text-sm text-gray-900 dark:text-gray-300 select-none">Keep
-                              me signed in</label>
-                          </div>
+                          <span>or</span>
+                          <span
+                            className={"cursor-pointer text-[#fff] hover:text-[#FF9900] transition-colors ease-in-out duration-300"} onClick={() => {
+                            changeSection("register")
+                          }}>Register</span>
                         </div>
                       </div>
                     </div>
@@ -165,9 +154,6 @@ export const AuthModal = ({children, ...props}: AuthModal) => {
                 <form onSubmit={handleSubmit}>
                   <div className="flex flex-col gap-4">
                     <div className={"text-xl text-center"}>
-                      <u className={"cursor-pointer hover:text-[#FF9900]"} onClick={() => {
-                        changeSection("login")
-                      }}>Login</u> or Register
                     </div>
                     <div className={"flex flex-row justify-between gap-4"}>
                       <div>
@@ -205,22 +191,20 @@ export const AuthModal = ({children, ...props}: AuthModal) => {
                     />
                     {touched.passwordConfirmation &&
                         <FormikError touched={touched.passwordConfirmation} error={errors.passwordConfirmation}/>}
-
-                    <SimpleInput id={"promoCode"} name={"promoCode"} labelText={"Promo Code"}
-                                 placeholderText={"XXXXXXXXXXX"} value={values.promoCode}
-                                 onChange={handleChange} onBlur={handleBlur}
-                    />
-                    {touched.promoCode && <FormikError touched={touched.promoCode} error={errors.promoCode}/>}
-
                     <div>
                       <div className="flex items-center mt-5">
-                        <div className="flex items-center justify-center mb-4 w-full gap-10">
+                        <div className="flex items-center justify-center mb-4 w-full gap-3 md:gap-4">
                           <button
                             type={"submit"}
                             disabled={isLoggingIn}
                             className={"h-12 w-52 bg-[#008BDA] hover:bg-white hover:text-black transition-colors ease-in-out duration-150 designera-rounded designera-box-shadow text-center flex items-center justify-center text-xl"}>
                             {isLoggingIn ? statusMessage : "Register"}
                           </button>
+                          <span>or</span>
+                          <span
+                            className={"cursor-pointer text-[#fff] hover:text-[#FF9900] transition-colors ease-in-out duration-300"} onClick={() => {
+                            changeSection("login")
+                          }}>Login</span>
                         </div>
                       </div>
                     </div>
