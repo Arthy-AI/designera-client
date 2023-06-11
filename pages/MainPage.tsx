@@ -482,10 +482,10 @@ export default function MainPage() {
                     >
                       Image Dependency
                     </span>
-                    <Slider defaultValue={0.55} min={0.4} max={0.7} step={0.05}>
-                      <SliderTrack bg='orange.100'>
-                        <Box position='relative'/>
-                        <SliderFilledTrack bg='orange.100' />
+                    <Slider defaultValue={0.55} min={0.4} max={0.7} step={0.05} marginBottom={2}>
+                      <SliderTrack borderRadius='full' height='8px' bg='gray.400'>
+                        <Box position='relative' right={-10}/>
+                        <SliderFilledTrack borderRadius='full' height='8px' bg='#FF9900' />
                       </SliderTrack>
                       <SliderThumb boxSize={4} />
                       <SliderMark value={0.4} mt='1.5' ml='0' fontStyle='Inter-Medium' fontSize='14px' textColor={"gray.100"} >
@@ -494,10 +494,6 @@ export default function MainPage() {
                       <SliderMark value={0.7} mt='1.5' ml='-12' fontStyle='Inter-Medium' fontSize='14px' textColor={"gray.100"} >
                         Strong
                       </SliderMark>
-                      <SliderTrack borderRadius='full' height='8px' >
-                        <SliderFilledTrack borderRadius='full' height='8px' />
-                      </SliderTrack>
-                      <SliderThumb borderRadius='full' />
                     </Slider>
                   </Box>
                   <div>
