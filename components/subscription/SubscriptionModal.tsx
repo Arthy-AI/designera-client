@@ -10,6 +10,7 @@ import {SimpleButton} from "../button/SimpleButton";
 import {SubscriptionCards} from "./SubscriptionCards";
 import {useRouter} from "next/router";
 import useSubscription from "../../hooks/subscription/useSubscription";
+import PricingPage from "./PricingTable";
 
 interface SubscriptionModal extends ReactProps {
 }
@@ -27,16 +28,9 @@ export const SubscriptionModal = ({children, ...props}: SubscriptionModal) => {
             <ModalOverlay/>
             <ModalContent
                 style={{backgroundColor: "transparent", display: "flex", alignItems: "flex-end"}}>
-                <ModalBody style={{ display: "flex", flexDirection: "column", justifyContent: "center", minHeight: "80vh" }}>
-                    <SubscriptionCards selected={data.selectedSubscription} onSelect={changeSubscription}/>
-                    <div className={"flex justify-center"}>
-                        <SimpleButton
-                            text={"Select Plan"}
-                            type={"colorless"}
-                            disabled={data.selectedSubscription < 1}
-                            className={"w-1/2 bg-[#2563eb] hover:bg-white hover:text-black transition-colors ease-in-out duration-150 mt-2"}
-                            onClick={() => { router.replace('/checkout', { query: {selected: data.selectedSubscription} }) }}
-                        />
+                <ModalBody style={{ display: "flex", flexDirection: "column", justifyContent: "center", minHeight: "80vh", width: "100%" }}>
+                    <div className={`bg-[#242424] py-9 designera-rounded overflow-hidden`}>
+                        <PricingPage/>
                     </div>
                 </ModalBody>
             </ModalContent>

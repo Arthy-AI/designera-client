@@ -21,7 +21,7 @@ export default function AboutUsContact() {
   const router = useRouter()
 
   return (
-    <main className="flex flex-col" id={"CheckoutPage"}>
+    <main className="flex flex-col" id={"AboutUsPage"}>
       <Head>
         <title>Designera | Create AI-Powered Design Ideas in Seconds</title>
         <meta name="description"

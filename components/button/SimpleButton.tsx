@@ -28,6 +28,10 @@ export const SimpleButton = ({children, text, type, className, disabled, onClick
             onClick={(e) => {
                 return onClick && onClick(e)
             }}
+            style={{
+                backgroundColor: colors[type],
+                color:"white"
+            }}
         >
             {text}
         </button>

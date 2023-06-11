@@ -21,6 +21,7 @@ import Image from "next/image";
 export const RecentImagesGalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicObject) => {
   const {userData, upvoteImageUpdate} = useAuth()
   const [photos, setPhotos] = useState([] as any[])
+  const [nullPhotos, setNullPhotos] = useState([] as any[])
   const {themesSectionToggle, themes, removeImageById} = useAsTheme()
   const {PATCH} = useAxios()
 
@@ -33,6 +34,7 @@ export const RecentImagesGalleryModalFooter = ({innerProps, isModal, currentInde
   }, []);
 
   const [voteLoading, setVoteLoading] = useState(false)
+
   async function vote(isLike: boolean) {
     let vote;
     if (voteLoading) return;
@@ -169,15 +171,24 @@ export const RecentImagesGalleryModalFooter = ({innerProps, isModal, currentInde
           <IconButton
             icon={
               photos[currentIndex]?.data?.userAvatar ?
-                <div className={"overflow-hidden designera-rounded"}>
+                <div className={"overflow-hidden designera-rounded-lg"}>
                   <Image
                     width={50}
                     height={50}
-                    src={`https://cdn.designera.app/avatar/${photos[currentIndex]?.data?.userAvatar}?${photos[currentIndex]?.data?.userAvatar}`}
+                    src={
+                      !nullPhotos.includes(photos[currentIndex]?.data?.userAvatar) ?
+                        `https://cdn.designera.app/avatar/${photos[currentIndex]?.data?.userAvatar}` :
+                        "/assets/images/unknown.png"
+                    }
                     alt={photos[currentIndex]?.data?.userAvatar || "No info found"}
                     style={{objectFit: 'contain'}}
                     placeholder={"blur"}
                     blurDataURL={"/assets/images/unknown.png"}
+                    onError={() => {
+                      let tempNullPhotos = Array.from(nullPhotos)
+                      tempNullPhotos.push(photos[currentIndex]?.data?.userAvatar)
+                      setNullPhotos([...tempNullPhotos])
+                    }}
                   />
                 </div>
                 : <div className={'hidden'}></div>

@@ -47,8 +47,6 @@ export const SampleProfileGalleryImages = ({tab, trigger}: { tab: string, trigge
     }, [tab, trigger])
 
     useEffect(() => {
-        console.log(userData)
-
         setLightboxPhotos((tab == `Likes` ? userData?.upvotedImages : userData?.images as any[])?.filter((v: any) =>
           tab == `Images` ? !v.description :
             tab == `Publishes` ? v.description :

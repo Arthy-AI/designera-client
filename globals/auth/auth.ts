@@ -36,7 +36,7 @@ const authGlobal = createSlice({
       state.userData[type][index] = image;
     },
     decrementCreditBalance: (state, action) => {
-      state.userData.credits[0].balance -= 1
+      state.userData.credits -= 1
     },
     upvoteImageUpdate: (state, action) => {
       let {image, type} = action.payload;

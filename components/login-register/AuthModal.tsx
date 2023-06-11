@@ -11,6 +11,8 @@ import useAuth from "../../hooks/auth/useAuth";
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {FormikError} from "../input/FormikError";
+import {MutedSmall} from "../text/small/MutedSmall";
+import {Small} from "../text/small/Small";
 
 interface AuthModal extends ReactProps {
 }
@@ -107,20 +109,25 @@ export const AuthModal = ({children, ...props}: AuthModal) => {
                     {touched.password && <FormikError touched={touched.password} error={errors.password}/>}
                     <div>
                       <div className="flex items-center mt-5">
-                        <div className="flex items-center justify-center mb-4 w-full gap-3 md:gap-4">
+                        <div className="flex flex-col items-center justify-center w-full gap-2">
                           <button
                             type={"submit"}
                             disabled={isLoggingIn}
                             className={"h-12 w-52 bg-[#008BDA] hover:bg-white hover:text-black transition-colors ease-in-out duration-150 designera-rounded designera-box-shadow text-center flex items-center justify-center text-xl"}>
                             {isLoggingIn ? statusMessage : "Login"}
                           </button>
-                          <span>or</span>
-                          <span
-                            className={"cursor-pointer text-[#fff] hover:text-[#FF9900] transition-colors ease-in-out duration-300"} onClick={() => {
-                            changeSection("register")
-                          }}>Register</span>
+                          <Small
+                            className={"text-[#ccc] select-none"}>Don&apos;t have an account?
+                            <span
+                              className={"cursor-pointer hover:text-[#FF9900] transition-colors ease-in-out duration-300 text-sm ml-1"}
+                              onClick={() => {
+                                changeSection("register")
+                              }}
+                            >Register</span>
+                          </Small>
                         </div>
                       </div>
+                      <Small className={"mt-2 text-[#ccc]"}><a href={'/send-reset-password-request'} className={"hover:underline"}>Forgot Password?</a></Small>
                     </div>
                   </div>
                 </form>
@@ -193,18 +200,22 @@ export const AuthModal = ({children, ...props}: AuthModal) => {
                         <FormikError touched={touched.passwordConfirmation} error={errors.passwordConfirmation}/>}
                     <div>
                       <div className="flex items-center mt-5">
-                        <div className="flex items-center justify-center mb-4 w-full gap-3 md:gap-4">
+                        <div className="flex flex-col items-center justify-center w-full gap-2">
                           <button
                             type={"submit"}
                             disabled={isLoggingIn}
                             className={"h-12 w-52 bg-[#008BDA] hover:bg-white hover:text-black transition-colors ease-in-out duration-150 designera-rounded designera-box-shadow text-center flex items-center justify-center text-xl"}>
                             {isLoggingIn ? statusMessage : "Register"}
                           </button>
-                          <span>or</span>
-                          <span
-                            className={"cursor-pointer text-[#fff] hover:text-[#FF9900] transition-colors ease-in-out duration-300"} onClick={() => {
-                            changeSection("login")
-                          }}>Login</span>
+                          <Small
+                            className={"text-[#ccc] select-none"}>Already have an account?
+                            <span
+                              className={"cursor-pointer hover:text-[#FF9900] transition-colors ease-in-out duration-300 text-sm ml-1"}
+                              onClick={() => {
+                                changeSection("login")
+                              }}
+                            >Login</span>
+                          </Small>
                         </div>
                       </div>
                     </div>

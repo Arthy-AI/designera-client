@@ -6,7 +6,7 @@ import {Formik} from 'formik';
 import {FormikError} from '../input/FormikError';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { NetworkConfig } from '../../hooks/useAxios';
+import {NetworkConfig} from '../../hooks/useAxios';
 
 interface ObjMap {
   [key: string]: any;
@@ -59,7 +59,7 @@ const menus = {
           onSubmit={(values, {setSubmitting, resetForm}) => {
             const token = localStorage.getItem('token');
 
-            axios.patch( NetworkConfig.API_URL + 'user/me', {
+            axios.patch(NetworkConfig.API_URL + 'user/me', {
               firstName: values.firstName,
               lastName: values.lastName,
             }, {
@@ -124,9 +124,9 @@ const menus = {
                 Authorization: `Bearer ${token}`,
               },
             }).then((res) => {
-                toast.success("Password changed successfully!");
-              }).catch((err) => {
-                toast.error(err.response.data.message);
+              toast.success("Password changed successfully!");
+            }).catch((err) => {
+              toast.error(err.response.data.message);
             });
           }}
         >
@@ -205,39 +205,7 @@ const menus = {
             <hr className={"bg-stone-400 border-none h-px"}/>
         </div>*/
   },
-  'Payment Settings': {
-    'Cancel Subscription':
-      <div className="flex flex-col">
-                <span
-                  className={'Font-Light block text-center text-white p-4 pt-0'}>Do you really want to cancel your subscription?</span>
-        <div className={'w-full flex flex-row justify-center'}>
-          <SimpleButton type={'colorless'} text={'Try Another Plan!'} className={'mb-4 bg-[#FF8924] w-4/5'}/>
-        </div>
-        <hr className={'bg-stone-400 border-none h-px'}/>
-        <div className={`flex flex-row justify-center items-center p-4`}>
-                <span className={'font-semibold text-white cursor-pointer'} onClick={() => {
-                  goBack();
-                }}>Cancel</span>
-        </div>
-        <hr className={'bg-stone-400 border-none h-px'}/>
-        <div className={`flex flex-row justify-center items-center p-4`} onClick={() => {
-          const token = localStorage.getItem('token');
-
-          axios.patch( NetworkConfig.API_URL + 'subscription/cancel', {}, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }).then((res) => {
-            toast.success("Subscription cancelled successfully!");
-            location.reload()
-          }).catch((err) => {
-            toast.error(err.response.data.message);
-          });
-        }}>
-          <span className={'font-semibold text-white cursor-pointer'}>Continue</span>
-        </div>
-        <hr className={'bg-stone-400 border-none h-px'}/>
-      </div>,
+  'Manage Plan': () => {
   },
   /*'Delete Images':
     <div className="flex flex-col">
@@ -293,9 +261,25 @@ const settingsSlice = createSlice({
       state = {...tempMenu};
     },
     triggerFunction: (state, action) => {
-      localStorage.removeItem(`token`)
-      localStorage.removeItem(`keepMeSignedIn`)
-      location.reload()
+      let menu = action.payload['v'];
+
+      switch (menu) {
+        case "Logout":
+          localStorage.removeItem(`token`)
+          localStorage.removeItem(`keepMeSignedIn`)
+          location.reload()
+          break;
+        case "Manage Plan":
+          const response = axios.get(NetworkConfig.API_URL + 'network-health').then((data) => {
+            if (data.status == 200) {
+              window.open("https://billing.stripe.com/p/login/test_14k5mLaWn3J72Oc4gg", "_blank");
+            } else {
+              toast.error("An error occurred.")
+            }
+          })
+            .catch((err) => {})
+          break;
+      }
     }
   },
 });
@@ -304,4 +288,4 @@ const settingsStore = configureStore({
   reducer: settingsSlice.reducer,
 });
 
-export { settingsStore, settingsSlice };
+export {settingsStore, settingsSlice};

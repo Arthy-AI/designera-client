@@ -48,8 +48,9 @@ import {UseAsThemeFlatLogo} from "../assets/svg/UseAsThemeFlatLogo";
 import {SubscriptionModal} from "../components/subscription/SubscriptionModal";
 import useSubscription from "../hooks/subscription/useSubscription";
 import {Box, CircularProgress} from "@chakra-ui/react";
-import { Slider, SliderTrack, SliderFilledTrack, SliderThumb, SliderMark } from "@chakra-ui/react";
-import { orange } from "@mui/material/colors";
+import {Slider, SliderTrack, SliderFilledTrack, SliderThumb, SliderMark} from "@chakra-ui/react";
+import {orange} from "@mui/material/colors";
+import {useBottomScrollListener} from "react-bottom-scroll-listener";
 
 
 export default function MainPage() {
@@ -69,6 +70,8 @@ export default function MainPage() {
   const [selectedImage, setSelectedImage] = useState("");
   const [selectedImageObject, setSelectedImageObject] = useState({} as DynamicObject);
   const [publisheds, setPublisheds] = useState([] as String[]);
+  const [imageDependency, setImageDependency] = useState(0.55);
+  const [blockPagination, setBlockPagination] = useState(false);
 
   const [styleSuggestionPills, setStyleSuggestionPills] = useState(StyleSuggestionPills);
 
@@ -107,6 +110,7 @@ export default function MainPage() {
 
   useEffect(() => {
     async function fetchImages() {
+      if (blockPagination) return;
       setLoadingImages(true)
       let recentImagesResponse = await GET("image/filter", {
         query: null,
@@ -118,6 +122,9 @@ export default function MainPage() {
 
 
       let data = await GET("image/filter", paginationData)
+      if (data.items.length < 20) {
+        setBlockPagination(true)
+      }
       let newImages = [...(images), ...(data.items)]
       setImages([...newImages])
       setLoadingImages(false)
@@ -145,12 +152,13 @@ export default function MainPage() {
     generateImageFormData.append("file", selectedImageObject as File)
     generateImageFormData.append("roomType", roomType)
     generateImageFormData.append("roomStyle", `${roomStyle}, ${themes.map((v) => v.style).join(", ")}`)
+    generateImageFormData.append("initImageStrength", String(imageDependency))
 
     if (createVariants) {
       generateImageFormData.append("imageId", selectedResult.id || resultData.id)
     }
 
-    let response = await FILEPOST((userData?.subscription?.isActive) ? "generate-image/premium" : "generate-image", generateImageFormData)
+    let response = await FILEPOST("generate-image", generateImageFormData)
 
     decrementCreditBalance()
     setResultData(response)
@@ -293,6 +301,13 @@ export default function MainPage() {
     closeLightbox()
   }
 
+  const scrollRef = useBottomScrollListener((...args) => {
+    if (loadingImages) return;
+    let tempPaginationData = paginationData
+    tempPaginationData.pageIndex += 1
+    setPaginationData({...tempPaginationData})
+  });
+
   return (
     <main className="flex flex-col" id={"MainPage"}>
       <Header/>
@@ -333,7 +348,7 @@ export default function MainPage() {
                       onValueChange={(files) => selectImage(files)}
                       id={"fileupload1"}
                     />
-                    <Small>
+                    <Small className={"py-2"}>
                       Make sure it shows the entire room in a 90° straight
                       angle facing walls, not from a corner or angled.
                       Ultra-wide angle lenses not recommended.
@@ -471,27 +486,44 @@ export default function MainPage() {
                     )}
                   </div>
                   <Box pt={0} pb={5} pl={2.5} pr={2.5}>
+                    <ReactTooltip
+                      anchorId={`artistic-freedom`}
+                      place="top"
+                      content={"Slide to find the perfect balance between artistic freedom and preserving the original image details."}
+                    />
                     <span
+                      id={"artistic-freedom"}
+                      className={"select-none cursor-help"}
                       style={{
                         display: 'block',
                         textAlign: 'center',
                         color: 'white',
                         fontSize: '14px',
                         fontFamily: 'Inter-Medium',
+                        marginBottom: 3
                       }}
                     >
-                      Image Dependency
+                      Artistic Freedom
                     </span>
-                    <Slider defaultValue={0.55} min={0.4} max={0.7} step={0.05} marginBottom={2}>
+                    <Slider defaultValue={0.55} value={imageDependency} min={0.4} max={0.7} step={0.05}
+                            marginBottom={0.4}
+                            onChange={(val) => setImageDependency(val)}
+                    >
                       <SliderTrack borderRadius='full' height='8px' bg='gray.400'>
-                        <Box position='relative' right={-10}/>
-                        <SliderFilledTrack borderRadius='full' height='8px' bg='#FF9900' />
+                        <Box position='relative' right={4}/>
+                        <SliderFilledTrack borderRadius='full' height='8px' bg='#FF9900'/>
                       </SliderTrack>
-                      <SliderThumb boxSize={4} />
-                      <SliderMark value={0.4} mt='1.5' ml='0' fontStyle='Inter-Medium' fontSize='14px' textColor={"gray.100"} >
+                      <SliderThumb boxSize={4}/>
+                      <SliderMark value={0.55} mt='1.5' ml='-8' fontStyle='Inter-Medium' fontSize='14px'
+                                  textColor={"gray.100"}>
+                        Balanced
+                      </SliderMark>
+                      <SliderMark value={0.4} mt='1.5' ml='0' fontStyle='Inter-Medium' fontSize='14px'
+                                  textColor={"gray.100"}>
                         Weak
                       </SliderMark>
-                      <SliderMark value={0.7} mt='1.5' ml='-12' fontStyle='Inter-Medium' fontSize='14px' textColor={"gray.100"} >
+                      <SliderMark value={0.7} mt='1.5' ml='-12' fontStyle='Inter-Medium' fontSize='14px'
+                                  textColor={"gray.100"}>
                         Strong
                       </SliderMark>
                     </Slider>
@@ -500,13 +532,13 @@ export default function MainPage() {
                     {isLoggedIn ?
                       (
                         <div className={"flex flex-row gap-2"}>
-                          {!userData.subscription &&
+                          {!userData?.plan &&
                               <div
                                   className={"flex flex-row bg-stone-700 text-white designera-rounded designera-box-shadow items-center justify-center gap-2 p-2 h-16 w-fit"}>
                                   <div
                                       className="flex justify-center items-center font-bold text-4xl select-none">
                                       <span
-                                          className={"h-max"}>{userData?.credits ? userData?.credits[0].balance : 0}</span>
+                                          className={"h-max"}>{userData?.credits ? userData?.credits : 0}</span>
                                   </div>
                                   <div
                                       className="flex justify-center items-center text-sm pt-1 leading-4 text-xs font-thin select-none">Credits<br/>Available
@@ -516,7 +548,7 @@ export default function MainPage() {
                           <div className={"w-full"}>
                             <SimpleButton
                               disabled={
-                              !selectedImage
+                                !selectedImage
                                 || !selectedImageObject
                                 || !(roomType.length > 2 && roomType.length < 1024)
                                 || (!(roomStyle.length > 2 && roomStyle.length < 1024) && themes.length < 1)}
@@ -666,11 +698,7 @@ export default function MainPage() {
                                 <button
                                     id={"publishButton"}
                                     onClick={() => {
-                                      if ((userData?.subscription?.isActive)) {
                                         publish()
-                                      } else {
-                                        subscriptionToggleModal(true)
-                                      }
                                     }}
                                     disabled={publishDescription.length < 6 || publishDescription.length > 50}
                                     className="xl:w-1/12 block text-stone-400 p-2 bg-[#1E1E1E] hover:bg-[#242424] focus:bg-[#242424] opacity-90 border border-[#6F6B6A] font-semibold hover:text-white designera-rounded ml-2 flex items-center justify-center"
@@ -713,7 +741,7 @@ export default function MainPage() {
                       className={"w-full flex items-center justify-center flex-col font-semibold bg-stone-600 designera-rounded text-white h-96 md:h-full"}>
                       <span style={{marginBottom: '0.4rem'}}>Rendering...</span>
                       <div style={{marginTop: '0.4rem'}}>
-                        <CircularProgress isIndeterminate color={"#FF9900"} />
+                        <CircularProgress isIndeterminate color={"#FF9900"}/>
                       </div>
                     </div>
                     :

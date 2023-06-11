@@ -171,7 +171,7 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
                                      <div className={"black-zone flex flex-col w-1/2 items-start"}>
                                          <IconButton
                                              icon={
-                                                 <div className={"overflow-hidden designera-rounded"}>
+                                                 <div className={"overflow-hidden designera-rounded-lg"}>
                                                      <ImageWithFallback
                                                        width={50}
                                                        height={50}

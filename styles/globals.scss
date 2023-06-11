@@ -153,6 +153,7 @@ input::placeholder {
   max-width: 300px;
   z-index: 9999;
   border-radius: 10px;
+  text-align: center;
 }
 
 button:disabled {
@@ -188,4 +189,12 @@ button:disabled {
 
 .chakra-modal__overlay {
   background-color: rgba(0, 0, 0, 0.70) !important;
+}
+
+.designera-rounded-lg {
+  border-radius: 8px;
+}
+
+.PricingTable {
+  border-radius: 10px !important;
 }

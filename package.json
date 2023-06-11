@@ -30,6 +30,7 @@
     "moment-duration-format": "^2.3.2",
     "next": "^13.0.4",
     "react": "^18.2.0",
+    "react-bottom-scroll-listener": "^5.1.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
     "react-images": "^1.2.0-beta.7",

@@ -23,6 +23,7 @@ import {ImageWithFallback} from "../ImageWithFallback";
 export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicObject) => {
   const {userData, upvoteImageUpdate} = useAuth()
   const [photos, setPhotos] = useState([] as any[])
+  const [nullPhotos, setNullPhotos] = useState([] as any[])
   const {themesSectionToggle, themes, removeImageById} = useAsTheme()
   const {PATCH} = useAxios()
 
@@ -168,17 +169,26 @@ export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicO
           <IconButton
             icon={
               photos[currentIndex]?.data?.userAvatar ?
-              <div className={"overflow-hidden designera-rounded"}>
-                <Image
-                  width={50}
-                  height={50}
-                  src={`https://cdn.designera.app/avatar/${photos[currentIndex]?.data?.userAvatar}?${photos[currentIndex]?.data?.userAvatar}`}
-                  alt={photos[currentIndex]?.data?.userAvatar || "No info found"}
-                  style={{objectFit: 'contain'}}
-                  placeholder={"blur"}
-                  blurDataURL={"/assets/images/unknown.png"}
-                />
-              </div>
+                <div className={"overflow-hidden designera-rounded-lg"}>
+                  <Image
+                    width={50}
+                    height={50}
+                    src={
+                      !nullPhotos.includes(photos[currentIndex]?.data?.userAvatar) ?
+                        `https://cdn.designera.app/avatar/${photos[currentIndex]?.data?.userAvatar}` :
+                        "/assets/images/unknown.png"
+                    }
+                    alt={photos[currentIndex]?.data?.userAvatar || "No info found"}
+                    style={{objectFit: 'contain'}}
+                    placeholder={"blur"}
+                    blurDataURL={"/assets/images/unknown.png"}
+                    onError={() => {
+                      let tempNullPhotos = Array.from(nullPhotos)
+                      tempNullPhotos.push(photos[currentIndex]?.data?.userAvatar)
+                      setNullPhotos([...tempNullPhotos])
+                    }}
+                  />
+                </div>
               : <div className={'hidden'}></div>
             }
             className={"p-0.5"}

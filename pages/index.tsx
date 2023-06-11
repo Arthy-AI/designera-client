@@ -19,6 +19,10 @@ export default function Main() {
                     content="/assets/site/icon.png"></meta>
               <link rel="shortcut icon" href="/assets/site/favicon.ico"/>
               <meta name="theme-color" content="#FF9900"/>
+              <script
+                async
+                src="https://js.stripe.com/v3/pricing-table.js">
+              </script>
             </Head>
             <MainPage/>
         </div>

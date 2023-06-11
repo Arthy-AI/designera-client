@@ -9,8 +9,11 @@ import {DesigneraTitleLarge} from "../../assets/svg/DesigneraTitleLarge";
 import useAuth from "../../hooks/auth/useAuth";
 import { ImageWithBlur } from '../images/ImageWithBlur';
 import useSubscription from "../../hooks/subscription/useSubscription";
+import toast from "react-hot-toast";
+import {useAxios} from "../../hooks/useAxios";
 
 export const Header = ({children, ...props}: ReactProps) => {
+  const { GET } = useAxios()
   const {isLoggedIn, toggleModal, changeSection, userData} = useAuth()
   const {isOpen: SidemenuIsOpen, onOpen: SidemenuOnOpen, onClose: SidemenuOnClose} = useDisclosure()
   const { toggleModal: subscriptionToggleModal } = useSubscription()
@@ -45,12 +48,19 @@ export const Header = ({children, ...props}: ReactProps) => {
               toggleModal(true)
             }}>Login</button>
           }
-          { !userData?.subscription &&
+          { !userData?.stripeCustomerId &&
           <button
             className="h-8 bg-blue-600 designera-rounded p-90 text-white designera-box-shadow font-semibold px-3 select-none transition-colors ease-in-out duration-150 hover:bg-white hover:text-black"
-            onClick={() => {
+            onClick={async () => {
               if (isLoggedIn) {
-                subscriptionToggleModal(true)
+                try {
+                  let networkHealth = await GET("network-health", {})
+                  if (networkHealth.delay) {
+                    subscriptionToggleModal(true)
+                  }
+                } catch {
+                  toast.error("An error occurred.")
+                }
               } else {
                 changeSection("login");
                 toggleModal(true)

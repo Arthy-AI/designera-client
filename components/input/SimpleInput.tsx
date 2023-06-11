@@ -7,7 +7,7 @@ interface SimpleInput extends ReactProps {
     labelText: string;
     placeholderText?: string;
     secondaryPlaceholderText?: string;
-    type?: 'text' | 'password'
+    type?: 'text' | 'password' | 'email'
     labelTagShow?: boolean;
     value?: string;
     rounded?: boolean;

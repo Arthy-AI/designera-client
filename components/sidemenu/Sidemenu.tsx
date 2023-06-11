@@ -181,7 +181,7 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
                                 { !userData?.subscription && <div id={"CreditsContainer"} className={"flex flex-row gap-2"}>
                                     <div
                                         className={"bg-stone-700 px-3 designera-rounded designera-box-shadow font-bold flex items-center text-lg"}>
-                                        {userData?.credits?.length > 0 && userData?.credits[0]?.balance}
+                                        {userData?.credits && userData?.credits}
                                     </div>
                                     <button
                                         className="bg-blue-600 designera-rounded p-1 px-3 text-white designera-box-shadow font-semibold transition-colors ease-in-out duration-150 hover:bg-white hover:text-black">Subscribe
@@ -234,6 +234,7 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
                                             :
                                             <div className="flex flex-col Font-Light">
                                                 {Object.keys(menu.currentMenu).map((v, i) => {
+                                                    if (!userData.plan && v == "Manage Plan") return;
                                                     return (
                                                         <>
                                                             <div
