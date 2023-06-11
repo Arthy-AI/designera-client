@@ -47,7 +47,10 @@ import useAsTheme from "../hooks/themes/useAsTheme";
 import {UseAsThemeFlatLogo} from "../assets/svg/UseAsThemeFlatLogo";
 import {SubscriptionModal} from "../components/subscription/SubscriptionModal";
 import useSubscription from "../hooks/subscription/useSubscription";
-import {CircularProgress} from "@chakra-ui/react";
+import {Box, CircularProgress} from "@chakra-ui/react";
+import { Slider, SliderTrack, SliderFilledTrack, SliderThumb, SliderMark } from "@chakra-ui/react";
+import { orange } from "@mui/material/colors";
+
 
 export default function MainPage() {
   const {GET, FILEPOST, POST, PATCH} = useAxios()
@@ -314,8 +317,8 @@ export default function MainPage() {
                             <img src={selectedImage} alt={"Chosen Image"}
                                  style={{objectFit: "contain"}}
                                  width={"480"}/> :
-                            <div className={"flex flex-col items-center gap-4"}>
-                              <FontAwesomeIcon icon={faArrowUpFromBracket} style={{height: 40, width: 40}}
+                            <div className={"flex flex-col items-center gap-2"}>
+                              <FontAwesomeIcon icon={faArrowUpFromBracket} style={{height: 30, width: 30}}
                                                color={"#fff"}/>
                               <span
                                 className="text-sm text-white text-center block designera-text-shadow lg:text-md"
@@ -339,7 +342,7 @@ export default function MainPage() {
                       labelText={"Room Type"}
                       labelTagShow={false}
                       className={"placeholder-white"}
-                      secondaryPlaceholderText={"  Ex. Living Room, Kitchen, Office..."}
+                      secondaryPlaceholderText={" Ex. Living Room, Kitchen, Office..."}
                       value={roomType}
                       onValueChange={(e) => {
                         setRoomType(e)
@@ -354,7 +357,7 @@ export default function MainPage() {
                       <SimpleInput labelText={"Style"} labelTagShow={false} value={roomStyle} onValueChange={(e) => {
                         setRoomStyle(e)
                       }}
-                                   secondaryPlaceholderText={"  Ex. Minimalist, Gothic, 70’s, Zen, Modern..."}
+                                   secondaryPlaceholderText={" Ex. Minimalist, Gothic, 70’s, Zen, Modern..."}
                                    onFocus={() => {
                                      setShowStyleSuggestionPills(true)
                                    }}
@@ -467,6 +470,36 @@ export default function MainPage() {
                       </div>
                     )}
                   </div>
+                  <Box pt={0} pb={5} pl={2} pr={2}>
+                    <span
+                      style={{
+                        display: 'block',
+                        textAlign: 'center',
+                        color: 'white',
+                        fontSize: '14px',
+                        fontFamily: 'Inter-Medium',
+                      }}
+                    >
+                      Image Dependency
+                    </span>
+                    <Slider defaultValue={0.55} min={0.4} max={0.7} step={0.05}>
+                      <SliderTrack bg='orange.100'>
+                        <Box position='relative'/>
+                        <SliderFilledTrack bg='orange.100' />
+                      </SliderTrack>
+                      <SliderThumb boxSize={4} />
+                      <SliderMark value={0.4} mt='1.5' ml='0' fontStyle='Inter-Medium' fontSize='14px' textColor={"white"} >
+                        Weak
+                      </SliderMark>
+                      <SliderMark value={0.7} mt='1.5' ml='-12' fontStyle='Inter-Medium' fontSize='14px' textColor={"white"} >
+                        Strong
+                      </SliderMark>
+                      <SliderTrack borderRadius='full' height='8px'>
+                        <SliderFilledTrack borderRadius='full' height='8px' />
+                      </SliderTrack>
+                      <SliderThumb borderRadius='full' />
+                    </Slider>
+                  </Box>
                   <div>
                     {isLoggedIn ?
                       (
