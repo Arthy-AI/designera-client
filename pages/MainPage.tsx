@@ -470,7 +470,7 @@ export default function MainPage() {
                       </div>
                     )}
                   </div>
-                  <Box pt={0} pb={5} pl={2} pr={2}>
+                  <Box pt={0} pb={5} pl={2.5} pr={2.5}>
                     <span
                       style={{
                         display: 'block',
@@ -488,13 +488,13 @@ export default function MainPage() {
                         <SliderFilledTrack bg='orange.100' />
                       </SliderTrack>
                       <SliderThumb boxSize={4} />
-                      <SliderMark value={0.4} mt='1.5' ml='0' fontStyle='Inter-Medium' fontSize='14px' textColor={"white"} >
+                      <SliderMark value={0.4} mt='1.5' ml='0' fontStyle='Inter-Medium' fontSize='14px' textColor={"gray.100"} >
                         Weak
                       </SliderMark>
-                      <SliderMark value={0.7} mt='1.5' ml='-12' fontStyle='Inter-Medium' fontSize='14px' textColor={"white"} >
+                      <SliderMark value={0.7} mt='1.5' ml='-12' fontStyle='Inter-Medium' fontSize='14px' textColor={"gray.100"} >
                         Strong
                       </SliderMark>
-                      <SliderTrack borderRadius='full' height='8px'>
+                      <SliderTrack borderRadius='full' height='8px' >
                         <SliderFilledTrack borderRadius='full' height='8px' />
                       </SliderTrack>
                       <SliderThumb borderRadius='full' />
