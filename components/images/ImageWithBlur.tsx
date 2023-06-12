@@ -15,7 +15,7 @@ export const ImageWithBlur = ({alt, fallbackUrl, fill = false, ...props}: ImageW
   return (
     <Image
       {...props}
-      src={src+ "?" + src.split("/").pop() + props.height + props.width}
+      src={src+ "?" + src.split("/").pop()}
       alt={alt}
       fill={fill}
       placeholder={"blur"}
