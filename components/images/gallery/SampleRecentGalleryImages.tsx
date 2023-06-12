@@ -152,7 +152,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                                         src={`https://cdn.designera.app/avatar/${photos[0]?.data?.userAvatar}`}
                                         alt={photos[0]?.data?.userAvatar || "No info found"}
                                         style={{objectFit: 'contain'}}
-                                        fallbackUrl={"/assets/images/Unknown.png"}
+                                        fallbackUrl={"/assets/images/unknown.png"}
                                       />
                                     </div>
                                   }
@@ -221,7 +221,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                                         src={`https://cdn.designera.app/avatar/${photos[1]?.data?.userAvatar}`}
                                         alt={photos[1]?.data?.userAvatar || "No info found"}
                                         style={{objectFit: 'contain'}}
-                                        fallbackUrl={"/assets/images/Unknown.png"}
+                                        fallbackUrl={"/assets/images/unknown.png"}
                                       />
                                     </div>
                                   }
@@ -295,7 +295,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                                         src={`https://cdn.designera.app/avatar/${photos[2]?.data?.userAvatar}`}
                                         alt={photos[2]?.data?.userAvatar || "No info found"}
                                         style={{objectFit: 'contain'}}
-                                        fallbackUrl={"/assets/images/Unknown.png"}
+                                        fallbackUrl={"/assets/images/unknown.png"}
                                       />
                                     </div>
                                   }
@@ -365,7 +365,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                                         src={`https://cdn.designera.app/avatar/${photos[3]?.data?.userAvatar}`}
                                         alt={photos[3]?.data?.userAvatar || "No info found"}
                                         style={{objectFit: 'contain'}}
-                                        fallbackUrl={"/assets/images/Unknown.png"}
+                                        fallbackUrl={"/assets/images/unknown.png"}
                                       />
                                     </div>
                                   }
@@ -439,7 +439,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                                         src={`https://cdn.designera.app/avatar/${photos[4]?.data?.userAvatar}`}
                                         alt={photos[4]?.data?.userAvatar || "No info found"}
                                         style={{objectFit: 'contain'}}
-                                        fallbackUrl={"/assets/images/Unknown.png"}
+                                        fallbackUrl={"/assets/images/unknown.png"}
                                       />
                                     </div>
                                   }
@@ -509,7 +509,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                                         src={`https://cdn.designera.app/avatar/${photos[5]?.data?.userAvatar}`}
                                         alt={photos[5]?.data?.userAvatar || "No info found"}
                                         style={{objectFit: 'contain'}}
-                                        fallbackUrl={"/assets/images/Unknown.png"}
+                                        fallbackUrl={"/assets/images/unknown.png"}
                                       />
                                     </div>
                                   }

@@ -178,12 +178,12 @@ export const RecentImagesGalleryModalFooter = ({innerProps, isModal, currentInde
                     src={
                       !nullPhotos.includes(photos[currentIndex]?.data?.userAvatar) ?
                         `https://cdn.designera.app/avatar/${photos[currentIndex]?.data?.userAvatar}` :
-                        "/assets/images/Unknown.png"
+                        "/assets/images/unknown.png"
                     }
                     alt={photos[currentIndex]?.data?.userAvatar || "No info found"}
                     style={{objectFit: 'contain'}}
                     placeholder={"blur"}
-                    blurDataURL={"/assets/images/Unknown.png"}
+                    blurDataURL={"/assets/images/unknown.png"}
                     onError={() => {
                       let tempNullPhotos = Array.from(nullPhotos)
                       tempNullPhotos.push(photos[currentIndex]?.data?.userAvatar)

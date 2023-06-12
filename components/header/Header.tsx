@@ -39,7 +39,7 @@ export const Header = ({children, ...props}: ReactProps) => {
                   width={36}
                   height={36}
                   src={`https://cdn.designera.app/avatar/${userData.id}`}
-                  fallbackUrl={"/assets/images/Unknown.png"}
+                  fallbackUrl={"/assets/images/unknown.png"}
                 />
               }
             </div> :

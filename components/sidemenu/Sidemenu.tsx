@@ -174,7 +174,7 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
                                     className={'rounded-full'}
                                     src={'https://cdn.designera.app/avatar/' + userData?.id}
                                     alt={"Profile Picture"}
-                                    fallbackUrl={"/assets/images/Unknown.png"}
+                                    fallbackUrl={"/assets/images/unknown.png"}
                                   />
                               </div>
                                 <span className={"font-semibold"}>{ userData?.firstName + ' ' + userData?.lastName }</span>

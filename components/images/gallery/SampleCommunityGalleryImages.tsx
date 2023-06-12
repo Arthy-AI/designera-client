@@ -177,7 +177,7 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
                                                        height={50}
                                                        src={`https://cdn.designera.app/avatar/${photos[index]?.data?.userAvatar}`}
                                                        alt={"Avatar"}
-                                                       fallbackUrl={"/assets/images/Unknown.png"}
+                                                       fallbackUrl={"/assets/images/unknown.png"}
                                                      />
                                                  </div>
                                              }
