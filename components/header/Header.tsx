@@ -36,8 +36,8 @@ export const Header = ({children, ...props}: ReactProps) => {
                 userData.id &&
                 <ImageWithBlur
                   alt={"Avatar"}
-                  width={36}
-                  height={36}
+                  width={118}
+                  height={118}
                   src={`https://cdn.designera.app/avatar/${userData.id}`}
                   fallbackUrl={"/assets/images/unknown.png"}
                 />
