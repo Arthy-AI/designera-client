@@ -169,8 +169,8 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
                                     onClick={() => {
                                       document.getElementById('avatar-file-input')?.click()
                                     }}
-                                    width={128}
-                                    height={128}
+                                    width={118}
+                                    height={118}
                                     className={'rounded-full'}
                                     src={'https://cdn.designera.app/avatar/' + userData?.id}
                                     alt={"Profile Picture"}
