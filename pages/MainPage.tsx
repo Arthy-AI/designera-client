@@ -158,7 +158,13 @@ export default function MainPage() {
       generateImageFormData.append("imageId", selectedResult.id || resultData.id)
     }
 
-    let response = await FILEPOST("generate-image", generateImageFormData)
+    try {
+      var response = await FILEPOST("generate-image", generateImageFormData)
+    } catch (err: any) {
+      setResulted(false)
+      setLoaderShow(false)
+      return toast.error( err?.response?.status ? err?.response?.status + " - " + err?.response?.data?.message : "An error occurred.")
+    }
 
     decrementCreditBalance()
     setResultData(response)
@@ -551,7 +557,9 @@ export default function MainPage() {
                                 !selectedImage
                                 || !selectedImageObject
                                 || !(roomType.length > 2 && roomType.length < 1024)
-                                || (!(roomStyle.length > 2 && roomStyle.length < 1024) && themes.length < 1)}
+                                || (!(roomStyle.length > 2 && roomStyle.length < 1024) && themes.length < 1)
+                                || loaderShow
+                              }
                               text={"Run Designera"}
                               type={"primary"}
                               onClick={(e) => {
@@ -698,7 +706,7 @@ export default function MainPage() {
                                 <button
                                     id={"publishButton"}
                                     onClick={() => {
-                                        publish()
+                                      publish()
                                     }}
                                     disabled={publishDescription.length < 6 || publishDescription.length > 50}
                                     className="xl:w-1/12 block text-stone-400 p-2 bg-[#1E1E1E] hover:bg-[#242424] focus:bg-[#242424] opacity-90 border border-[#6F6B6A] font-semibold hover:text-white designera-rounded ml-2 flex items-center justify-center"
