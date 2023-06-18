@@ -105,6 +105,7 @@ export default function MainPage() {
     let tempPaginationData = paginationData;
     tempPaginationData.orderBy = galleryOrderBy == 0 ? 'upvoteCount' : 'createdAt'
     setPaginationData({...tempPaginationData})
+    setBlockPagination(false)
   }, [galleryOrderBy]);
 
 
