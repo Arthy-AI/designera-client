@@ -23,8 +23,10 @@ import {SimpleButton} from "../button/SimpleButton";
 import {useRouter} from "next/router";
 import {DynamicObject} from "../../constants/DynamicObject";
 import axios from 'axios';
+import {useAxios} from "../../hooks/useAxios";
 import toast from 'react-hot-toast';
 import { NetworkConfig } from '../../hooks/useAxios';
+import useSubscription from "../../hooks/subscription/useSubscription";
 
 interface Sidemenu extends ReactProps {
     isOpen: boolean,
@@ -52,8 +54,11 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
         currentTitle: "",
         previousTitle: ""
     })
-    const {userData} = useAuth()
     const router = useRouter()
+    const { GET } = useAxios()
+    const {isLoggedIn, toggleModal, changeSection, userData} = useAuth()
+    const {isOpen: SidemenuIsOpen, onOpen: SidemenuOnOpen, onClose: SidemenuOnClose} = useDisclosure()
+    const { toggleModal: subscriptionToggleModal } = useSubscription()
     // SIDEBAR MENU SYSTEM
 
     useEffect(() => {
@@ -184,7 +189,22 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
                                         {userData?.credits && userData?.credits}
                                     </div>
                                     <button
-                                        className="bg-blue-600 designera-rounded p-1 px-3 text-white designera-box-shadow font-semibold transition-colors ease-in-out duration-150 hover:bg-white hover:text-black">Subscribe
+                                        className="bg-blue-600 designera-rounded p-1 px-3 text-white designera-box-shadow font-semibold transition-colors ease-in-out duration-150 hover:bg-white hover:text-black"
+                                        onClick={async () => {
+                                            if (isLoggedIn) {
+                                                try {
+                                                    let networkHealth = await GET("network-health", {})
+                                                    if (networkHealth.delay) {
+                                                        subscriptionToggleModal(true)
+                                                    }
+                                                } catch {
+                                                    toast.error("An error occurred.")
+                                                }
+                                            } else {
+                                                changeSection("login");
+                                                toggleModal(true)
+                                            }
+                                        }}>Subscribe
                                     </button>
                                 </div>}
                             </div>
