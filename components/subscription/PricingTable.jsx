@@ -6,8 +6,8 @@ function PricingPage() {
 
     return (
         <stripe-pricing-table
-            pricing-table-id="prctbl_1NEqzCIAuES0cAL2XDhCvGuw"
-            publishable-key="pk_test_51NBY8eIAuES0cAL2rOnsOU4uyLiMWcf7mgRp7gIBNua9cWOCImwf5VZWShGgIUEmzJepLAqaTg14wqrPEpblS0xV00HDWgQNGP"
+            pricing-table-id="prctbl_1NKnSFIAuES0cAL2z2RDp9TB"
+            publishable-key="pk_live_51NBY8eIAuES0cAL2BU8QIkve8Ov5bpjJ8NDr5Yd5Ybz945H2uzYUTU5MpiQkSYFF2T3MQPlcBw4gJk6ntv07724a00QJPvz3um"
             client-reference-id={userData?.id}
         >
         </stripe-pricing-table>
