@@ -9,10 +9,14 @@ export function CustomDateFormat(this: any) {
 
   if (duration.asSeconds() < 60) {
     return "s [Seconds]";
-  } else if (duration.asMinutes() < 60) {
+  } else if (duration.asMinutes() < 10) {
     return "m [Minutes], s [Seconds]";
-  } else if (duration.asHours() < 24) {
+  } else if (duration.asMinutes() < 60) {
+    return "m [Minutes]";
+  } else if (duration.asHours() < 6) {
     return "H [Hours], m [Minutes]";
+  } else if (duration.asHours() < 24) {
+    return "H [Hours]";
   } else if (duration.asDays() < 7) {
     return "d [Days]";
   } else if (duration.asDays() < 30) {

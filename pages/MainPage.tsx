@@ -1,5 +1,5 @@
-import React, {useCallback, useEffect, useState} from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import React, { useCallback, useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCopy,
   faCircleDown,
@@ -9,56 +9,56 @@ import {
   faUpRightAndDownLeftFromCenter, faArrowsRotate, faArrowUpFromBracket,
   faMagnifyingGlassDollar
 } from "@fortawesome/free-solid-svg-icons";
-import {Tooltip as ReactTooltip} from "react-tooltip";
+import { Tooltip as ReactTooltip } from "react-tooltip";
 import * as Scroll from 'react-scroll';
 
-import {Heading} from "../components/heading/Heading";
-import {Small} from "../components/text/small/Small";
-import {SimpleButton} from "../components/button/SimpleButton";
-import {Content} from "../components/layout/StandardLayout/Content";
-import {SimpleInput} from "../components/input/SimpleInput";
-import {StandardLayout} from "../components/layout/StandardLayout/StandardLayout";
-import {MutedSmall} from "../components/text/small/MutedSmall";
-import {RadioButtons} from "../components/input/RadioButtons";
-import {SubHeading} from "../components/heading/SubHeading";
-import {SideMenu} from "../components/layout/StandardLayout/SideMenu";
-import {FileInputArea} from "../components/input/FileInputArea";
-import {SampleRecentGalleryImages} from "../components/images/gallery/SampleRecentGalleryImages";
-import {AnimatedSimpleInput} from "../components/input/AnimatedSimpleInput";
-import {Header} from "../components/header/Header";
-import {AuthModal} from "../components/login-register/AuthModal";
-import {SampleCommunityGalleryImages} from "../components/images/gallery/SampleCommunityGalleryImages";
-import {IconButton} from "../components/button/IconButton";
-import Carousel, {Modal, ModalGateway} from "react-images";
-import {GeneratedImageModalFooter} from "../components/images/gallery/GeneratedImageModalFooter";
-import {useAxios} from "../hooks/useAxios";
+import { Heading } from "../components/heading/Heading";
+import { Small } from "../components/text/small/Small";
+import { SimpleButton } from "../components/button/SimpleButton";
+import { Content } from "../components/layout/StandardLayout/Content";
+import { SimpleInput } from "../components/input/SimpleInput";
+import { StandardLayout } from "../components/layout/StandardLayout/StandardLayout";
+import { MutedSmall } from "../components/text/small/MutedSmall";
+import { RadioButtons } from "../components/input/RadioButtons";
+import { SubHeading } from "../components/heading/SubHeading";
+import { SideMenu } from "../components/layout/StandardLayout/SideMenu";
+import { FileInputArea } from "../components/input/FileInputArea";
+import { SampleRecentGalleryImages } from "../components/images/gallery/SampleRecentGalleryImages";
+import { AnimatedSimpleInput } from "../components/input/AnimatedSimpleInput";
+import { Header } from "../components/header/Header";
+import { AuthModal } from "../components/login-register/AuthModal";
+import { SampleCommunityGalleryImages } from "../components/images/gallery/SampleCommunityGalleryImages";
+import { IconButton } from "../components/button/IconButton";
+import Carousel, { Modal, ModalGateway } from "react-images";
+import { GeneratedImageModalFooter } from "../components/images/gallery/GeneratedImageModalFooter";
+import { useAxios } from "../hooks/useAxios";
 import useAuth from "../hooks/auth/useAuth";
-import toast, {Toaster} from "react-hot-toast";
-import {useAuthGlobalDispatch} from "../globals/auth/authHooks";
-import {authGlobalInitiate} from "../globals/auth/functions/authGlobalInitiate";
-import {StyleSuggestionPills} from "../constants/StyleSuggestionPills";
-import {ShuffleArray} from "../constants/ShuffleArray";
-import {DynamicObject} from "../constants/DynamicObject";
-import {GetBase64} from "../constants/GetBase64";
-import {ImageWithBlur} from "../components/images/ImageWithBlur";
-import {ForceDownload} from "../constants/ForceDownload";
-import {imagesGlobal, imagesGlobalStore} from "../globals/images/images";
+import toast, { Toaster } from "react-hot-toast";
+import { useAuthGlobalDispatch } from "../globals/auth/authHooks";
+import { authGlobalInitiate } from "../globals/auth/functions/authGlobalInitiate";
+import { StyleSuggestionPills } from "../constants/StyleSuggestionPills";
+import { ShuffleArray } from "../constants/ShuffleArray";
+import { DynamicObject } from "../constants/DynamicObject";
+import { GetBase64 } from "../constants/GetBase64";
+import { ImageWithBlur } from "../components/images/ImageWithBlur";
+import { ForceDownload } from "../constants/ForceDownload";
+import { imagesGlobal, imagesGlobalStore } from "../globals/images/images";
 import useAsTheme from "../hooks/themes/useAsTheme";
-import {UseAsThemeFlatLogo} from "../assets/svg/UseAsThemeFlatLogo";
-import {SubscriptionModal} from "../components/subscription/SubscriptionModal";
+import { UseAsThemeFlatLogo } from "../assets/svg/UseAsThemeFlatLogo";
+import { SubscriptionModal } from "../components/subscription/SubscriptionModal";
 import useSubscription from "../hooks/subscription/useSubscription";
-import {Box, CircularProgress} from "@chakra-ui/react";
-import {Slider, SliderTrack, SliderFilledTrack, SliderThumb, SliderMark,} from "@chakra-ui/react";
-import {orange} from "@mui/material/colors";
-import {useBottomScrollListener} from "react-bottom-scroll-listener";
+import { Box, CircularProgress } from "@chakra-ui/react";
+import { Slider, SliderTrack, SliderFilledTrack, SliderThumb, SliderMark } from "@chakra-ui/react";
+import { orange } from "@mui/material/colors";
+import { useBottomScrollListener } from "react-bottom-scroll-listener";
 
 
 
 export default function MainPage() {
-  const {GET, FILEPOST, POST, PATCH} = useAxios()
-  const {userData, decrementCreditBalance, isLoggedIn, toggleModal, changeSection, upvoteImageUpdate} = useAuth()
-  const {themes, addImage, removeImage, themesSectionShow, themesSectionToggle, removeImageById} = useAsTheme()
-  const {toggleModal: subscriptionToggleModal} = useSubscription()
+  const { GET, FILEPOST, POST, PATCH } = useAxios()
+  const { userData, decrementCreditBalance, isLoggedIn, toggleModal, changeSection, upvoteImageUpdate } = useAuth()
+  const { themes, addImage, removeImage, themesSectionShow, themesSectionToggle, removeImageById } = useAsTheme()
+  const { toggleModal: subscriptionToggleModal } = useSubscription()
   const [galleryOrderBy, setGalleryOrderBy] = useState(0);
   const [loaderShow, setLoaderShow] = useState(false);
   const [resulted, setResulted] = useState(false);
@@ -97,7 +97,7 @@ export default function MainPage() {
     let tempPaginationData = paginationData;
     tempPaginationData.pageIndex = 0
     tempPaginationData.query = search as any || null
-    setPaginationData({...tempPaginationData})
+    setPaginationData({ ...tempPaginationData })
   }, [search]);
 
   useEffect(() => {
@@ -105,7 +105,7 @@ export default function MainPage() {
 
     let tempPaginationData = paginationData;
     tempPaginationData.orderBy = galleryOrderBy == 0 ? 'upvoteCount' : 'createdAt'
-    setPaginationData({...tempPaginationData})
+    setPaginationData({ ...tempPaginationData })
     setBlockPagination(false)
   }, [galleryOrderBy]);
 
@@ -165,7 +165,7 @@ export default function MainPage() {
     } catch (err: any) {
       setResulted(false)
       setLoaderShow(false)
-      return toast.error( err?.response?.status ? err?.response?.status + " - " + err?.response?.data?.message : "An error occurred.")
+      return toast.error(err?.response?.status ? err?.response?.status + " - " + err?.response?.data?.message : "An error occurred.")
     }
 
     decrementCreditBalance()
@@ -174,9 +174,9 @@ export default function MainPage() {
     imagesGlobalStore.dispatch(imagesGlobal.actions.changeGeneratedImages({
       images: [...
         response.id ?
-          [{src: `https://cdn.designera.app/generated/${response.id}`, id: response.id, style: roomStyle}] :
+          [{ src: `https://cdn.designera.app/generated/${response.id}`, id: response.id, style: roomStyle }] :
           response.images ? response.images.map((v: any) => {
-            return {src: `https://cdn.designera.app/generated/${v}`, id: v, style: roomStyle}
+            return { src: `https://cdn.designera.app/generated/${v}`, id: v, style: roomStyle }
           }) : []
       ]
     }))
@@ -204,7 +204,7 @@ export default function MainPage() {
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
 
   // @ts-ignore
-  const openLightbox = useCallback((event, {photo, index}) => {
+  const openLightbox = useCallback((event, { photo, index }) => {
     setCurrentImage(index);
     setViewerIsOpen(true);
   }, []);
@@ -313,7 +313,7 @@ export default function MainPage() {
     if (loadingImages) return;
     let tempPaginationData = paginationData
     tempPaginationData.pageIndex += 1
-    setPaginationData({...tempPaginationData})
+    setPaginationData({ ...tempPaginationData })
   });
 
   //Credits Suffixes
@@ -322,13 +322,13 @@ export default function MainPage() {
     const suffixIndex = Math.floor(Math.log10(credits) / 3);
     const scaledValue = credits / Math.pow(10, suffixIndex * 3);
     const formattedValue = scaledValue.toFixed(1);
-  
+
     return formattedValue + suffixes[suffixIndex];
   }
 
   return (
     <main className="flex flex-col" id={"MainPage"}>
-      <Header/>
+      <Header />
       <div className="flex justify-center items-center min-h-screen">
         <div className="w-4/5 flex flex-col items-center">
           <Heading>
@@ -345,23 +345,23 @@ export default function MainPage() {
                     <SubHeading>Your Current Space</SubHeading>
                     <FileInputArea
                       body=
-                        {
-                          selectedImage ?
-                            <img src={selectedImage} alt={"Chosen Image"}
-                                 style={{objectFit: "contain"}}
-                                 width={"480"}/> :
-                            <div className={"flex flex-col items-center gap-2"}>
-                              <FontAwesomeIcon icon={faArrowUpFromBracket} style={{height: 30, width: 30}}
-                                               color={"#fff"}/>
-                              <span
-                                className="text-sm text-white text-center block designera-text-shadow lg:text-md"
-                              >
-                                Drop your image, Tap to select or
-                                <br/>
-                                Take a photo!
-                              </span>
-                            </div>
-                        }
+                      {
+                        selectedImage ?
+                          <img src={selectedImage} alt={"Chosen Image"}
+                            style={{ objectFit: "contain" }}
+                            width={"480"} /> :
+                          <div className={"flex flex-col items-center gap-2"}>
+                            <FontAwesomeIcon icon={faArrowUpFromBracket} style={{ height: 30, width: 30 }}
+                              color={"#fff"} />
+                            <span
+                              className="text-sm text-white text-center block designera-text-shadow lg:text-md"
+                            >
+                              Drop your image, Tap to select or
+                              <br />
+                              Take a photo!
+                            </span>
+                          </div>
+                      }
 
                       onValueChange={(files) => selectImage(files)}
                       id={"fileupload1"}
@@ -390,21 +390,21 @@ export default function MainPage() {
                       <SimpleInput labelText={"Style"} labelTagShow={false} value={roomStyle} onValueChange={(e) => {
                         setRoomStyle(e)
                       }}
-                                   secondaryPlaceholderText={" Ex. Minimalist, Gothic, 70’s, Zen, Modern..."}
-                                   onFocus={() => {
-                                     setShowStyleSuggestionPills(true)
-                                   }}
-                                   className={"placeholder-white"}/>
+                        secondaryPlaceholderText={" Ex. Minimalist, Gothic, 70’s, Zen, Modern..."}
+                        onFocus={() => {
+                          setShowStyleSuggestionPills(true)
+                        }}
+                        className={"placeholder-white"} />
                       <button
                         className="svg-change bg-[#3E3E3E] text-stone-400 font-semibold hover:text-white border border-stone-500 designera-rounded ml-1.5 flex justify-center items-center"
-                        style={{minHeight: "42px", minWidth: "42px"}}
+                        style={{ minHeight: "42px", minWidth: "42px" }}
                         onClick={() => {
                           themesSectionToggle()
                         }}
                       >
                         <FontAwesomeIcon icon={faWandMagicSparkles} color={themesSectionShow ? "#61A0FF" : "#AAA7A5"}
-                                         size={"xs"}
-                                         style={{width: 25, height: 25}}/>
+                          size={"xs"}
+                          style={{ width: 25, height: 25 }} />
                       </button>
                     </div>
                     {themesSectionShow ? (
@@ -432,11 +432,11 @@ export default function MainPage() {
                                 }}
                                 className="w-1/3 flex items-center text-center bg-stone-600 h-24 designera-rounded cursor-not-allowed justify-center">
                                 <FontAwesomeIcon icon={faPlus} color={"#AAA7A5"}
-                                                 style={{
-                                                   width: 50,
-                                                   height: 50,
-                                                   color: "#AAA7A5"
-                                                 }}/>
+                                  style={{
+                                    width: 50,
+                                    height: 50,
+                                    color: "#AAA7A5"
+                                  }} />
                               </div>
                             )
                           )
@@ -459,17 +459,17 @@ export default function MainPage() {
                               >
                                 <div>
                                   <div id={`suggestion-refresh`}
-                                       className="bg-[#515151] p-0.5 rounded px-1 text-stone-100 designera-box-shadow cursor-pointer Font-ExtraLight select-none"
-                                       style={{fontSize: "0.850rem"}}
-                                       onClick={(e) => {
-                                         setStyleSuggestionPills([...ShuffleArray(styleSuggestionPills)])
-                                       }}
+                                    className="bg-[#515151] p-0.5 rounded px-1 text-stone-100 designera-box-shadow cursor-pointer Font-ExtraLight select-none"
+                                    style={{ fontSize: "0.850rem" }}
+                                    onClick={(e) => {
+                                      setStyleSuggestionPills([...ShuffleArray(styleSuggestionPills)])
+                                    }}
                                   >
                                     <FontAwesomeIcon icon={faArrowsRotate} color={"#F5F5F4"}
-                                                     style={{
-                                                       width: 15,
-                                                       height: 15,
-                                                     }}/>
+                                      style={{
+                                        width: 15,
+                                        height: 15,
+                                      }} />
                                   </div>
                                   <ReactTooltip
                                     anchorId={`suggestion-refresh`}
@@ -481,11 +481,11 @@ export default function MainPage() {
                                   return (
                                     <div key={i}>
                                       <div id={`suggestion-${i}`}
-                                           className="bg-[#515151] rounded px-1 text-stone-100 designera-box-shadow cursor-pointer Font-ExtraLight select-none"
-                                           style={{fontSize: "0.850rem"}}
-                                           onClick={(e) => {
-                                             setRoomStyle(roomStyle.length > 0 ? roomStyle + ", " + v.name : v.name)
-                                           }}
+                                        className="bg-[#515151] rounded px-1 text-stone-100 designera-box-shadow cursor-pointer Font-ExtraLight select-none"
+                                        style={{ fontSize: "0.850rem" }}
+                                        onClick={(e) => {
+                                          setRoomStyle(roomStyle.length > 0 ? roomStyle + ", " + v.name : v.name)
+                                        }}
                                       >
                                         {v.name}
                                       </div>
@@ -511,7 +511,7 @@ export default function MainPage() {
                     />
                     <span
                       id={"artistic-freedom"}
-                      className={"select-none cursor-help"}
+                      className={"select-none"}
                       style={{
                         display: 'block',
                         textAlign: 'center',
@@ -524,24 +524,24 @@ export default function MainPage() {
                       Artistic Freedom
                     </span>
                     <Slider defaultValue={0.55} value={imageDependency} min={0.4} max={0.7} step={0.05}
-                            marginBottom={0.4}
-                            onChange={(val) => setImageDependency(val)}
+                      marginBottom={0.4}
+                      onChange={(val) => setImageDependency(val)}
                     >
-                      <SliderTrack borderRadius='full' height='8px' bg='gray.400'>
-                        <Box position='relative' right={4}/>
-                        <SliderFilledTrack borderRadius='full' height='8px' bg='#FF9900'/>
+                      <SliderTrack borderRadius='full' height='8px' bg='#3e3e3e'>
+                        <Box position='relative' right={4} />
+                        <SliderFilledTrack borderRadius='full' height='8px' bg='#3e3e3e' />
                       </SliderTrack>
-                      <SliderThumb boxSize={4}/>
+                      <SliderThumb boxSize={4} />
                       <SliderMark value={0.55} mt='1.5' ml='-8' fontStyle='Inter-Medium' fontSize='14px'
-                                  textColor={"gray.100"}>
+                        textColor={"gray.100"}>
                         Balanced
                       </SliderMark>
                       <SliderMark value={0.4} mt='1.5' ml='0' fontStyle='Inter-Medium' fontSize='14px'
-                                  textColor={"gray.100"}>
+                        textColor={"gray.100"}>
                         Weak
                       </SliderMark>
                       <SliderMark value={0.7} mt='1.5' ml='-12' fontStyle='Inter-Medium' fontSize='14px'
-                                  textColor={"gray.100"}>
+                        textColor={"gray.100"}>
                         Strong
                       </SliderMark>
                     </Slider>
@@ -550,19 +550,18 @@ export default function MainPage() {
                     {isLoggedIn ?
                       (
                         <div className={"flex flex-row gap-2"}>
-                          {!userData?.plan &&
-                              <div
-                                  className={"flex flex-row bg-stone-700 text-white designera-rounded designera-box-shadow items-center justify-center gap-2 p-2 h-16 w-fit"}>
+                          {(!userData?.plan && userData?.credits && userData.credits <= 10) && (
+                            <div className="flex flex-row bg-stone-700 text-white designera-rounded designera-box-shadow items-center justify-center gap-2 p-2 h-16 w-fit">
                               <div className="flex justify-center items-center font-bold text-4xl select-none">
                                 <span className="h-max">
-                                  {userData?.credits ? formatCredits(userData.credits) : "0"}
+                                  {formatCredits(userData.credits)}
                                 </span>
                               </div>
-                                  <div
-                                      className="flex justify-center items-center text-sm pt-1 leading-4 text-xs font-thin select-none">Credits<br/>Available
-                                  </div>
+                              <div className="flex justify-center items-center text-sm pt-1 leading-4 text-xs font-thin select-none">
+                                Credits<br />Available
                               </div>
-                          }
+                            </div>
+                          )}
                           <div className={"w-full"}>
                             <SimpleButton
                               disabled={
@@ -622,112 +621,112 @@ export default function MainPage() {
                       <div className={"h-1/2"}>
                         <div className={"overflow-x-scroll md:overflow-x-hidden black-zone"}>
                           {!selectedResult?.url?.includes("reference") &&
-                              <div
-                                  className={"black-zone w-fit flex flex-row items-start justify-center sm:w-full md:justify-start md:flex-col md:items-end gap-3 p-3"}>
-                                  <IconButton
-                                      description={"Download"}
-                                      icon={<FontAwesomeIcon icon={faCircleDown} color={"#AAA7A5"}
-                                                             size={"xl"}
-                                                             style={{width: 25, height: 25}}/>} onClick={() => {
+                            <div
+                              className={"black-zone w-fit flex flex-row items-start justify-center sm:w-full md:justify-start md:flex-col md:items-end gap-3 p-3"}>
+                              <IconButton
+                                description={"Download"}
+                                icon={<FontAwesomeIcon icon={faCircleDown} color={"#AAA7A5"}
+                                  size={"xl"}
+                                  style={{ width: 25, height: 25 }} />} onClick={() => {
                                     ForceDownload(selectedResult.url, "designera-" + selectedResult.id)
-                                  }}/>
-                                  <IconButton
-                                      description={"Like"}
-                                      icon={<FontAwesomeIcon icon={faHeart} color={
-                                        userData?.upvotedImages?.findIndex((v: any) => v.id == selectedResult.id) == -1 ? "#AAA7A5" : "#FF6363"
-                                      }
-                                                             size={"xl"}
-                                                             style={{width: 25, height: 25}}/>} onClick={() => {
+                                  }} />
+                              <IconButton
+                                description={"Like"}
+                                icon={<FontAwesomeIcon icon={faHeart} color={
+                                  userData?.upvotedImages?.findIndex((v: any) => v.id == selectedResult.id) == -1 ? "#AAA7A5" : "#FF6363"
+                                }
+                                  size={"xl"}
+                                  style={{ width: 25, height: 25 }} />} onClick={() => {
                                     vote(true)
-                                  }}/>
-                                  <IconButton
-                                      description={"Copy Style"}
-                                      icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={
-                                        themes.findIndex((v) => v.id == selectedResult.id) == -1 ? "#AAA7A5" : "#61A0FF"
-                                      } size={"xl"}
-                                                             style={{width: 25, height: 25}}/>}
-                                      onClick={() => {
-                                        if (themes.findIndex((v) => v.id == selectedResult.id) == -1) {
-                                          addImage({
-                                            id: selectedResult.id,
-                                            url: selectedResult.id,
-                                            style: roomStyle
-                                          })
-                                        } else {
-                                          removeImageById(selectedResult.id)
-                                        }
-                                        themesSectionToggle(true)
-                                      }}/>
-                                  <IconButton
-                                      description={"Upscale"}
-                                      icon={<FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter}
-                                                             color={"#AAA7A5"} size={"xl"}
-                                                             style={{width: 25, height: 25}}/>}
-                                      onClick={() => {
-                                        upscale()
-                                      }}
-                                  />
-                                  <IconButton
-                                      description={"Regenerate"}
-                                      icon={<FontAwesomeIcon icon={faArrowsRotate}
-                                                             color={"#AAA7A5"} size={"xl"}
-                                                             style={{width: 25, height: 25}}/>}
-                                      onClick={() => {
-                                        renderProcess()
-                                      }}
-                                  />
-                                  <IconButton
-                                      description={"Create Variants"}
-                                      icon={<FontAwesomeIcon icon={faCopy} color={"#AAA7A5"}
-                                                             size={"xl"}
-                                                             style={{width: 25, height: 25}}/>}
-                                      onClick={() => {
-                                        renderProcess(true)
-                                      }}
-                                  />
-                                  <IconButton
-                                      description={"Coming Soon"}
-                                      icon={<FontAwesomeIcon icon={faMagnifyingGlassDollar} color={"#AAA7A5"}
-                                                             size={"xl"}
-                                                             style={{width: 25, height: 25}}/>}
-                                  />
-                              </div>
+                                  }} />
+                              <IconButton
+                                description={"Copy Style"}
+                                icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={
+                                  themes.findIndex((v) => v.id == selectedResult.id) == -1 ? "#AAA7A5" : "#61A0FF"
+                                } size={"xl"}
+                                  style={{ width: 25, height: 25 }} />}
+                                onClick={() => {
+                                  if (themes.findIndex((v) => v.id == selectedResult.id) == -1) {
+                                    addImage({
+                                      id: selectedResult.id,
+                                      url: selectedResult.id,
+                                      style: roomStyle
+                                    })
+                                  } else {
+                                    removeImageById(selectedResult.id)
+                                  }
+                                  themesSectionToggle(true)
+                                }} />
+                              <IconButton
+                                description={"Upscale"}
+                                icon={<FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter}
+                                  color={"#AAA7A5"} size={"xl"}
+                                  style={{ width: 25, height: 25 }} />}
+                                onClick={() => {
+                                  upscale()
+                                }}
+                              />
+                              <IconButton
+                                description={"Regenerate"}
+                                icon={<FontAwesomeIcon icon={faArrowsRotate}
+                                  color={"#AAA7A5"} size={"xl"}
+                                  style={{ width: 25, height: 25 }} />}
+                                onClick={() => {
+                                  renderProcess()
+                                }}
+                              />
+                              <IconButton
+                                description={"Create Variants"}
+                                icon={<FontAwesomeIcon icon={faCopy} color={"#AAA7A5"}
+                                  size={"xl"}
+                                  style={{ width: 25, height: 25 }} />}
+                                onClick={() => {
+                                  renderProcess(true)
+                                }}
+                              />
+                              <IconButton
+                                description={"Coming Soon"}
+                                icon={<FontAwesomeIcon icon={faMagnifyingGlassDollar} color={"#AAA7A5"}
+                                  size={"xl"}
+                                  style={{ width: 25, height: 25 }} />}
+                              />
+                            </div>
                           }
                         </div>
                       </div>
                       <div
                         className={"black-zone h-1/2 w-full flex flex-col justify-end items-center"}>
                         {!(selectedResult?.url?.includes("reference") || publisheds.includes(selectedResult.id)) &&
-                            <div className={"w-11/12 xl:w-2/3 flex justify-center"}>
-                                <AnimatedSimpleInput
-                                    labelText={"Give your design a name"}
-                                    className={"w-8/12 xl:w-9/12"}
-                                    labelClassname={"ml-5 text-white text-base"}
-                                    inputClassname={"bg-[#1E1E1E] hover:bg-[#242424] focus:bg-[#242424] opacity-90 pl-7 pt-6"}
-                                    value={publishDescription}
-                                    onValueChange={(text) => {
-                                      setPublishDescription(text)
-                                    }}
-                                />
-                                <ReactTooltip
-                                    anchorId={"publishButton"}
-                                    place="top"
-                                    content={"Publish"}
-                                    delayShow={500}
-                                />
-                                <button
-                                    id={"publishButton"}
-                                    onClick={() => {
-                                      publish()
-                                    }}
-                                    disabled={publishDescription.length < 6 || publishDescription.length > 50}
-                                    className="xl:w-1/12 block text-stone-400 p-2 bg-[#1E1E1E] hover:bg-[#242424] focus:bg-[#242424] opacity-90 border border-[#6F6B6A] font-semibold hover:text-white designera-rounded ml-2 flex items-center justify-center"
-                                    style={{height: 56, width: 56}}
-                                >
-                                    <FontAwesomeIcon icon={faPaperPlane} color={"#AAA7A5"}
-                                                     style={{paddingRight: 2, height: 30, width: 30}}/>
-                                </button>
-                            </div>
+                          <div className={"w-11/12 xl:w-2/3 flex justify-center"}>
+                            <AnimatedSimpleInput
+                              labelText={"Give your design a name"}
+                              className={"w-8/12 xl:w-9/12"}
+                              labelClassname={"ml-5 text-white text-base"}
+                              inputClassname={"bg-[#1E1E1E] hover:bg-[#242424] focus:bg-[#242424] opacity-90 pl-7 pt-6"}
+                              value={publishDescription}
+                              onValueChange={(text) => {
+                                setPublishDescription(text)
+                              }}
+                            />
+                            <ReactTooltip
+                              anchorId={"publishButton"}
+                              place="top"
+                              content={"Publish"}
+                              delayShow={500}
+                            />
+                            <button
+                              id={"publishButton"}
+                              onClick={() => {
+                                publish()
+                              }}
+                              disabled={publishDescription.length < 6 || publishDescription.length > 50}
+                              className="xl:w-1/12 block text-stone-400 p-2 bg-[#1E1E1E] hover:bg-[#242424] focus:bg-[#242424] opacity-90 border border-[#6F6B6A] font-semibold hover:text-white designera-rounded ml-2 flex items-center justify-center"
+                              style={{ height: 56, width: 56 }}
+                            >
+                              <FontAwesomeIcon icon={faPaperPlane} color={"#AAA7A5"}
+                                style={{ paddingRight: 2, height: 30, width: 30 }} />
+                            </button>
+                          </div>
                         }
                         <div
                           className={"w-full overflow-x-scroll xl:overflow-x-hidden xl:flex xl:justify-center"}>
@@ -739,7 +738,7 @@ export default function MainPage() {
                                 <div key={i} onClick={(e) => {
                                   switchImage(v, e, i)
                                 }}
-                                     className="w-32 xl:w-1/6 flex items-center text-center bg-stone-600 h-20 designera-rounded designera-box-shadow border-2 border-transparent hover:border-white cursor-pointer overflow-hidden">
+                                  className="w-32 xl:w-1/6 flex items-center text-center bg-stone-600 h-20 designera-rounded designera-box-shadow border-2 border-transparent hover:border-white cursor-pointer overflow-hidden">
                                   <ImageWithBlur
                                     className="w-full h-full object-cover"
                                     src={`https://cdn.designera.app/generated/${v}`}
@@ -759,15 +758,15 @@ export default function MainPage() {
                   : loaderShow ?
                     <div
                       className={"w-full flex items-center justify-center flex-col font-semibold bg-stone-600 designera-rounded text-white h-96 md:h-full"}>
-                      <span style={{marginBottom: '0.4rem'}}>Rendering...</span>
-                      <div style={{marginTop: '0.4rem'}}>
-                        <CircularProgress isIndeterminate color={"#FF9900"}/>
+                      <span style={{ marginBottom: '0.4rem' }}>Rendering...</span>
+                      <div style={{ marginTop: '0.4rem' }}>
+                        <CircularProgress isIndeterminate color={"#FF9900"} />
                       </div>
                     </div>
                     :
                     <div className={"h-full"}>
                       <div className={"h-full hidden md:block"}>
-                        <SampleRecentGalleryImages images={recentImages}/>
+                        <SampleRecentGalleryImages images={recentImages} />
                       </div>
                       <div
                         className={"w-full h-96 flex items-center justify-center font-semibold bg-stone-600 designera-rounded text-white md:hidden"}>
@@ -812,7 +811,7 @@ export default function MainPage() {
             />
           </div>
           <div className="w-full designera-rounded-lg mt-10">
-            <SampleCommunityGalleryImages images={images}/>
+            <SampleCommunityGalleryImages images={images} />
           </div>
           {/*<div
                         className="h-15 pt-2 w-full designera-rounded-lg flex justify-center items-center bg-gray-700 block text-white font-bold designera-box-shadow cursor-pointer mb-10"
@@ -835,9 +834,9 @@ export default function MainPage() {
               // @ts-ignore
               views={[...
                 resultData.id ?
-                  [{src: `https://cdn.designera.app/generated/${resultData.id}`, id: resultData.id}] :
+                  [{ src: `https://cdn.designera.app/generated/${resultData.id}`, id: resultData.id }] :
                   resultData.images ? resultData.images.map((v: any) => {
-                    return {src: `https://cdn.designera.app/generated/${v}`, id: v}
+                    return { src: `https://cdn.designera.app/generated/${v}`, id: v }
                   }) : []
               ]}
               components={{
@@ -849,9 +848,9 @@ export default function MainPage() {
         ) : null}
       </ModalGateway>
 
-      <AuthModal/>
-      <SubscriptionModal/>
-      <Toaster containerStyle={{zIndex: 999999}} toastOptions={{style: {backgroundColor: "#2b2b2b", color: "#fff"}}}/>
+      <AuthModal />
+      <SubscriptionModal />
+      <Toaster containerStyle={{ zIndex: 999999 }} toastOptions={{ style: { backgroundColor: "#2b2b2b", color: "#fff" } }} />
     </main>
   );
 }
