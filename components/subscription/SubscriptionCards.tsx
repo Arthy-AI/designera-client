@@ -13,7 +13,7 @@ export const SubscriptionCards = ({children, selected, onSelect, ...props}: Subs
     return (
         <div className={"h-fit grid grid-cols-1 sm:grid-cols-3 gap-6 mb-2"}>
             <div
-                className={"h-fit bg-[#2f2f2f] text-white border-4 designera-rounded-2 p-2 px-2 md:p-7 md:px-0 flex flex-col items-center gap-1 cursor-pointer"}
+                className={"h-fit bg-[#2b2b2b] text-white border-4 designera-rounded-2 p-2 px-2 md:p-7 md:px-0 flex flex-col items-center gap-1 cursor-pointer"}
                 style={{borderColor: selected == 1 ? "#FF9900" : "#4d4d4d"}}
                 onClick={() => {
                     onSelect(1)
@@ -57,7 +57,7 @@ export const SubscriptionCards = ({children, selected, onSelect, ...props}: Subs
             </div>
 
             <div
-                className={"h-fit bg-[#2f2f2f] text-white border-4 designera-rounded-2 p-2 px-2 md:p-7 md:px-0 flex flex-col items-center gap-1 cursor-pointer relative"}
+                className={"h-fit bg-[#2b2b2b] text-white border-4 designera-rounded-2 p-2 px-2 md:p-7 md:px-0 flex flex-col items-center gap-1 cursor-pointer relative"}
                 style={{borderColor: selected == 2 ? "#FF9900" : "#4d4d4d"}}
                 onClick={() => {
                     onSelect(2)
@@ -104,7 +104,7 @@ export const SubscriptionCards = ({children, selected, onSelect, ...props}: Subs
             </div>
 
             <div
-                className={"h-fit bg-[#2f2f2f] text-white border-4 designera-rounded-2 p-2 px-2 md:p-7 md:px-0 flex flex-col items-center gap-1 cursor-pointer relative"}
+                className={"h-fit bg-[#2b2b2b] text-white border-4 designera-rounded-2 p-2 px-2 md:p-7 md:px-0 flex flex-col items-center gap-1 cursor-pointer relative"}
                 style={{borderColor: selected == 3 ? "#FF9900" : "#4d4d4d"}}
                 onClick={() => {
                     onSelect(3)

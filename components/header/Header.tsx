@@ -20,7 +20,7 @@ export const Header = ({children, ...props}: ReactProps) => {
 
   return (
     <div id={"Header"}
-         className={"h-11 w-full fixed top-0 flex items-center pl-3 pr-4 bg-[#2f2f2f] designera-box-shadow z-50"}>
+         className={"h-11 w-full fixed top-0 flex items-center pl-3 pr-4 bg-[#2b2b2b] designera-box-shadow z-50"}>
       <div id={"HeaderContainer"} className={"w-full flex justify-between items-center"}>
         <div className={"ml-2 mt-1 cursor-pointer"} id={"HeaderLogoContainer"} style={{height: "fit-content"}} onClick={() => window.location.reload()}>
           <DesigneraTitleLarge/>

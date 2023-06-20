@@ -25,7 +25,7 @@ export const TermsOfUseModal = ({children, isOpen, onClose, onOpen, ...props}: T
                     gap: 5,
                     flexDirection: "column",
                     boxShadow: "none",
-                    backgroundColor: "#2F2F2F",
+                    backgroundColor: "#2b2b2b",
                     color: "white",
                     wordWrap: "break-word",
                     whiteSpace: "pre-wrap"

@@ -202,11 +202,10 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
                                                      onClick={() => themeAdd(photos[index]?.data?.id, photos[index]?.src, photos[index]?.data?.style)}
                                          />
                                          <div className={"absolute right-0 bottom-0 pr-2 pb-2"}>
-                                             <div
-                                                 className={"sticky text-white font-semibold z-10 text-right flex flex-col text-xs leading-3"}>
-                                                 { photos[index].data.title }
-                                                 <small className={"font-thin"}>By { photos[index].data.username }</small>
-                                                 <small className={"Font-Light font-thin text-stone-400"}>{ photos[index].data.likes } likes</small>
+                                             <div className="sticky text-white z-10 text-right flex flex-col text-xs leading-3">
+                                                 <small style={{ fontSize: '1.1em', textTransform: 'capitalize' }}>{photos[index].data.title}</small>
+                                                 <small className="font-thin mt-1" style={{ textTransform: 'capitalize' }}>By {photos[index].data.username}</small>
+                                                 <small className="Font-Light font-thin text-stone-400">{photos[index].data.likes} likes</small>
                                              </div>
                                              <div className={"black-zone absolute w-60 h-32 bottom-0 right-0 z-0"}
                                                   style={{

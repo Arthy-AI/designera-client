@@ -71,7 +71,7 @@ export const AuthModal = ({children, ...props}: AuthModal) => {
     <Modal isOpen={modalShow} onClose={() => toggleModal(false)} isCentered size={"lg"}>
       <ModalOverlay/>
       <ModalContent
-        style={{backgroundColor: "#2F2F2F", color: "white", border: "2px solid #4d4d4d", borderRadius: 15}}>
+        style={{backgroundColor: "#2b2b2b", color: "white", border: "2px solid #4d4d4d", borderRadius: 15}}>
         <ModalBody paddingX={10} paddingY={5}>
           {currentSection == "login" && (
             <Formik

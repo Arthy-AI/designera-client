@@ -132,7 +132,7 @@ export default function CheckoutPage() {
                 </div>
               </div>
               <div
-                className="col-span-12 lg:col-span-4 bg-[#2f2f2f] flex lg:justify-center lg:items-center relative">
+                className="col-span-12 lg:col-span-4 bg-[#2b2b2b] flex lg:justify-center lg:items-center relative">
                 <div>
                   <div className={"block lg:hidden pt-20 px-2"}>
                     <SmallSubscriptionCards selected={selectedSubscription as unknown as number}

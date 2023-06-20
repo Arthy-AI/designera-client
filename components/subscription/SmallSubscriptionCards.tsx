@@ -13,7 +13,7 @@ export const SmallSubscriptionCards = ({children, selected, onSelect, ...props}:
     return (
         <div className={"grid grid-cols-1 sm:grid-cols-3 gap-5 h-full"}>
             <div
-                className={"h-fit flex flex-col items-center gap-1 bg-[#2f2f2f] text-white border-4 designera-rounded p-4 2xl:p-8 cursor-pointer"}
+                className={"h-fit flex flex-col items-center gap-1 bg-[#2b2b2b] text-white border-4 designera-rounded p-4 2xl:p-8 cursor-pointer"}
                 style={{borderColor: selected == 1 ? "#FF9900" : "#4d4d4d"}}
                 onClick={() => {
                     onSelect(1)
@@ -61,7 +61,7 @@ export const SmallSubscriptionCards = ({children, selected, onSelect, ...props}:
             </div>
 
             <div
-                className={"h-fit flex flex-col items-center gap-1 bg-[#2f2f2f] text-white border-4 designera-rounded p-4 2xl:p-8 cursor-pointer relative"}
+                className={"h-fit flex flex-col items-center gap-1 bg-[#2b2b2b] text-white border-4 designera-rounded p-4 2xl:p-8 cursor-pointer relative"}
                 style={{borderColor: selected == 2 ? "#FF9900" : "#4d4d4d"}}
                 onClick={() => {
                     onSelect(2)
@@ -110,7 +110,7 @@ export const SmallSubscriptionCards = ({children, selected, onSelect, ...props}:
             </div>
 
             <div
-                className={"h-fit  flex flex-col items-center gap-0 sm:gap-1 bg-[#2f2f2f] text-white border-4 designera-rounded p-4 2xl:p-8 cursor-pointer relative"}
+                className={"h-fit  flex flex-col items-center gap-0 sm:gap-1 bg-[#2b2b2b] text-white border-4 designera-rounded p-4 2xl:p-8 cursor-pointer relative"}
                 style={{borderColor: selected == 3 ? "#FF9900" : "#4d4d4d"}}
                 onClick={() => {
                     onSelect(3)

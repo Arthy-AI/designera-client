@@ -47,7 +47,7 @@ export default function PrivacyPolicy() {
         </div>
 
         <div
-          className={"w-1/2 flex flex-col gap-6 p-4 bg-[#2F2F2F] designera-rounded designera-box-shadow text-white break-words"}>
+          className={"w-1/2 flex flex-col gap-6 p-4 bg-[#2b2b2b] designera-rounded designera-box-shadow text-white break-words"}>
           <div className="separator-white text-xl select-none">Privacy Policy</div>
           <div className={"Font-Regular break-words whitespace-break-spaces"}>
             <div>

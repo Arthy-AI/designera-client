@@ -48,7 +48,7 @@ import {UseAsThemeFlatLogo} from "../assets/svg/UseAsThemeFlatLogo";
 import {SubscriptionModal} from "../components/subscription/SubscriptionModal";
 import useSubscription from "../hooks/subscription/useSubscription";
 import {Box, CircularProgress} from "@chakra-ui/react";
-import {Slider, SliderTrack, SliderFilledTrack, SliderThumb, SliderMark} from "@chakra-ui/react";
+import {Slider, SliderTrack, SliderFilledTrack, SliderThumb, SliderMark,} from "@chakra-ui/react";
 import {orange} from "@mui/material/colors";
 import {useBottomScrollListener} from "react-bottom-scroll-listener";
 
@@ -577,7 +577,7 @@ export default function MainPage() {
                               onClick={(e) => {
                                 renderProcess()
                               }}
-                              className={"h-16 text-lg lg:text-sm select-none"}
+                              className={"h-16 text-lg lg:text-l select-none"}
                             />
                           </div>
                         </div>
@@ -590,7 +590,7 @@ export default function MainPage() {
                           changeSection("login")
                           toggleModal(true)
                         }}
-                        className={"h-16 text-xl"}
+                        className={"h-16 text-l"}
                       />)
                     }
                   </div>
@@ -851,7 +851,7 @@ export default function MainPage() {
 
       <AuthModal/>
       <SubscriptionModal/>
-      <Toaster containerStyle={{zIndex: 999999}} toastOptions={{style: {backgroundColor: "#2F2F2F", color: "#fff"}}}/>
+      <Toaster containerStyle={{zIndex: 999999}} toastOptions={{style: {backgroundColor: "#2b2b2b", color: "#fff"}}}/>
     </main>
   );
 }
