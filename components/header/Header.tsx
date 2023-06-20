@@ -25,7 +25,7 @@ export const Header = ({children, ...props}: ReactProps) => {
         <div className={"ml-2 mt-1 cursor-pointer"} id={"HeaderLogoContainer"} style={{height: "fit-content"}} onClick={() => window.location.reload()}>
           <DesigneraTitleLarge/>
         </div>
-        <div id={"HeaderButtonGroup"} className={`flex flex-row ${isLoggedIn ? "gap-4" : "md:gap-10 gap-4"} items-center`}>
+        <div id={"HeaderButtonGroup"} className={`flex flex-row ${isLoggedIn ? "gap-3" : "md:gap-6 gap-4"} items-center`}>
           {isLoggedIn ?
             <div
               className={"rounded-full w-9 h-9 cursor-pointer rounded-full border-2 border-transparent hover:border-2 hover:ring-stone-400 hover:border-stone-400 overflow-hidden"}
@@ -50,7 +50,7 @@ export const Header = ({children, ...props}: ReactProps) => {
           }
           { !userData?.stripeCustomerId &&
           <button
-            className="h-8 bg-blue-600 designera-rounded p-90 text-white designera-box-shadow font-semibold px-3 select-none transition-colors ease-in-out duration-150 hover:bg-white hover:text-black"
+            className="h-8 bg-blue-600 designera-rounded-3 p-90 text-white designera-box-shadow font-semibold px-3 select-none transition-colors ease-in-out duration-150 hover:bg-white hover:text-black"
             onClick={async () => {
               if (isLoggedIn) {
                 try {

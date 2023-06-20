@@ -166,7 +166,7 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
                                      {...photo}
                                  />
                                  <div
-                                     className={"top-0 absolute w-full h-full p-4 flex flex-row opacity-0 hover:opacity-100 transition duration-300 ease-in-out"}
+                                     className={"top-0 absolute w-full h-full p-2 flex flex-row opacity-0 hover:opacity-100 transition duration-300 ease-in-out"}
                                      style={{backgroundColor: "rgba(0, 0, 0, 0.2)"}}>
                                      <div className={"black-zone flex flex-col w-1/2 items-start"}>
                                          <IconButton
@@ -184,7 +184,7 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
                                              className={"p-0.5"}
                                          />
                                      </div>
-                                     <div className={"black-zone flex flex-col w-1/2 items-end gap-0.5 md:gap-4"}>
+                                     <div className={"black-zone flex flex-col w-1/2 items-end gap-0.5 md:gap-2"}>
                                          <IconButton description={"Download"} icon={<FontAwesomeIcon icon={faCircleDown} color={"#AAA7A5"} size={"xl"}
                                                                             style={{width: 25, height: 25}}/>}
                                                      onClick={() => ForceDownload(photos[index]?.src, "designera-" + photos[index]?.data?.id)}

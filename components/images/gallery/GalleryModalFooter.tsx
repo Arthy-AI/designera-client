@@ -99,8 +99,8 @@ export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicO
   return isModal ? (
     <div {...innerProps}>
       <div
-        className={"absolute alwaysOnTop left-0 top-5 sm:top-auto sm:bottom-0 pl-2 pb-2 gap-4 items-end h-fit"}>
-        <div className={"flex items-end flex-row flex-wrap gap-4"}>
+        className={"absolute alwaysOnTop left-0 top-5 sm:top-auto sm:bottom-0 pl-2 pb-2 gap-2 items-end h-fit"}>
+        <div className={"flex items-end flex-row flex-wrap gap-2"}>
           <IconButton description={"Download"} icon={
             <FontAwesomeIcon icon={faCircleDown} color={"#AAA7A5"} size={"xl"}
                              style={{width: 25, height: 25}}

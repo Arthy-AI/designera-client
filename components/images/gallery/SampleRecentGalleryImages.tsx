@@ -133,7 +133,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                     height: "45%"
                   }}>
                       <div
-                          className={"top-0 absolute w-full h-full p-4 flex flex-row opacity-0 hover:opacity-100 transition duration-300 ease-in-out z-10"}
+                          className={"top-0 absolute w-full h-full p-2 flex flex-row opacity-0 hover:opacity-100 transition duration-300 ease-in-out z-10"}
                           style={{backgroundColor: "rgba(0, 0, 0, 0.2)"}}
                           onClick={(e: any) => {
                             if ([...e.target.classList].includes("black-zone")) return openLightbox(e, {
@@ -159,7 +159,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                                   className={"p-0.5"}
                               />
                           </div>
-                          <div className={"black-zone flex flex-col w-1/2 items-end gap-4"}>
+                          <div className={"black-zone flex flex-col w-1/2 items-end gap-2"}>
                               <IconButton description={"Download"}
                                           icon={<FontAwesomeIcon icon={faCircleDown} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
@@ -202,7 +202,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                     height: "55%"
                   }}>
                       <div
-                          className={"top-0 absolute w-full h-full p-4 flex flex-row opacity-0 hover:opacity-100 transition duration-300 ease-in-out z-10"}
+                          className={"top-0 absolute w-full h-full p-2 flex flex-row opacity-0 hover:opacity-100 transition duration-300 ease-in-out z-10"}
                           style={{backgroundColor: "rgba(0, 0, 0, 0.2)"}}
                           onClick={(e: any) => {
                             if ([...e.target.classList].includes("black-zone")) return openLightbox(e, {
@@ -228,7 +228,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                                   className={"p-0.5"}
                               />
                           </div>
-                          <div className={"black-zone flex flex-col w-1/2 items-end gap-4"}>
+                          <div className={"black-zone flex flex-col w-1/2 items-end gap-2"}>
                               <IconButton description={"Download"}
                                           icon={<FontAwesomeIcon icon={faCircleDown} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
@@ -276,7 +276,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                     height: "55%"
                   }}>
                       <div
-                          className={"top-0 absolute w-full h-full p-4 flex flex-row opacity-0 hover:opacity-100 transition duration-300 ease-in-out z-10"}
+                          className={"top-0 absolute w-full h-full p-2 flex flex-row opacity-0 hover:opacity-100 transition duration-300 ease-in-out z-10"}
                           style={{backgroundColor: "rgba(0, 0, 0, 0.2)"}}
                           onClick={(e: any) => {
                             if ([...e.target.classList].includes("black-zone")) return openLightbox(e, {
@@ -302,7 +302,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                                   className={"p-0.5"}
                               />
                           </div>
-                          <div className={"black-zone flex flex-col w-1/2 items-end gap-4"}>
+                          <div className={"black-zone flex flex-col w-1/2 items-end gap-2"}>
                               <IconButton description={"Download"}
                                           icon={<FontAwesomeIcon icon={faCircleDown} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
@@ -346,7 +346,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                     height: "45%"
                   }}>
                       <div
-                          className={"top-0 absolute w-full h-full p-4 flex flex-row opacity-0 hover:opacity-100 transition duration-300 ease-in-out z-10"}
+                          className={"top-0 absolute w-full h-full p-2 flex flex-row opacity-0 hover:opacity-100 transition duration-300 ease-in-out z-10"}
                           style={{backgroundColor: "rgba(0, 0, 0, 0.2)"}}
                           onClick={(e: any) => {
                             if ([...e.target.classList].includes("black-zone")) return openLightbox(e, {
@@ -372,7 +372,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                                   className={"p-0.5"}
                               />
                           </div>
-                          <div className={"black-zone flex flex-col w-1/2 items-end gap-4"}>
+                          <div className={"black-zone flex flex-col w-1/2 items-end gap-2"}>
                               <IconButton description={"Download"}
                                           icon={<FontAwesomeIcon icon={faCircleDown} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
@@ -420,7 +420,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                     height: "45%"
                   }}>
                       <div
-                          className={"top-0 absolute w-full h-full p-4 flex flex-row opacity-0 hover:opacity-100 transition duration-300 ease-in-out z-10"}
+                          className={"top-0 absolute w-full h-full p-2 flex flex-row opacity-0 hover:opacity-100 transition duration-300 ease-in-out z-10"}
                           style={{backgroundColor: "rgba(0, 0, 0, 0.2)"}}
                           onClick={(e: any) => {
                             if ([...e.target.classList].includes("black-zone")) return openLightbox(e, {
@@ -446,7 +446,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                                   className={"p-0.5"}
                               />
                           </div>
-                          <div className={"black-zone flex flex-col w-1/2 items-end gap-4"}>
+                          <div className={"black-zone flex flex-col w-1/2 items-end gap-2"}>
                               <IconButton description={"Download"}
                                           icon={<FontAwesomeIcon icon={faCircleDown} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}
@@ -490,7 +490,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                     height: "55%"
                   }}>
                       <div
-                          className={"top-0 absolute w-full h-full p-4 flex flex-row opacity-0 hover:opacity-100 transition duration-300 ease-in-out z-10"}
+                          className={"top-0 absolute w-full h-full p-2 flex flex-row opacity-0 hover:opacity-100 transition duration-300 ease-in-out z-10"}
                           style={{backgroundColor: "rgba(0, 0, 0, 0.2)"}}
                           onClick={(e: any) => {
                             if ([...e.target.classList].includes("black-zone")) return openLightbox(e, {
@@ -516,7 +516,7 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                                   className={"p-0.5"}
                               />
                           </div>
-                          <div className={"black-zone flex flex-col w-1/2 items-end gap-4"}>
+                          <div className={"black-zone flex flex-col w-1/2 items-end gap-2"}>
                               <IconButton description={"Download"}
                                           icon={<FontAwesomeIcon icon={faCircleDown} color={"#AAA7A5"} size={"xl"}
                                                                  style={{width: 25, height: 25}}/>}

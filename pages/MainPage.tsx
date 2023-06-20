@@ -53,6 +53,7 @@ import {orange} from "@mui/material/colors";
 import {useBottomScrollListener} from "react-bottom-scroll-listener";
 
 
+
 export default function MainPage() {
   const {GET, FILEPOST, POST, PATCH} = useAxios()
   const {userData, decrementCreditBalance, isLoggedIn, toggleModal, changeSection, upvoteImageUpdate} = useAuth()
@@ -315,13 +316,23 @@ export default function MainPage() {
     setPaginationData({...tempPaginationData})
   });
 
+  //Credits Suffixes
+  function formatCredits(credits: number): string {
+    const suffixes = ["", "K", "M", "B", "T"]; // Add more suffixes if needed
+    const suffixIndex = Math.floor(Math.log10(credits) / 3);
+    const scaledValue = credits / Math.pow(10, suffixIndex * 3);
+    const formattedValue = scaledValue.toFixed(1);
+  
+    return formattedValue + suffixes[suffixIndex];
+  }
+
   return (
     <main className="flex flex-col" id={"MainPage"}>
       <Header/>
       <div className="flex justify-center items-center min-h-screen">
         <div className="w-4/5 flex flex-col items-center">
           <Heading>
-            <div className={"hidden  md:block mb-6"}>Design your <span className="text-[#FF9900]">own</span> interior
+            <div className={"hidden  md:block mt-2 mb-2"}>Design your <span className="text-[#FF9900]">own</span> interior
               in
               seconds
             </div>
@@ -542,11 +553,11 @@ export default function MainPage() {
                           {!userData?.plan &&
                               <div
                                   className={"flex flex-row bg-stone-700 text-white designera-rounded designera-box-shadow items-center justify-center gap-2 p-2 h-16 w-fit"}>
-                                  <div
-                                      className="flex justify-center items-center font-bold text-4xl select-none">
-                                      <span
-                                          className={"h-max"}>{userData?.credits ? userData?.credits : 0}</span>
-                                  </div>
+                              <div className="flex justify-center items-center font-bold text-4xl select-none">
+                                <span className="h-max">
+                                  {userData?.credits ? formatCredits(userData.credits) : "0"}
+                                </span>
+                              </div>
                                   <div
                                       className="flex justify-center items-center text-sm pt-1 leading-4 text-xs font-thin select-none">Credits<br/>Available
                                   </div>
@@ -612,7 +623,7 @@ export default function MainPage() {
                         <div className={"overflow-x-scroll md:overflow-x-hidden black-zone"}>
                           {!selectedResult?.url?.includes("reference") &&
                               <div
-                                  className={"black-zone w-fit flex flex-row items-start justify-center sm:w-full md:justify-start md:flex-col md:items-end gap-4 p-4"}>
+                                  className={"black-zone w-fit flex flex-row items-start justify-center sm:w-full md:justify-start md:flex-col md:items-end gap-3 p-3"}>
                                   <IconButton
                                       description={"Download"}
                                       icon={<FontAwesomeIcon icon={faCircleDown} color={"#AAA7A5"}
