@@ -801,7 +801,7 @@ export default function MainPage() {
             Get <span className="text-[#FF0000]">inspired</span> by the community
             of <span className="text-[#FF9900]">Designera</span>
           </Heading>
-          <div className="w-full flex justify-center mb-4">
+          <div className="w-full flex justify-center mb-4 mt-5">
             <AnimatedSimpleInput
               labelText={"Search Designs"}
               placeholderText={"Ex. Ikea, Scandinavian, Cyberpunk, Batcave"}
