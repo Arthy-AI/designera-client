@@ -172,14 +172,6 @@ export const StyleSuggestionPills = [
     "description": "A luxurious style with Old Hollywood elements, including velvet, gold accents, and vintage-inspired décor."
   },
   {
-    "name": "Sci-Fi Fandom",
-    "description": "A futuristic design celebrating popular sci-fi franchises with themed accents, props, and otherworldly touches."
-  },
-  {
-    "name": "Superhero Sanctuary",
-    "description": "A style incorporating comic book superheroes, iconic logos, action-packed artwork, and bold colors."
-  },
-  {
     "name": "Retro TV Lounge",
     "description": "A nostalgic design with vintage TV memorabilia, mid-century furniture, and iconic show-inspired accents."
   },
@@ -194,5 +186,57 @@ export const StyleSuggestionPills = [
   {
     "name": "Street Art Loft",
     "description": "An urban design featuring graffiti, street art, bold graphics, and industrial materials."
+  },
+  {
+    "name": "Natural Organic",
+    "description": "Incorporates materials like wood, bamboo, linen, and rattan to create a soothing and eco-friendly atmosphere."
+  },
+  {
+    "name": "Luxurious Velvet",
+    "description": "Adds a touch of opulence with sumptuous velvet materials in rich colors like emerald green, royal blue, or deep purple."
+  },
+  {
+    "name": "Sleek Glass and Metal",
+    "description": "Creates a modern and polished look with the use of sleek glass surfaces, stainless steel, and chrome accents."
+  },
+  {
+    "name": "Cozy Knits",
+    "description": "Brings warmth and texture with knitted materials like chunky blankets, cable-knit pillows, and soft wool rugs."
+  },
+  {
+    "name": "Earthy Terracotta",
+    "description": "Highlights the natural warmth of terracotta materials, such as clay pottery, tiles, and textured finishes."
+  },
+  {
+    "name": "Vintage Mirrors",
+    "description": "Older mirrors with ornate frames or aged patina, creating a vintage and reflective focal point in a room."
+  },
+  {
+    "name": "Copper Accents",
+    "description": "Touches of copper in decorative objects, light fixtures, or kitchenware, providing a warm and metallic flair."
+  },
+  {
+    "name": "Artificial Faux Fur",
+    "description": "Faux fur materials used in throws, pillows, or rugs, providing a cozy and luxurious texture without using real animal fur."
+  },
+  {
+    "name": "Reclaimed Wood",
+    "description": "Wood that has been salvaged from old structures or sources, adding a rustic and sustainable touch to furniture and accents."
+  },
+  {
+    "name": "Marble",
+    "description": "A luxurious and timeless material known for its elegance and natural veining, commonly used in countertops, flooring, and décor."
+  },
+  {
+    "name": "Concrete",
+    "description": "A versatile and modern material often used for countertops, flooring, and decorative objects, providing an industrial and minimalist aesthetic."
+  },
+  {
+    "name": "Leather",
+    "description": "A durable and classic material that adds a touch of sophistication and luxury to furniture, upholstery, and accessories."
+  },
+  {
+    "name": "Woven Seagrass",
+    "description": "Natural seagrass fibers woven into baskets, rugs, and furniture, bringing a coastal and textural element to the space."
   }
 ]

@@ -117,9 +117,9 @@ export const AuthModal = ({children, ...props}: AuthModal) => {
                             {isLoggingIn ? statusMessage : "Login"}
                           </button>
                           <Small
-                            className={"text-[#ccc] select-none"}>Don&apos;t have an account?
+                            className={"text-[#ccc] select-none mt-1"}>Don&apos;t have an account?
                             <span
-                              className={"cursor-pointer hover:text-[#FF9900] transition-colors ease-in-out duration-300 text-sm ml-1"}
+                              className={"cursor-pointer hover:text-[#FF9900] transition-colors ease-in-out duration-150 text-sm ml-1"}
                               onClick={() => {
                                 changeSection("register")
                               }}
@@ -208,7 +208,7 @@ export const AuthModal = ({children, ...props}: AuthModal) => {
                             {isLoggingIn ? statusMessage : "Register"}
                           </button>
                           <Small
-                            className={"text-[#ccc] select-none"}>Already have an account?
+                            className={"text-[#ccc] select-none mt-1"}>Already have an account?
                             <span
                               className={"cursor-pointer hover:text-[#FF9900] transition-colors ease-in-out duration-300 text-sm ml-1"}
                               onClick={() => {

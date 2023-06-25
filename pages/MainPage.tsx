@@ -331,13 +331,16 @@ export default function MainPage() {
       <Header />
       <div className="flex justify-center items-center min-h-screen">
         <div className="w-4/5 flex flex-col items-center">
-          <Heading>
-            <div className={"hidden  md:block mt-2 mb-2"}>Design your <span className="text-[#FF9900]">own</span> interior
-              in
-              seconds
-            </div>
-          </Heading>
           <div className="w-full">
+          <Heading>
+            <div className={"hidden  md:block mt-2 mb-0"}><span className="text-[#FF9900]">Design</span> your interior
+              in <span className="text-[#ff9900]">seconds</span>
+              <div>
+                with <span className="text-[#FF0000]">AI</span> 🏠
+              </div> 
+            </div>
+              
+          </Heading>
             <StandardLayout>
               <SideMenu>
                 <div className="h-full flex flex-col justify-between">
@@ -387,25 +390,37 @@ export default function MainPage() {
                       types must be the same
                     </MutedSmall>
                     <div className="flex flex-row justify-between">
-                      <SimpleInput labelText={"Style"} labelTagShow={false} value={roomStyle} onValueChange={(e) => {
-                        setRoomStyle(e)
-                      }}
-                        secondaryPlaceholderText={" Ex. Minimalist, Gothic, 70’s, Zen, Modern..."}
-                        onFocus={() => {
-                          setShowStyleSuggestionPills(true)
-                        }}
-                        className={"placeholder-white"} />
-                      <button
-                        className="svg-change bg-[#3E3E3E] text-stone-400 font-semibold hover:text-white border border-stone-500 designera-rounded ml-1.5 flex justify-center items-center"
-                        style={{ minHeight: "42px", minWidth: "42px" }}
-                        onClick={() => {
-                          themesSectionToggle()
-                        }}
-                      >
-                        <FontAwesomeIcon icon={faWandMagicSparkles} color={themesSectionShow ? "#61A0FF" : "#AAA7A5"}
-                          size={"xs"}
-                          style={{ width: 25, height: 25 }} />
-                      </button>
+                      <div className="relative flex-grow">
+                        <SimpleInput
+                          labelText={"Style"}
+                          labelTagShow={false}
+                          value={roomStyle}
+                          onValueChange={(e) => {
+                            setRoomStyle(e);
+                          }}
+                          secondaryPlaceholderText={" Ex. Minimalist, Red, 70’s, Wood, Decorated..."}
+                          onFocus={() => {
+                            setShowStyleSuggestionPills(true);
+                          }}
+                          className={"placeholder-white"}
+                        />
+                        <div className="absolute right-0 top-0 bottom-0 flex items-center pr-1">
+                          <button
+                            className="svg-change font-semibold hover:text-white designera-rounded ml-1.5 flex justify-center items-center"
+                            style={{ minHeight: "30px", minWidth: "30px" }}
+                            onClick={() => {
+                              themesSectionToggle();
+                            }}
+                          >
+                            <FontAwesomeIcon
+                              icon={faWandMagicSparkles}
+                              color={themesSectionShow ? "#61A0FF" : "#AAA7A5"}
+                              size={"xs"}
+                              style={{ width: 20, height: 20 }}
+                            />
+                          </button>
+                        </div>
+                      </div>
                     </div>
                     {themesSectionShow ? (
                       <div className="flex flex-row justify-between my-2 gap-3 px-2">
