@@ -4,6 +4,7 @@ import {
   faCopy,
   faCircleDown,
   faHeart,
+  faImage,
   faPaperPlane,
   faPlus, faWandMagicSparkles,
   faUpRightAndDownLeftFromCenter, faArrowsRotate, faArrowUpFromBracket,
@@ -327,20 +328,23 @@ export default function MainPage() {
   }
 
   return (
-    <main className="flex flex-col" id={"MainPage"}>
+    <main className="flex flex-col user-scalable=no" id={"MainPage"}>
       <Header />
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="w-4/5 flex flex-col items-center">
+      <div className="hidden h-5">
+      </div>
+      <div className="h-5">
+      </div>
+      <Heading>
+        <div className={"hidden md:block mt-10 mb-0"}><span className="text-[#FFFFFF]">Design</span> your room
+          in seconds
+          <div>
+            with <span className="text-[#FF9900]">AI</span> Architect 🏠
+          </div>
+        </div>
+      </Heading>
+      <div className="flex justify-center items-center">
+        <div className="w-4/5 xl:w-4/7 flex flex-col items-center">
           <div className="w-full">
-          <Heading>
-            <div className={"hidden  md:block mt-2 mb-0"}><span className="text-[#FF9900]">Design</span> your interior
-              in <span className="text-[#ff9900]">seconds</span>
-              <div>
-                with <span className="text-[#FF0000]">AI</span> 🏠
-              </div> 
-            </div>
-              
-          </Heading>
             <StandardLayout>
               <SideMenu>
                 <div className="h-full flex flex-col justify-between">
@@ -354,7 +358,7 @@ export default function MainPage() {
                             style={{ objectFit: "contain" }}
                             width={"480"} /> :
                           <div className={"flex flex-col items-center gap-2"}>
-                            <FontAwesomeIcon icon={faArrowUpFromBracket} style={{ height: 30, width: 30 }}
+                            <FontAwesomeIcon icon={faImage} style={{ height: 30, width: 30 }}
                               color={"#fff"} />
                             <span
                               className="text-sm text-white text-center block designera-text-shadow lg:text-md"
@@ -586,25 +590,25 @@ export default function MainPage() {
                                 || (!(roomStyle.length > 2 && roomStyle.length < 1024) && themes.length < 1)
                                 || loaderShow
                               }
-                              text={"Run Designera"}
+                              text={"Create a Design 🎨"}
                               type={"primary"}
                               onClick={(e) => {
                                 renderProcess()
                               }}
-                              className={"h-16 text-lg lg:text-l select-none"}
+                              className={"h-12 text-lg lg:text-l select-none"}
                             />
                           </div>
                         </div>
                       )
                       :
                       (<SimpleButton
-                        text={"Login to Run Designera"}
+                        text={"Create Your Design 🎨"}
                         type={"primary"}
                         onClick={(e) => {
                           changeSection("login")
                           toggleModal(true)
                         }}
-                        className={"h-16 text-l"}
+                        className={"h-12 text-l"}
                       />)
                     }
                   </div>
@@ -798,13 +802,15 @@ export default function MainPage() {
       <div className="flex justify-center min-h-screen">
         <div className="w-4/5 flex flex-col items-center">
           <Heading>
+            <div className="mt-4 mb-3">
             Get <span className="text-[#FF0000]">inspired</span> by the community
             of <span className="text-[#FF9900]">Designera</span>
+            </div>
           </Heading>
-          <div className="w-full flex justify-center mb-4 mt-5">
+          <div className="w-full flex justify-center mb-4">
             <AnimatedSimpleInput
               labelText={"Search Designs"}
-              placeholderText={"Ex. Ikea, Scandinavian, Cyberpunk, Batcave"}
+              placeholderText={"Ex. Ikea, Scandinavian, Kitchen, Batcave, Garden"}
               className={"w-full md:w-4/5 lg:w-3/5 xl:w-2/5"}
               inputClassname={"bg-[#1E1E1E] hover:bg-[#242424] focus:bg-[#242424] pl-7 pt-6 rounded-full"}
               labelClassname={"ml-5 text-white text-base"}

@@ -19,8 +19,10 @@ export const Header = ({children, ...props}: ReactProps) => {
   const { toggleModal: subscriptionToggleModal } = useSubscription()
 
   return (
-    <div id={"Header"}
-         className={"h-11 w-full fixed top-0 flex items-center pl-3 pr-4 bg-[#2b2b2b] designera-box-shadow z-50"}>
+    <div
+      id="Header"
+      className="h-10 w-full fixed top-0 flex items-center pl-3 pr-4 designera-box-shadow z-50"
+      style={{ backgroundColor: "rgba(43, 43, 43, 0.9)", backdropFilter: "blur(10px)" }}>
       <div id={"HeaderContainer"} className={"w-full flex justify-between items-center"}>
         <div className={"ml-2 mt-1 cursor-pointer"} id={"HeaderLogoContainer"} style={{height: "fit-content"}} onClick={() => window.location.reload()}>
           <DesigneraTitleLarge/>
@@ -28,7 +30,7 @@ export const Header = ({children, ...props}: ReactProps) => {
         <div id={"HeaderButtonGroup"} className={`flex flex-row ${isLoggedIn ? "gap-3" : "md:gap-6 gap-4"} items-center`}>
           {isLoggedIn ?
             <div
-              className={"rounded-full w-9 h-9 cursor-pointer rounded-full border-2 border-transparent hover:border-2 hover:ring-stone-400 hover:border-stone-400 overflow-hidden"}
+              className={"rounded-full w-8 h-8 cursor-pointer rounded-full border-2 border-transparent hover:border-2 hover:ring-stone-400 hover:border-stone-400 overflow-hidden"}
               onClick={() => {
                 SidemenuOnOpen()
               }}>
@@ -50,7 +52,7 @@ export const Header = ({children, ...props}: ReactProps) => {
           }
           { !userData?.stripeCustomerId &&
           <button
-            className="h-8 bg-blue-600 designera-rounded-3 p-90 text-white designera-box-shadow font-semibold px-3 select-none transition-colors ease-in-out duration-150 hover:bg-white hover:text-black"
+            className="h-7 bg-blue-600 designera-rounded-3 p-90 text-white designera-box-shadow font-semibold px-2 select-none transition-colors ease-in-out duration-150 hover:bg-white hover:text-black"
             onClick={async () => {
               if (isLoggedIn) {
                 try {
