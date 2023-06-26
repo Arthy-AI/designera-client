@@ -97,7 +97,6 @@ const authGlobal = createSlice({
       if (data) {
         state.isLoggedIn = true
         state.userData = data
-        toast.success(`Successfully logged in.`)
       } else {
         if (reason != "keepMeSignedIn") {
           toast.error(reason)

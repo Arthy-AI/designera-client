@@ -329,7 +329,7 @@ export default function MainPage() {
   return (
     <main className="flex flex-col user-scalable=no" id={"MainPage"}>
       <Header />
-      <div className="hidden h-5">
+      <div className="hidden h-4">
       </div>
       <div className="h-5">
       </div>
@@ -342,7 +342,7 @@ export default function MainPage() {
         </div>
       </Heading>
       <div className="flex justify-center items-center">
-        <div className="w-4/5 xl:w-4/7 flex flex-col items-center">
+        <div className="w-full md:w-4/5 flex flex-col items-center">
           <div className="w-full">
             <StandardLayout>
               <SideMenu>
