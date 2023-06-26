@@ -50,7 +50,6 @@ import { SubscriptionModal } from "../components/subscription/SubscriptionModal"
 import useSubscription from "../hooks/subscription/useSubscription";
 import { Box, CircularProgress } from "@chakra-ui/react";
 import { Slider, SliderTrack, SliderFilledTrack, SliderThumb, SliderMark } from "@chakra-ui/react";
-import { orange } from "@mui/material/colors";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
 
 
@@ -326,7 +325,7 @@ export default function MainPage() {
 
     return formattedValue + suffixes[suffixIndex];
   }
-
+  
   return (
     <main className="flex flex-col user-scalable=no" id={"MainPage"}>
       <Header />
