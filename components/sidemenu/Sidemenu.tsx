@@ -1,5 +1,5 @@
-import React, {useCallback, useEffect, useState} from "react";
-import {ReactProps} from "../../interfaces/ReactProps";
+import React, { useCallback, useEffect, useState } from "react";
+import { ReactProps } from "../../interfaces/ReactProps";
 import {
     Drawer,
     DrawerBody,
@@ -9,21 +9,21 @@ import {
     DrawerFooter,
     useDisclosure,
 } from '@chakra-ui/react'
-import {SampleProfileGalleryImages} from "../images/gallery/SampleProfileGalleryImages";
-import {DesigneraTitle} from "../../assets/svg/DesigneraTitle";
-import {PrivacyPolicyModal} from "../modals/PrivacyPolicyModal";
-import {TermsOfUseModal} from "../modals/TermsOfUseModal";
-import {settingsSlice, settingsStore} from "./Settings";
-import {faChevronLeft, faGear} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {sidemenuStore} from "./SidemenuToggle";
+import { SampleProfileGalleryImages } from "../images/gallery/SampleProfileGalleryImages";
+import { DesigneraTitle } from "../../assets/svg/DesigneraTitle";
+import { PrivacyPolicyModal } from "../modals/PrivacyPolicyModal";
+import { TermsOfUseModal } from "../modals/TermsOfUseModal";
+import { settingsSlice, settingsStore } from "./Settings";
+import { faChevronLeft, faGear } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { sidemenuStore } from "./SidemenuToggle";
 import { ImageWithBlur } from '../images/ImageWithBlur';
 import useAuth from '../../hooks/auth/useAuth';
-import {SimpleButton} from "../button/SimpleButton";
-import {useRouter} from "next/router";
-import {DynamicObject} from "../../constants/DynamicObject";
+import { SimpleButton } from "../button/SimpleButton";
+import { useRouter } from "next/router";
+import { DynamicObject } from "../../constants/DynamicObject";
 import axios from 'axios';
-import {useAxios} from "../../hooks/useAxios";
+import { useAxios } from "../../hooks/useAxios";
 import toast from 'react-hot-toast';
 import { NetworkConfig } from '../../hooks/useAxios';
 import useSubscription from "../../hooks/subscription/useSubscription";
@@ -38,13 +38,13 @@ interface ObjMap {
     [key: string]: any
 }
 
-export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu) => {
+export const Sidemenu = ({ children, isOpen, onClose, onOpen, ...props }: Sidemenu) => {
     const [profileGalleryTab, setProfileGalleryTab] = useState({
         tab: "Images",
         trigger: Date.now()
     })
-    const {isOpen: PrivacyPolicyIsOpen, onOpen: PrivacyPolicyOnOpen, onClose: PrivacyPolicyOnClose} = useDisclosure()
-    const {isOpen: TermsOfUseIsOpen, onOpen: TermsOfUseOnOpen, onClose: TermsOfUseOnClose} = useDisclosure()
+    const { isOpen: PrivacyPolicyIsOpen, onOpen: PrivacyPolicyOnOpen, onClose: PrivacyPolicyOnClose } = useDisclosure()
+    const { isOpen: TermsOfUseIsOpen, onOpen: TermsOfUseOnOpen, onClose: TermsOfUseOnClose } = useDisclosure()
     const [settingsIsOpen, setSettingsIsOpen] = useState(false)
     const [selectedImage, setSelectedImage] = useState("");
     const [selectedImageObject, setSelectedImageObject] = useState({} as DynamicObject);
@@ -56,8 +56,8 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
     })
     const router = useRouter()
     const { GET } = useAxios()
-    const {isLoggedIn, toggleModal, changeSection, userData} = useAuth()
-    const {isOpen: SidemenuIsOpen, onOpen: SidemenuOnOpen, onClose: SidemenuOnClose} = useDisclosure()
+    const { isLoggedIn, toggleModal, changeSection, userData } = useAuth()
+    const { isOpen: SidemenuIsOpen, onOpen: SidemenuOnOpen, onClose: SidemenuOnClose } = useDisclosure()
     const { toggleModal: subscriptionToggleModal } = useSubscription()
     // SIDEBAR MENU SYSTEM
 
@@ -71,33 +71,38 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
         if (isOpen) {
             let tempProfileGalleryTab = profileGalleryTab
             tempProfileGalleryTab.trigger = Date.now()
-            setProfileGalleryTab({...tempProfileGalleryTab})
+            setProfileGalleryTab({ ...tempProfileGalleryTab })
         }
     }, [isOpen])
 
     function changeTab(tab: string) {
         let tempProfileGalleryTab = profileGalleryTab
         tempProfileGalleryTab.tab = tab
-        setProfileGalleryTab({...tempProfileGalleryTab})
+        setProfileGalleryTab({ ...tempProfileGalleryTab })
     }
 
     function changeMenu(v: string) {
-        settingsStore.dispatch(settingsSlice.actions.changeMenu({v: v}))
+        settingsStore.dispatch(settingsSlice.actions.changeMenu({ v: v }))
     }
     function triggerFunction(v: string) {
-        settingsStore.dispatch(settingsSlice.actions.triggerFunction({v: v}))
+        settingsStore.dispatch(settingsSlice.actions.triggerFunction({ v: v }))
     }
 
     // SIDEBAR CONTROLLER
 
     function formatCredits(credits: number): string {
-        const suffixes = ["", "K", "M", "B", "T"]; // Add more suffixes if needed
+        if (credits < 1000) {
+            return credits.toString();
+        }
+
+        const suffixes = ["", "K", "M"]; // Add more suffixes if needed
         const suffixIndex = Math.floor(Math.log10(credits) / 3);
         const scaledValue = credits / Math.pow(10, suffixIndex * 3);
         const formattedValue = scaledValue.toFixed(1);
 
         return formattedValue + suffixes[suffixIndex];
     }
+
 
     // CREDITS SUFFIXES
 
@@ -122,11 +127,11 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
                 }}
                 closeOnEsc={true}
             >
-                <DrawerOverlay/>
-                <DrawerContent style={{backgroundColor: "black", color: "white", width: "286px"}}>
+                <DrawerOverlay />
+                <DrawerContent style={{ backgroundColor: "black", color: "white", width: "286px" }}>
                     <DrawerHeader className={"flex flex-row justify-between"}>
                         <button onClick={onClose}><FontAwesomeIcon icon={faChevronLeft} color={"#AAA7A5"} size={"xl"}
-                                                                   style={{width: 20, height: 20}}/></button>
+                            style={{ width: 20, height: 20 }} /></button>
                         <button onClick={(e) => {
                             settingsStore.dispatch(settingsSlice.actions.reset())
                             if (menu.currentTitle == "Settings") {
@@ -139,7 +144,7 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
                                 icon={faGear}
                                 color={"#AAA7A5"}
                                 size={"xl"}
-                                style={{width: 20, height: 20}}
+                                style={{ width: 20, height: 20 }}
                             />
                         </button>
                     </DrawerHeader>
@@ -151,50 +156,50 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
                         <div className={"flex flex-col gap-4"}>
                             <div id={"DrawerPersonalInfos"} className={"flex flex-col items-center gap-4"}>
                                 <input
-                                  onChange={(e) => {
-                                      // Get the image and upload it to the server using multipart/form-data
+                                    onChange={(e) => {
+                                        // Get the image and upload it to the server using multipart/form-data
 
-                                      if ( !e.target.files || e.target.files.length === 0) {
-                                        return;
-                                      }
+                                        if (!e.target.files || e.target.files.length === 0) {
+                                            return;
+                                        }
 
-                                      const file = e.target.files[0]
-                                      const formData = new FormData()
-                                      formData.append('file', file)
-                                      axios.put(NetworkConfig.API_URL+ 'user/avatar', formData, {
-                                          headers: {
-                                              'Content-Type': 'multipart/form-data',
-                                              Authorization: `Bearer ${localStorage.getItem('token')}`
-                                          }
-                                      }).then((res) => {
-                                          toast.success('Profile picture updated successfully');
-                                          setTimeout(() => {
-                                              router.reload()
-                                          }, 1000)
-                                      }).catch((err) => {
-                                          toast.error('An error occurred while updating your profile picture')
-                                          setTimeout(() => {
-                                              router.reload()
-                                          }
-                                          , 1000)
-                                      })
-                                  }}
-                                  type="file" id="avatar-file-input" style={{ display: 'none' }} />
-                                <div className={'rounded-full flex justify-center items-center overflow-hidden w-[116px] h-[116px] border-4 border-gray-600 hover:border-white cursor-pointer'}>
-                                  <ImageWithBlur
-                                    onClick={() => {
-                                      document.getElementById('avatar-file-input')?.click()
+                                        const file = e.target.files[0]
+                                        const formData = new FormData()
+                                        formData.append('file', file)
+                                        axios.put(NetworkConfig.API_URL + 'user/avatar', formData, {
+                                            headers: {
+                                                'Content-Type': 'multipart/form-data',
+                                                Authorization: `Bearer ${localStorage.getItem('token')}`
+                                            }
+                                        }).then((res) => {
+                                            toast.success('Profile picture updated successfully');
+                                            setTimeout(() => {
+                                                router.reload()
+                                            }, 1000)
+                                        }).catch((err) => {
+                                            toast.error('An error occurred while updating your profile picture')
+                                            setTimeout(() => {
+                                                router.reload()
+                                            }
+                                                , 1000)
+                                        })
                                     }}
-                                    width={118}
-                                    height={118}
-                                    className={'rounded-full'}
-                                    src={'https://cdn.designera.app/avatar/' + userData?.id}
-                                    alt={"Profile Picture"}
-                                    fallbackUrl={"/assets/images/unknown.png"}
-                                  />
-                              </div>
-                                <span className={"font-semibold"}>{ userData?.firstName + ' ' + userData?.lastName }</span>
-                                { !userData?.subscription && <div id={"CreditsContainer"} className={"flex flex-row gap-2"}>
+                                    type="file" id="avatar-file-input" style={{ display: 'none' }} />
+                                <div className={'rounded-full flex justify-center items-center overflow-hidden w-[116px] h-[116px] border-4 border-gray-600 hover:border-white cursor-pointer'}>
+                                    <ImageWithBlur
+                                        onClick={() => {
+                                            document.getElementById('avatar-file-input')?.click()
+                                        }}
+                                        width={118}
+                                        height={118}
+                                        className={'rounded-full'}
+                                        src={'https://cdn.designera.app/avatar/' + userData?.id}
+                                        alt={"Profile Picture"}
+                                        fallbackUrl={"/assets/images/unknown.png"}
+                                    />
+                                </div>
+                                <span className={"font-semibold"}>{userData?.firstName + ' ' + userData?.lastName}</span>
+                                {!userData?.subscription && <div id={"CreditsContainer"} className={"flex flex-row gap-2"}>
                                     <div
                                         className={"bg-stone-700 px-3 designera-rounded designera-box-shadow font-bold flex items-center text-lg"}>
                                         {userData?.credits ? formatCredits(userData.credits) : "0"}
@@ -224,31 +229,31 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
                                     <div>
                                         <div className={"flex flex-row justify-center items-center gap-2"}>
                                             <span className={"cursor-pointer font-semibold"}
-                                                  style={{color: profileGalleryTab.tab == "Images" ? "white" : "#333333"}}
-                                                  onClick={() => {
-                                                      changeTab("Images")
-                                                  }}>
+                                                style={{ color: profileGalleryTab.tab == "Images" ? "white" : "#333333" }}
+                                                onClick={() => {
+                                                    changeTab("Images")
+                                                }}>
                                                 Images
                                             </span>
                                             <span className={"cursor-pointer font-semibold"}
-                                                  style={{color: profileGalleryTab.tab == "Likes" ? "white" : "#333333"}}
-                                                  onClick={() => {
-                                                      changeTab("Likes")
-                                                  }}>
+                                                style={{ color: profileGalleryTab.tab == "Likes" ? "white" : "#333333" }}
+                                                onClick={() => {
+                                                    changeTab("Likes")
+                                                }}>
                                                 Likes
                                             </span>
                                             <span className={"cursor-pointer font-semibold"}
-                                                  style={{color: profileGalleryTab.tab == "Publishes" ? "white" : "#333333"}}
-                                                  onClick={() => {
-                                                      changeTab("Publishes")
-                                                  }}>
+                                                style={{ color: profileGalleryTab.tab == "Publishes" ? "white" : "#333333" }}
+                                                onClick={() => {
+                                                    changeTab("Publishes")
+                                                }}>
                                                 Publishes
                                             </span>
                                         </div>
-                                        <hr className={"bg-stone-400 border-none h-px"}/>
+                                        <hr className={"bg-stone-400 border-none h-px"} />
                                     </div>
                                     <div className={"flex flex-row flex-wrap gap-1.5 justify-start"}>
-                                        <SampleProfileGalleryImages tab={profileGalleryTab.tab} trigger={profileGalleryTab.trigger}/>
+                                        <SampleProfileGalleryImages tab={profileGalleryTab.tab} trigger={profileGalleryTab.trigger} />
                                     </div>
                                 </>
                                 :
@@ -257,7 +262,7 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
                                         <span className={"block font-semibold text-white text-center"}>
                                             {menu.currentTitle}
                                         </span>
-                                        <hr className={"bg-stone-400 border-none h-px"}/>
+                                        <hr className={"bg-stone-400 border-none h-px"} />
                                     </div>
                                     {
                                         React.isValidElement(menu.currentMenu) ?
@@ -276,7 +281,7 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
                                                             >
                                                                 {v}
                                                             </div>
-                                                            <hr className={"bg-stone-400 border-none h-px"}/>
+                                                            <hr className={"bg-stone-400 border-none h-px"} />
                                                         </>
                                                     )
                                                 })}
@@ -286,21 +291,21 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
                             }
                         </div>
                     </DrawerBody>
-                    <DrawerFooter style={{justifyContent: "center"}}>
+                    <DrawerFooter style={{ justifyContent: "center" }}>
                         <div className={"w-full flex flex-col justify-center font-semibold items-center"}>
                             <div className={"my-5 flex flex-col justify-center items-center"}>
                                 <small className="text-[#979797] hover:text-[#c7c7c7] block cursor-pointer"
-                                       onClick={() => { router.push('/privacy-policy') }}><u>Privacy
-                                    Policy</u></small>
+                                    onClick={() => { router.push('/privacy-policy') }}><u>Privacy
+                                        Policy</u></small>
                                 <small className="text-[#979797] hover:text-[#c7c7c7] block cursor-pointer"
-                                       onClick={() => { router.push('/terms-of-use') }}><u>Terms of
-                                    Use</u></small>
+                                    onClick={() => { router.push('/terms-of-use') }}><u>Terms of
+                                        Use</u></small>
                                 <small className="text-[#979797] hover:text-[#c7c7c7] block cursor-pointer"
-                                       onClick={() => { router.push('/about-us-contact') }}><u>About Us & Contact</u></small>
+                                    onClick={() => { router.push('/about-us-contact') }}><u>About Us & Contact</u></small>
                             </div>
 
-                            <div style={{height: "fit-content"}}>
-                                <DesigneraTitle/>
+                            <div style={{ height: "fit-content" }}>
+                                <DesigneraTitle />
                             </div>
                         </div>
                     </DrawerFooter>
@@ -308,8 +313,8 @@ export const Sidemenu = ({children, isOpen, onClose, onOpen, ...props}: Sidemenu
             </Drawer>
 
             <PrivacyPolicyModal isOpen={PrivacyPolicyIsOpen} onOpen={PrivacyPolicyOnOpen}
-                                onClose={PrivacyPolicyOnClose}/>
-            <TermsOfUseModal isOpen={TermsOfUseIsOpen} onOpen={TermsOfUseOnOpen} onClose={TermsOfUseOnClose}/>
+                onClose={PrivacyPolicyOnClose} />
+            <TermsOfUseModal isOpen={TermsOfUseIsOpen} onOpen={TermsOfUseOnOpen} onClose={TermsOfUseOnClose} />
         </>
     )
 }
