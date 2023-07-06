@@ -334,7 +334,7 @@ export default function MainPage() {
       <div className="h-5">
       </div>
       <Heading>
-        <div className={"hidden md:block mt-10 mb-0"}><span className="text-[#FFFFFF]">Design</span> your room
+        <div className={"hidden md:block mt-8 mb-0"}><span className="text-[#FFFFFF]">Design</span> your room
           in seconds
           <div>
             with <span className="text-[#FF9900]">AI</span> Architect 🏠
