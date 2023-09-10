@@ -4,7 +4,7 @@ import {DynamicObject} from "../constants/DynamicObject";
 import useAuth from "./auth/useAuth";
 
 export const NetworkConfig = {
-  API_URL: "https://5461-176-88-46-161.ngrok-free.app/"
+  API_URL: "https://api.designera.app/"
 }
 
 export function useAxios() {
