@@ -51,10 +51,12 @@ import useSubscription from "../hooks/subscription/useSubscription";
 import { Box, CircularProgress } from "@chakra-ui/react";
 import { Slider, SliderTrack, SliderFilledTrack, SliderThumb, SliderMark } from "@chakra-ui/react";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
+import {useRouter} from "next/router";
 
 
 
 export default function MainPage() {
+  const router = useRouter()
   const { GET, FILEPOST, POST, PATCH } = useAxios()
   const { userData, decrementCreditBalance, isLoggedIn, toggleModal, changeSection, upvoteImageUpdate } = useAuth()
   const { themes, addImage, removeImage, themesSectionShow, themesSectionToggle, removeImageById } = useAsTheme()
@@ -703,7 +705,8 @@ export default function MainPage() {
                                 }}
                               />
                               <IconButton
-                                description={"Coming Soon"}
+                                description={"Item Search"}
+                                onClick={() => router.push("/item-search")}
                                 icon={<FontAwesomeIcon icon={faMagnifyingGlassDollar} color={"#AAA7A5"}
                                   size={"xl"}
                                   style={{ width: 25, height: 25 }} />}
