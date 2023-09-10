@@ -6,7 +6,7 @@ import {sidemenuSlice, sidemenuStore} from "../../sidemenu/SidemenuToggle";
 import useAuth from '../../../hooks/auth/useAuth';
 import {ProfileImagesGalleryModalFooter} from "./ProfileImagesGalleryModalFooter";
 
-export const SampleProfileGalleryImages = ({tab, trigger}: { tab: string, trigger: number }) => {
+export const SampleProfileGalleryImages = ({tab, trigger, large, onClick}: { tab: string, trigger: number, large?: boolean, onClick?: (photo: any) => any }) => {
     const { userData } = useAuth()
     const [photos, setPhotos] = useState([])
     const [lightboxPhotos, setLightboxPhotos] = useState([])
@@ -40,7 +40,9 @@ export const SampleProfileGalleryImages = ({tab, trigger}: { tab: string, trigge
                     createdAt: value.createdAt,
                     style: value.roomStyle,
                     referenceId: value.referenceId,
-                    referenceToggle: false
+                    referenceToggle: false,
+                    hasDetectedLabels: value.hasDetectedLabels,
+                    detectedItems: value.detectedItems,
                 }
             }
         }))
@@ -73,12 +75,14 @@ export const SampleProfileGalleryImages = ({tab, trigger}: { tab: string, trigge
         <>
             {photos?.map((v: any, index: number) => {
                 return (
-                    <div key={index} className={"w-16 h-16 overflow-hidden object-contain"} style={{
+                    <div key={index} className={`${large ? "w-36 h-36" : "w-16 h-16"} overflow-hidden object-contain cursor-pointer`} style={{
                         backgroundImage: `url(${v.src})`,
                         backgroundSize: `cover`,
                         backgroundPosition: `center`
                     }} onClick={(e: any) => {
-                        return openLightbox(e, {
+                        return large ?
+                            onClick && onClick(photos[index])
+                          : openLightbox(e, {
                             photo: v.src,
                             index
                         })

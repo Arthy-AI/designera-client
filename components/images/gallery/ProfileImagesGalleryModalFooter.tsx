@@ -170,7 +170,7 @@ export const ProfileImagesGalleryModalFooter = ({
           className={"sticky text-white font-semibold z-10 text-right flex flex-col"}>
           {photos[currentIndex]?.data?.title}
           <small
-            className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[currentIndex]?.data?.createdAt))?.valueOf()).format(CustomDateFormat, {trim: "both"})} Ago</small>
+            className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[currentIndex]?.data?.createdAt))?.valueOf())?.format(CustomDateFormat, {trim: "both"})} Ago</small>
         </div>
         <div className={"absolute w-60 h-32 bottom-0 right-0 z-0"} style={{
           backgroundImage: 'url("/assets/images/Rectangle_9.png")',

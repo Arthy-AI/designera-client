@@ -13,6 +13,7 @@ import * as Yup from "yup";
 import {FormikError} from "../input/FormikError";
 import {MutedSmall} from "../text/small/MutedSmall";
 import {Small} from "../text/small/Small";
+import {useAxios} from "../../hooks/useAxios";
 
 interface AuthModal extends ReactProps {
 }
@@ -66,6 +67,13 @@ const registerValidation = Yup.object().shape({
 export const AuthModal = ({children, ...props}: AuthModal) => {
   const {modalShow, toggleModal, currentSection, changeSection, isLoggingIn, statusMessage, login, register} = useAuth()
   const [keepMeSignedIn, setKeepMeSignedIn] = useState(false)
+  const { POST } = useAxios()
+
+  async function continueWithGoogle() {
+    const data = await POST("auth/oauth/google/get-url", {})
+
+    window.location.replace(data as unknown as string)
+  }
 
   return (
     <Modal isOpen={modalShow} onClose={() => toggleModal(false)} isCentered size={"lg"}>
@@ -116,6 +124,17 @@ export const AuthModal = ({children, ...props}: AuthModal) => {
                             className={"h-12 w-52 bg-[#008BDA] hover:bg-white hover:text-black transition-colors ease-in-out duration-150 designera-rounded designera-box-shadow text-center flex items-center justify-center text-xl"}>
                             {isLoggingIn ? statusMessage : "Login"}
                           </button>
+
+                          <button
+                            type={"button"}
+                            disabled={isLoggingIn}
+                            className={"h-12 w-52 bg-[#fff] text-black hover:bg-black hover:text-white transition-colors ease-in-out duration-150 designera-rounded designera-box-shadow text-center flex items-center justify-evenly text-sm"}
+                            onClick={() => continueWithGoogle()}
+                          >
+                            <img
+                              src={"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMTcuNiA5LjJsLS4xLTEuOEg5djMuNGg0LjhDMTMuNiAxMiAxMyAxMyAxMiAxMy42djIuMmgzYTguOCA4LjggMCAwIDAgMi42LTYuNnoiIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIvPjxwYXRoIGQ9Ik05IDE4YzIuNCAwIDQuNS0uOCA2LTIuMmwtMy0yLjJhNS40IDUuNCAwIDAgMS04LTIuOUgxVjEzYTkgOSAwIDAgMCA4IDV6IiBmaWxsPSIjMzRBODUzIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNNCAxMC43YTUuNCA1LjQgMCAwIDEgMC0zLjRWNUgxYTkgOSAwIDAgMCAwIDhsMy0yLjN6IiBmaWxsPSIjRkJCQzA1IiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48cGF0aCBkPSJNOSAzLjZjMS4zIDAgMi41LjQgMy40IDEuM0wxNSAyLjNBOSA5IDAgMCAwIDEgNWwzIDIuNGE1LjQgNS40IDAgMCAxIDUtMy43eiIgZmlsbD0iI0VBNDMzNSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZD0iTTAgMGgxOHYxOEgweiIvPjwvZz48L3N2Zz4="}></img>
+                            Continue with Google
+                          </button>
                           <Small
                             className={"text-[#ccc] select-none mt-1"}>Don&apos;t have an account?
                             <span
@@ -127,7 +146,9 @@ export const AuthModal = ({children, ...props}: AuthModal) => {
                           </Small>
                         </div>
                       </div>
-                      <Small className={"mt-2 text-[#ccc]"}><a href={'/send-reset-password-request'} className={"hover:underline"}>Forgot Password?</a></Small>
+                      <Small className={"mt-2 text-[#ccc]"}><a href={'/send-reset-password-request'}
+                                                               className={"hover:underline"}>Forgot
+                        Password?</a></Small>
                     </div>
                   </div>
                 </form>
