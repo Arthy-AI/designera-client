@@ -1,5 +1,4 @@
-import React, {ReactElement, useCallback, useEffect, useState} from "react";
-import Image from 'next/image';
+import React, {useCallback, useEffect, useState} from "react";
 import {IconButton} from "../../button/IconButton";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleDown, faHeart, faWandMagicSparkles} from "@fortawesome/free-solid-svg-icons";
@@ -251,8 +250,8 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                       </div>
                       <div className={"absolute right-0 bottom-0 pr-2 pb-2"}>
                       <div className="sticky text-white z-10 text-right flex flex-col text-xs leading-3">
-                                                 <small style={{ fontSize: '1.1em', textTransform: 'capitalize' }}>{photos[1].data.title}</small>
-                                                 <small className="font-thin mt-1" style={{ textTransform: 'capitalize' }}>By {photos[1].data.username}</small>
+                                                 <small style={{ fontSize: '1.1em', textTransform: 'capitalize' }}>{photos[1]?.data?.title}</small>
+                                                 <small className="font-thin mt-1" style={{ textTransform: 'capitalize' }}>By {photos[1]?.data?.username}</small>
                               <small
                                   className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[1]?.data?.createdAt))?.valueOf()).format(CustomDateFormat)} Ago</small>
                           </div>
@@ -324,8 +323,8 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                       </div>
                       <div className={"absolute right-0 bottom-0 pr-2 pb-2"}>
                       <div className="sticky text-white z-10 text-right flex flex-col text-xs leading-3">
-                                                 <small style={{ fontSize: '1.1em', textTransform: 'capitalize' }}>{photos[2].data.title}</small>
-                                                 <small className="font-thin mt-1" style={{ textTransform: 'capitalize' }}>By {photos[2].data.username}</small>
+                                                 <small style={{ fontSize: '1.1em', textTransform: 'capitalize' }}>{photos[2]?.data?.title}</small>
+                                                 <small className="font-thin mt-1" style={{ textTransform: 'capitalize' }}>By {photos[2]?.data?.username}</small>
                               <small
                                   className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[2]?.data?.createdAt))?.valueOf()).format(CustomDateFormat)} Ago</small>
                           </div>
@@ -393,8 +392,8 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                       </div>
                       <div className={"absolute right-0 bottom-0 pr-2 pb-2"}>
                       <div className="sticky text-white z-10 text-right flex flex-col text-xs leading-3">
-                                                 <small style={{ fontSize: '1.1em', textTransform: 'capitalize' }}>{photos[3].data.title}</small>
-                                                 <small className="font-thin mt-1" style={{ textTransform: 'capitalize' }}>By {photos[3].data.username}</small>
+                                                 <small style={{ fontSize: '1.1em', textTransform: 'capitalize' }}>{photos[3]?.data?.title}</small>
+                                                 <small className="font-thin mt-1" style={{ textTransform: 'capitalize' }}>By {photos[3]?.data?.username}</small>
                               <small
                                   className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[3]?.data?.createdAt))?.valueOf()).format(CustomDateFormat)} Ago</small>
                           </div>
@@ -466,8 +465,8 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                       </div>
                       <div className={"absolute right-0 bottom-0 pr-2 pb-2"}>
                       <div className="sticky text-white z-10 text-right flex flex-col text-xs leading-3">
-                                                 <small style={{ fontSize: '1.1em', textTransform: 'capitalize' }}>{photos[4].data.title}</small>
-                                                 <small className="font-thin mt-1" style={{ textTransform: 'capitalize' }}>By {photos[4].data.username}</small>
+                                                 <small style={{ fontSize: '1.1em', textTransform: 'capitalize' }}>{photos[4]?.data?.title}</small>
+                                                 <small className="font-thin mt-1" style={{ textTransform: 'capitalize' }}>By {photos[4]?.data?.username}</small>
                               <small
                                   className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[4]?.data?.createdAt))?.valueOf()).format(CustomDateFormat)} Ago</small>
                           </div>
@@ -535,8 +534,8 @@ export const SampleRecentGalleryImages = ({images}: SampleRecentGalleryImages) =
                       </div>
                       <div className={"absolute right-0 bottom-0 pr-2 pb-2"}>
                       <div className="sticky text-white z-10 text-right flex flex-col text-xs leading-3">
-                                                 <small style={{ fontSize: '1.1em', textTransform: 'capitalize' }}>{photos[5].data.title}</small>
-                                                 <small className="font-thin mt-1" style={{ textTransform: 'capitalize' }}>By {photos[5].data.username}</small>
+                                                 <small style={{ fontSize: '1.1em', textTransform: 'capitalize' }}>{photos[5]?.data?.title}</small>
+                                                 <small className="font-thin mt-1" style={{ textTransform: 'capitalize' }}>By {photos[5]?.data?.username}</small>
                               <small
                                   className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[5]?.data?.createdAt))?.valueOf()).format(CustomDateFormat)} Ago</small>
                           </div>

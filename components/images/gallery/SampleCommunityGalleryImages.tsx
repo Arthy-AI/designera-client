@@ -7,13 +7,10 @@ import Carousel, {Modal, ModalGateway} from "react-images";
 import {GalleryModalFooter} from "./GalleryModalFooter";
 import {ReactProps} from "../../../interfaces/ReactProps";
 import {GetMeta} from "../../../constants/GetMeta";
-import {ImageWithBlur} from "../ImageWithBlur";
 import {ForceDownload} from "../../../constants/ForceDownload";
 import toast from "react-hot-toast";
 import {useAxios} from "../../../hooks/useAxios";
-import {UseAsThemeLogo} from "../../../assets/svg/UseAsThemeLogo";
 import {imagesGlobal, imagesGlobalStore} from "../../../globals/images/images";
-import {UseAsThemeFlatLogo} from "../../../assets/svg/UseAsThemeFlatLogo";
 import useAuth from "../../../hooks/auth/useAuth";
 import useAsTheme from "../../../hooks/themes/useAsTheme";
 import {ImageWithFallback} from "../ImageWithFallback";
@@ -217,7 +214,7 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
                                      </div>
                                  </div>
                              </div>
-                         ) : <div/>
+                         ) : <div key={index}></div>
                      }}/>
             { /* @ts-ignore */}
             <ModalGateway>
