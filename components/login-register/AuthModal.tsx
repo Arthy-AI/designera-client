@@ -11,7 +11,6 @@ import useAuth from "../../hooks/auth/useAuth";
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {FormikError} from "../input/FormikError";
-import {MutedSmall} from "../text/small/MutedSmall";
 import {Small} from "../text/small/Small";
 import {useAxios} from "../../hooks/useAxios";
 
