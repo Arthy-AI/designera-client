@@ -67,10 +67,10 @@ const registerValidation = Yup.object().shape({
 export const AuthModal = ({children, ...props}: AuthModal) => {
   const {modalShow, toggleModal, currentSection, changeSection, isLoggingIn, statusMessage, login, register} = useAuth()
   const [keepMeSignedIn, setKeepMeSignedIn] = useState(false)
-  const { POST } = useAxios()
+  const { GET } = useAxios()
 
   async function continueWithGoogle() {
-    const data = await POST("auth/oauth/google/get-url", {})
+    const data = await GET("auth/oauth/google/get-url", {})
 
     window.location.replace(data as unknown as string)
   }
