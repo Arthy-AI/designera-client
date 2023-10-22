@@ -35,12 +35,12 @@ const loginValidation = Yup.object().shape({
 const registerValidation = Yup.object().shape({
   name: Yup.string()
     .max(50, "Please shorten your input (maximum length: 50).")
-    .matches(/^[a-zA-Z ]*$/, {message: "Please use only letters."})
+    .matches(/^[a-zA-ZçıöğüşÇİÖĞÜŞ ]*$/, {message: "Please use only letters."})
     .required("Please enter a valid name."),
 
   surname: Yup.string()
     .max(50, "Please shorten your input (maximum length: 50).")
-    .matches(/^[a-zA-Z ]*$/, {message: "Please use only letters."})
+    .matches(/^[a-zA-ZçıöğüşÇİÖĞÜŞ ]*$/, {message: "Please use only letters."})
     .required("Please enter a valid surname."),
 
   email: Yup.string()
@@ -102,7 +102,7 @@ export const AuthModal = ({children, ...props}: AuthModal) => {
                   isSubmitting
                 }) => (
                 <form onSubmit={handleSubmit}>
-                  <div className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-2">
                     <SimpleInput id={"email"} name={"email"} labelText={"Email"}
                                  placeholderText={"e.g. dexxxxxx@gmail.com"}
                                  className={"LoginInput"} value={values.email}

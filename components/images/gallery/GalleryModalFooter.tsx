@@ -1,31 +1,34 @@
-import React, {useEffect, useState} from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import React, { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleDown, faEye,
-  faHeart, faWandMagicSparkles,
+  faHeart, faWandMagicSparkles, faMagnifyingGlassDollar
 } from "@fortawesome/free-solid-svg-icons";
-import {IconButton} from "../../button/IconButton";
+import { IconButton } from "../../button/IconButton";
 import moment from "moment/moment";
-import {imagesGlobal, imagesGlobalStore} from "../../../globals/images/images";
-import {DynamicObject} from "../../../constants/DynamicObject";
-import {ImageWithBlur} from "../ImageWithBlur";
-import {ForceDownload} from "../../../constants/ForceDownload";
-import {useAxios} from "../../../hooks/useAxios";
+import { imagesGlobal, imagesGlobalStore } from "../../../globals/images/images";
+import { DynamicObject } from "../../../constants/DynamicObject";
+import { ImageWithBlur } from "../ImageWithBlur";
+import { ForceDownload } from "../../../constants/ForceDownload";
+import { useAxios } from "../../../hooks/useAxios";
 import toast from "react-hot-toast";
-import {UseAsThemeLogo} from "../../../assets/svg/UseAsThemeLogo";
+import { UseAsThemeLogo } from "../../../assets/svg/UseAsThemeLogo";
 import useAsTheme from "../../../hooks/themes/useAsTheme";
 import Image from 'next/image';
-import {UseAsThemeFlatLogo} from "../../../assets/svg/UseAsThemeFlatLogo";
+import { UseAsThemeFlatLogo } from "../../../assets/svg/UseAsThemeFlatLogo";
 import useAuth from "../../../hooks/auth/useAuth";
-import {CustomDateFormat} from "../../../constants/CustomDateFormat";
-import {ImageWithFallback} from "../ImageWithFallback";
+import { CustomDateFormat } from "../../../constants/CustomDateFormat";
+import { ImageWithFallback } from "../ImageWithFallback";
+import { useRouter } from "next/router";
 
-export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicObject) => {
-  const {userData, upvoteImageUpdate} = useAuth()
+export const GalleryModalFooter = ({ innerProps, isModal, currentIndex }: DynamicObject) => {
+  const { decrementCreditBalance, isLoggedIn, toggleModal, changeSection } = useAuth()
+  const router = useRouter()
+  const { userData, upvoteImageUpdate } = useAuth()
   const [photos, setPhotos] = useState([] as any[])
   const [nullPhotos, setNullPhotos] = useState([] as any[])
-  const {themesSectionToggle, themes, removeImageById} = useAsTheme()
-  const {PATCH} = useAxios()
+  const { themesSectionToggle, themes, removeImageById } = useAsTheme()
+  const { PATCH } = useAxios()
 
   useEffect(() => {
     setPhotos(imagesGlobalStore.getState().communityImages)
@@ -103,8 +106,8 @@ export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicO
         <div className={"flex items-end flex-row flex-wrap gap-2"}>
           <IconButton description={"Download"} icon={
             <FontAwesomeIcon icon={faCircleDown} color={"#AAA7A5"} size={"xl"}
-                             style={{width: 25, height: 25}}
-                             onClick={() => ForceDownload(photos[currentIndex]?.src, "designera-" + photos[currentIndex]?.data?.id)}/>
+              style={{ width: 25, height: 25 }}
+              onClick={() => ForceDownload(photos[currentIndex]?.src, "designera-" + photos[currentIndex]?.data?.id)} />
           }
           />
           <IconButton
@@ -112,7 +115,7 @@ export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicO
             icon={
               <FontAwesomeIcon icon={faHeart} color={
                 userData?.upvotedImages?.findIndex((v: any) => v.id == photos[currentIndex]?.data?.id) == -1 ? "#AAA7A5" : "#FF6363"
-              } size={"xl"} style={{width: 25, height: 25}}/>
+              } size={"xl"} style={{ width: 25, height: 25 }} />
             }
             onClick={() => {
               vote(true)
@@ -123,20 +126,39 @@ export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicO
             icon={
               <FontAwesomeIcon icon={faWandMagicSparkles} color={
                 themes.findIndex((v) => v.id == photos[currentIndex]?.data?.id) == -1 ? "#AAA7A5" : "#61A0FF"
-              } size={"xl"} style={{width: 25, height: 25}}/>
+              } size={"xl"} style={{ width: 25, height: 25 }} />
             }
             onClick={() => themeAdd(photos[currentIndex]?.data?.id, photos[currentIndex]?.src, photos[currentIndex]?.data?.style)}
+          />
+          <IconButton
+            description="Item Search"
+            onClick={() => {
+              if (!isLoggedIn) {
+                changeSection("login");
+                toggleModal(true);
+              } else {
+                router.push("/item-search");
+              }
+            }}
+            icon={
+              <FontAwesomeIcon
+                icon={faMagnifyingGlassDollar}
+                color="#AAA7A5"
+                size="xl"
+                style={{ width: 25, height: 25 }}
+              />
+            }
           />
           <IconButton
             description={"Show Original Image"}
             className={`${photos[currentIndex]?.src?.includes("reference") ? "bg-[#ffffff]" : ""}`}
             icon={
               <FontAwesomeIcon icon={faEye}
-                               color={photos[currentIndex]?.src?.includes("generate") ? "#AAA7A5" : "black"} size={"xl"}
-                               style={{
-                                 width: 25,
-                                 height: 25,
-                               }}/>
+                color={photos[currentIndex]?.src?.includes("generate") ? "#AAA7A5" : "black"} size={"xl"}
+                style={{
+                  width: 25,
+                  height: 25,
+                }} />
             }
             onClick={() => {
               if (photos[currentIndex]?.src?.includes("generate")) {
@@ -179,7 +201,7 @@ export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicO
                         "/assets/images/unknown.png"
                     }
                     alt={photos[currentIndex]?.data?.userAvatar || "No info found"}
-                    style={{objectFit: 'contain'}}
+                    style={{ objectFit: 'contain' }}
                     placeholder={"blur"}
                     blurDataURL={"/assets/images/unknown.png"}
                     onError={() => {
@@ -189,7 +211,7 @@ export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicO
                     }}
                   />
                 </div>
-              : <div className={'hidden'}></div>
+                : <div className={'hidden'}></div>
             }
             className={"p-0.5"}
           />
@@ -200,7 +222,7 @@ export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicO
           {photos[currentIndex]?.data?.title}
           <small className={"font-thin"}>By {photos[currentIndex]?.data?.username}</small>
           <small
-            className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[currentIndex]?.data?.createdAt))?.valueOf()).format(CustomDateFormat, {trim: "both"})} Ago</small>
+            className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[currentIndex]?.data?.createdAt))?.valueOf()).format(CustomDateFormat, { trim: "both" })} Ago</small>
         </div>
         <div className={"absolute w-60 h-32 bottom-0 right-0 z-0"} style={{
           backgroundImage: 'url("/assets/images/Rectangle_9.png")',
@@ -208,7 +230,7 @@ export const GalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicO
           rotate: "-10deg",
           bottom: -20,
           right: -5
-        }}/>
+        }} />
       </div>
     </div>
   ) : null

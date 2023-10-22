@@ -51,7 +51,7 @@ import useSubscription from "../hooks/subscription/useSubscription";
 import { Box, CircularProgress } from "@chakra-ui/react";
 import { Slider, SliderTrack, SliderFilledTrack, SliderThumb, SliderMark } from "@chakra-ui/react";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 
 
 
@@ -219,7 +219,7 @@ export default function MainPage() {
   async function selectImage(files: FileList | undefined) {
     if (files) {
       if (!["png", "jfif", "jpg", "jpeg", "pjpeg"].includes(String(files[0]?.name?.split(".")?.pop()))) {
-        return toast.error("Please just upload images.")
+        return toast.error("Please upload supported file types like png, jpeg etc.")
       }
       let photo = await GetBase64(files[0])
       setSelectedImageObject(files[0])
@@ -327,7 +327,7 @@ export default function MainPage() {
 
     return formattedValue + suffixes[suffixIndex];
   }
-  
+
   return (
     <main className="flex flex-col user-scalable=no" id={"MainPage"}>
       <Header />
@@ -651,14 +651,28 @@ export default function MainPage() {
                                     ForceDownload(selectedResult.url, "designera-" + selectedResult.id)
                                   }} />
                               <IconButton
-                                description={"Like"}
-                                icon={<FontAwesomeIcon icon={faHeart} color={
-                                  userData?.upvotedImages?.findIndex((v: any) => v.id == selectedResult.id) == -1 ? "#AAA7A5" : "#FF6363"
+                                description="Like"
+                                onClick={() => {
+                                  if (!isLoggedIn) {
+                                    changeSection("login");
+                                    toggleModal(true);
+                                  } else {
+                                    vote(true);
+                                  }
+                                }}
+                                icon={
+                                  <FontAwesomeIcon
+                                    icon={faHeart}
+                                    color={
+                                      userData?.upvotedImages?.findIndex((v: any) => v.id == selectedResult.id) == -1
+                                        ? "#AAA7A5"
+                                        : "#FF6363"
+                                    }
+                                    size="xl"
+                                    style={{ width: 22, height: 22 }}
+                                  />
                                 }
-                                  size={"xl"}
-                                  style={{ width: 25, height: 25 }} />} onClick={() => {
-                                    vote(true)
-                                  }} />
+                              />
                               <IconButton
                                 description={"Copy Style"}
                                 icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={
@@ -805,15 +819,15 @@ export default function MainPage() {
         <div className="w-4/5 flex flex-col items-center">
           <Heading>
             <div className="mt-4 mb-3">
-            Get <span className="text-[#FF0000]">inspired</span> by the community
-            of <span className="text-[#FF9900]">Designera</span>
+              Get <span className="text-[#FF0000]">inspired</span> by the community
+              of <span className="text-[#FF9900]">Designera</span>
             </div>
           </Heading>
           <div className="w-full flex justify-center mb-4">
             <AnimatedSimpleInput
               labelText={"Search Designs"}
               placeholderText={"Ex. Ikea, Scandinavian, Kitchen, Batcave, Garden"}
-              className={"w-full md:w-4/5 lg:w-3/5 xl:w-2/5"}
+              className={"w-full md:w-4/5 lg:w-4/5 xl:w-2/5"}
               inputClassname={"bg-[#1E1E1E] hover:bg-[#242424] focus:bg-[#242424] pl-7 pt-6 rounded-full"}
               labelClassname={"ml-5 text-white text-base"}
               onValueChange={(text) => text.length < 1 ? setSearch("") : setSearchTemp(text)}

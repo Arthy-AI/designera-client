@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   faCircleDown, faEye,
-  faHeart, faWandMagicSparkles,
+  faHeart, faWandMagicSparkles, faMagnifyingGlassDollar
 } from "@fortawesome/free-solid-svg-icons";
 import {IconButton} from "../../button/IconButton";
 import moment from "moment/moment";
@@ -18,6 +18,7 @@ import Image from 'next/image';
 import {UseAsThemeFlatLogo} from "../../../assets/svg/UseAsThemeFlatLogo";
 import useAuth from "../../../hooks/auth/useAuth";
 import {CustomDateFormat} from "../../../constants/CustomDateFormat";
+import { useRouter } from "next/router";
 
 export const ProfileImagesGalleryModalFooter = ({
                                                   innerProps,
@@ -28,6 +29,8 @@ export const ProfileImagesGalleryModalFooter = ({
   const {changeProfileImageByIndex, userData, upvoteImageUpdate} = useAuth()
   const {themesSectionToggle, themes, removeImageById} = useAsTheme()
   const {PATCH} = useAxios()
+  const { decrementCreditBalance, isLoggedIn, toggleModal, changeSection } = useAuth()
+  const router = useRouter()
 
   const [voteLoading, setVoteLoading] = useState(false)
   async function vote(isLike: boolean) {
@@ -121,6 +124,25 @@ export const ProfileImagesGalleryModalFooter = ({
                                style={{width: 25, height: 25}}/>
             }
             onClick={() => themeAdd(photos[currentIndex]?.data?.id, photos[currentIndex]?.src, photos[currentIndex]?.data?.style)}
+          />
+          <IconButton
+            description="Item Search"
+            onClick={() => {
+              if (!isLoggedIn) {
+                changeSection("login");
+                toggleModal(true);
+              } else {
+                router.push("/item-search");
+              }
+            }}
+            icon={
+              <FontAwesomeIcon
+                icon={faMagnifyingGlassDollar}
+                color="#AAA7A5"
+                size="xl"
+                style={{ width: 25, height: 25 }}
+              />
+            }
           />
           <IconButton
             description={"Show Original Image"}

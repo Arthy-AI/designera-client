@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   faCircleDown,
-  faHeart, faWandMagicSparkles, faEye
+  faHeart, faWandMagicSparkles, faEye, faMagnifyingGlassDollar
 } from "@fortawesome/free-solid-svg-icons";
 import {IconButton} from "../../button/IconButton";
 import moment from "moment/moment";
@@ -17,9 +17,12 @@ import useAuth from "../../../hooks/auth/useAuth";
 import {CustomDateFormat} from "../../../constants/CustomDateFormat";
 import {ImageWithFallback} from "../ImageWithFallback";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 export const RecentImagesGalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicObject) => {
   const {userData, upvoteImageUpdate} = useAuth()
+  const { decrementCreditBalance, isLoggedIn, toggleModal, changeSection } = useAuth()
+  const router = useRouter()
   const [photos, setPhotos] = useState([] as any[])
   const [nullPhotos, setNullPhotos] = useState([] as any[])
   const {themesSectionToggle, themes, removeImageById} = useAsTheme()
@@ -126,6 +129,25 @@ export const RecentImagesGalleryModalFooter = ({innerProps, isModal, currentInde
                                style={{width: 25, height: 25}}/>
             }
             onClick={() => themeAdd(photos[currentIndex]?.data?.id, photos[currentIndex]?.src, photos[currentIndex]?.data?.style)}
+          />
+          <IconButton
+            description="Item Search"
+            onClick={() => {
+              if (!isLoggedIn) {
+                changeSection("login");
+                toggleModal(true);
+              } else {
+                router.push("/item-search");
+              }
+            }}
+            icon={
+              <FontAwesomeIcon
+                icon={faMagnifyingGlassDollar}
+                color="#AAA7A5"
+                size="xl"
+                style={{ width: 25, height: 25 }}
+              />
+            }
           />
           <IconButton
             description={"Show Original Image"}

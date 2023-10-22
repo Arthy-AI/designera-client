@@ -17,10 +17,10 @@ export const IconButton = ({children, icon, className, description, onClick, ...
       <>
         <button
             id={String(random)}
-            className={`icon-button flex justify-center items-center designera-rounded z-40 overflow-hidden ${className?.includes("p-") ? "" : "p-2"} ${className || ""}`}
+            className={`icon-button flex justify-center items-center designera-rounded-3 z-36 overflow-hidden ${className?.includes("p-") ? "" : "p-2"} ${className || ""}`}
             style={{
-                height: "40px",
-                width: "40px",
+                height: "36px",
+                width: "36px",
                 backgroundColor: !className?.includes("bg-") ? "rgba(36, 36, 36, 0.75)" : undefined
             }}
             onClick={(e) => {

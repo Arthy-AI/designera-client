@@ -1,26 +1,29 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Gallery from "react-photo-gallery";
-import {IconButton} from "../../button/IconButton";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faCircleDown, faHeart, faWandMagicSparkles} from "@fortawesome/free-solid-svg-icons";
-import Carousel, {Modal, ModalGateway} from "react-images";
-import {GalleryModalFooter} from "./GalleryModalFooter";
-import {ReactProps} from "../../../interfaces/ReactProps";
-import {GetMeta} from "../../../constants/GetMeta";
-import {ForceDownload} from "../../../constants/ForceDownload";
+import { IconButton } from "../../button/IconButton";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMagnifyingGlassDollar, faHeart, faWandMagicSparkles } from "@fortawesome/free-solid-svg-icons";
+import Carousel, { Modal, ModalGateway } from "react-images";
+import { GalleryModalFooter } from "./GalleryModalFooter";
+import { ReactProps } from "../../../interfaces/ReactProps";
+import { GetMeta } from "../../../constants/GetMeta";
+import { ForceDownload } from "../../../constants/ForceDownload";
 import toast from "react-hot-toast";
-import {useAxios} from "../../../hooks/useAxios";
-import {imagesGlobal, imagesGlobalStore} from "../../../globals/images/images";
+import { useAxios } from "../../../hooks/useAxios";
+import { imagesGlobal, imagesGlobalStore } from "../../../globals/images/images";
 import useAuth from "../../../hooks/auth/useAuth";
 import useAsTheme from "../../../hooks/themes/useAsTheme";
-import {ImageWithFallback} from "../ImageWithFallback";
+import { ImageWithFallback } from "../ImageWithFallback";
+import { useRouter } from "next/router";
 
 interface SampleCommunityGalleryImages extends ReactProps {
     images: any[]
 }
 
-export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryImages) => {
+export const SampleCommunityGalleryImages = ({ images }: SampleCommunityGalleryImages) => {
     const { userData, upvoteImageUpdate } = useAuth()
+    const { decrementCreditBalance, isLoggedIn, toggleModal, changeSection } = useAuth()
+    const router = useRouter()
     const [photos, setPhotos] = useState([{
         src: "",
         width: 4,
@@ -34,7 +37,7 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
     const [lightboxPhotos, setLightboxPhotos] = useState([] as any[])
     const [currentImage, setCurrentImage] = useState(0);
     const [viewerIsOpen, setViewerIsOpen] = useState(false);
-    const {themesSectionToggle, themes, removeImageById} = useAsTheme()
+    const { themesSectionToggle, themes, removeImageById } = useAsTheme()
     const { PATCH } = useAxios();
 
     useEffect(() => {
@@ -79,7 +82,7 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
     }, [])
 
     // @ts-ignore
-    const openLightbox = useCallback((event, {photo, index}) => {
+    const openLightbox = useCallback((event, { photo, index }) => {
         setCurrentImage(index);
         setViewerIsOpen(true);
     }, []);
@@ -97,7 +100,7 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
         try {
             if (userData?.upvotedImages?.findIndex((v: any) => v.id == photos[index]?.data?.id) == -1) {
                 vote = true
-                upvoteImageUpdate(images[index],"vote")
+                upvoteImageUpdate(images[index], "vote")
                 setVoteLoading(true)
                 const response = await PATCH('image/vote', {
                     "id": photos[index]?.data?.id,
@@ -140,82 +143,114 @@ export const SampleCommunityGalleryImages = ({images}: SampleCommunityGalleryIma
     return (
         <div>
             <Gallery photos={photos} direction={"column"} margin={5}
-                     renderImage={({index, left, top, photo}) => {
-                         return photo.src ? (
-                             <div key={index}
-                                 onClick={(e: any) => {
-                                     if ([...e.target.classList].includes("black-zone")) return openLightbox(e, {
-                                         photo,
-                                         index
-                                     })
-                                 }}
-                                 style={{
-                                     position: "absolute",
-                                     left: left,
-                                     top: top,
-                                     borderRadius: "10px",
-                                     overflow: "hidden"
-                                 }}
-                             >
-                                 {/* @ts-ignore */}
-                                 <img
-                                     alt={"Gallery Image"}
-                                     {...photo}
-                                 />
-                                 <div
-                                     className={"top-0 absolute w-full h-full p-2 flex flex-row opacity-0 hover:opacity-100 transition duration-300 ease-in-out"}
-                                     style={{backgroundColor: "rgba(0, 0, 0, 0.2)"}}>
-                                     <div className={"black-zone flex flex-col w-1/2 items-start"}>
-                                         <IconButton
-                                             icon={
-                                                 <div className={"overflow-hidden designera-rounded-lg"}>
-                                                     <ImageWithFallback
-                                                       width={50}
-                                                       height={50}
-                                                       src={`https://cdn.designera.app/avatar/${photos[index]?.data?.userAvatar}`}
-                                                       alt={"Avatar"}
-                                                       fallbackUrl={"/assets/images/unknown.png"}
-                                                     />
-                                                 </div>
-                                             }
-                                             className={"p-0.5"}
-                                         />
-                                     </div>
-                                     <div className={"black-zone flex flex-col w-1/2 items-end gap-0.5 md:gap-2"}>
-                                         <IconButton description={"Download"} icon={<FontAwesomeIcon icon={faCircleDown} color={"#AAA7A5"} size={"xl"}
-                                                                            style={{width: 25, height: 25}}/>}
-                                                     onClick={() => ForceDownload(photos[index]?.src, "designera-" + photos[index]?.data?.id)}
-                                         />
-                                         <IconButton description={"Like"} icon={<FontAwesomeIcon icon={faHeart} color={
-                                             userData?.upvotedImages?.findIndex((v: any) => v.id == photos[index]?.data?.id) == -1 ? "#AAA7A5" : "#FF6363"
-                                         } size={"xl"}
-                                                                            style={{width: 25, height: 25}}/>}
-                                                     onClick={() => vote(true, index)}
-                                         />
-                                         <IconButton description={"Copy Style"} icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={
-                                             themes.findIndex((v) => v.id == photos[index]?.data?.id) == -1 ? "#AAA7A5" : "#61A0FF"
-                                         } size={"xl"}
-                                                                            style={{width: 25, height: 25}}/>}
-                                                     onClick={() => themeAdd(photos[index]?.data?.id, photos[index]?.src, photos[index]?.data?.style)}
-                                         />
-                                         <div className={"absolute right-0 bottom-0 pr-2 pb-2"}>
-                                             <div className="sticky text-white z-10 text-right flex flex-col text-xs leading-3">
-                                                 <small style={{ fontSize: '1.1em', textTransform: 'capitalize' }}>{photos[index].data.title}</small>
-                                                 <small className="font-thin mt-1" style={{ textTransform: 'capitalize' }}>By {photos[index].data.username}</small>
-                                                 <small className="Font-Light font-thin text-stone-400">{photos[index].data.likes} likes</small>
-                                             </div>
-                                             <div className={"black-zone absolute w-60 h-32 bottom-0 right-0 z-0"}
-                                                  style={{
-                                                      backgroundImage: 'url("/assets/images/Rectangle_9.png")',
-                                                      backgroundSize: "cover"
-                                                  }}/>
-                                         </div>
+                renderImage={({ index, left, top, photo }) => {
+                    return photo.src ? (
+                        <div key={index}
+                            onClick={(e: any) => {
+                                if ([...e.target.classList].includes("black-zone")) return openLightbox(e, {
+                                    photo,
+                                    index
+                                })
+                            }}
+                            style={{
+                                position: "absolute",
+                                left: left,
+                                top: top,
+                                borderRadius: "10px",
+                                overflow: "hidden"
+                            }}
+                        >
+                            {/* @ts-ignore */}
+                            <img
+                                alt={"Gallery Image"}
+                                {...photo}
+                            />
+                            <div
+                                className={"top-0 absolute w-full h-full p-2 flex flex-row opacity-0 hover:opacity-100 transition duration-300 ease-in-out"}
+                                style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}>
+                                <div className={"black-zone flex flex-col w-1/2 items-start"}>
+                                    <IconButton
+                                        icon={
+                                            <div className={"overflow-hidden designera-rounded-lg"}>
+                                                <ImageWithFallback
+                                                    width={50}
+                                                    height={50}
+                                                    src={`https://cdn.designera.app/avatar/${photos[index]?.data?.userAvatar}`}
+                                                    alt={"Avatar"}
+                                                    fallbackUrl={"/assets/images/unknown.png"}
+                                                />
+                                            </div>
+                                        }
+                                        className={"p-0.5"}
+                                    />
+                                </div>
+                                <div className={"black-zone flex flex-col w-1/2 items-end gap-0.5 md:gap-2"}>
+                                    <IconButton
+                                        description="Like"
+                                        onClick={() => {
+                                            if (!isLoggedIn) {
+                                                changeSection("login");
+                                                toggleModal(true);
+                                            } else {
+                                                vote(true, index);
+                                            }
+                                        }}
+                                        icon={
+                                            <FontAwesomeIcon
+                                                icon={faHeart}
+                                                color={
+                                                    userData?.upvotedImages?.findIndex((v: any) => v.id == photos[index]?.data?.id) == -1
+                                                        ? "#AAA7A5"
+                                                        : "#FF6363"
+                                                }
+                                                size="xl"
+                                                style={{ width: 22, height: 22 }}
+                                            />
+                                        }
+                                    />
+                                    <IconButton description={"Copy Style"} icon={<FontAwesomeIcon icon={faWandMagicSparkles} color={
+                                        themes.findIndex((v) => v.id == photos[index]?.data?.id) == -1 ? "#AAA7A5" : "#61A0FF"
+                                    } size={"xl"}
+                                        style={{ width: 25, height: 25 }} />}
+                                        onClick={() => themeAdd(photos[index]?.data?.id, photos[index]?.src, photos[index]?.data?.style)}
+                                    />
+                                    <IconButton
+                                        description="Item Search"
+                                        onClick={() => {
+                                            if (!isLoggedIn) {
+                                                changeSection("login");
+                                                toggleModal(true);
+                                            } else {
+                                                router.push("/item-search");
+                                            }
+                                        }}
+                                        icon={
+                                            <FontAwesomeIcon
+                                                icon={faMagnifyingGlassDollar}
+                                                color="#AAA7A5"
+                                                size="xl"
+                                                style={{ width: 25, height: 25 }}
+                                            />
+                                        }
+                                    />
+                                    <div className={"absolute right-0 bottom-0 pr-2 pb-2"}>
+                                        <div className="sticky text-white z-10 text-right flex flex-col text-xs leading-3">
+                                            <small style={{ fontSize: '1.1em', textTransform: 'capitalize' }}>{photos[index].data.title}</small>
+                                            <small className="font-thin mt-1" style={{ textTransform: 'capitalize' }}>By {photos[index].data.username}</small>
+                                            <small className="Font-Light font-thin text-stone-400">{photos[index].data.likes} likes</small>
+                                        </div>
+                                        <div className={"black-zone absolute w-60 h-32 bottom-0 right-0 z-0"}
+                                            style={{
+                                                backgroundImage: 'url("/assets/images/Rectangle_9.png")',
+                                                backgroundSize: "cover"
+                                            }} />
+                                    </div>
 
-                                     </div>
-                                 </div>
-                             </div>
-                         ) : <div key={index}></div>
-                     }}/>
+                                </div>
+                            </div>
+                        </div>
+                    ) : <div key={index}></div>
+                }} />
             { /* @ts-ignore */}
             <ModalGateway>
                 {viewerIsOpen ? (

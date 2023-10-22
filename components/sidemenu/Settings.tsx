@@ -16,13 +16,13 @@ const changeNameValidation = Yup.object().shape({
   firstName: Yup.string()
     .max(32, 'Maximum length: 32.')
     .min(2, 'Minimum length: 2.')
-    .matches(/^[a-zA-Z ]*$/, {message: 'Please use only letters.'})
+    .matches(/^[a-zA-ZçıöğüşÇİÖĞÜŞ ]*$/, {message: 'Please use only letters.'})
     .required('Please enter a valid name.'),
 
   lastName: Yup.string()
     .max(32, 'Maximum length: 32.')
     .min(2, 'Minimum length: 2.')
-    .matches(/^[a-zA-Z ]*$/, {message: 'Please use only letters.'})
+    .matches(/^[a-zA-ZçıöğüşÇİÖĞÜŞ ]*$/, {message: 'Please use only letters.'})
     .required('Please enter a valid surname.'),
 });
 
