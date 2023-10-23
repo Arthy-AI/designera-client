@@ -613,6 +613,16 @@ export default function MainPage() {
                       />)
                     }
                   </div>
+                  <small className="Font-Light text-gray-400 text-center leading-3 pt-2 italic" style={{ fontSize: "0.70rem" }}>
+                    Check our{' '}
+                    <small className="hover:text-[#c7c7c7] cursor-pointer" onClick={() => { router.push('/privacy-policy') }}>
+                      <u>Privacy Policy</u>
+                    </small>{' '}
+                    and{' '}
+                    <small className="hover:text-[#c7c7c7] cursor-pointer" onClick={() => { router.push('/terms-of-use') }}>
+                      <u>Terms of Use</u>
+                    </small>
+                  </small>
                 </div>
 
               </SideMenu>

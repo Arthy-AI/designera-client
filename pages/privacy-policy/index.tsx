@@ -45,16 +45,17 @@ export default function PrivacyPolicy() {
           <h1
             className={"select-none text-[#AAA7A5] opacity-0 group-hover:opacity-100 transition-all ease-in-out duration-150"}>Back</h1>
         </div>
-
+        <div className="p-4">
+        </div>
         <div
-          className={"w-1/2 flex flex-col gap-6 p-4 bg-[#2b2b2b] designera-rounded designera-box-shadow text-white break-words"}>
+          className={"w-1/2 flex flex-col gap-6 p-4 pr-12 pl-12 bg-[#2b2b2b] designera-rounded designera-box-shadow text-white break-words"}>
           <div className="separator-white text-xl select-none">Privacy Policy</div>
-          <div className={"Font-Regular break-words whitespace-break-spaces"}>
+          <div className={"Font-Regular text-xs break-words whitespace-break-spaces"}>
             <div>
               {`
 Privacy Policy
 
-Updated at 2023-01-01
+Updated at 2023-23-10
 
 
 Designera (“we,” “our,” or “us”) is committed to protecting your privacy. This Privacy Policy explains how your personal information is collected, used, and disclosed by Designera.
@@ -81,14 +82,20 @@ To help explain things as clearly as possible in this Privacy Policy, every time
 
 What Information Do We Collect?
 
+Via Email Registiration:
+
 We collect information from you when you visit our website, register on our site, place an order, subscribe to our newsletter, respond to a survey or fill out a form.
 
 -Name / Username
 -Email Addresses
--Billing Addresses
--Debit/credit card numbers
 -Password
 
+Via Google Login / Register / Authentication:
+
+-When you opt for Google Login on Designera, we request permission to access and use your Google user data solely for the purpose of authentication. This data includes your name, email address, and profile picture. We do not access any other personal information or sensitive data linked to your Google account.
+-Designera stores your Google user data securely on our servers. This information is retained only for the duration of your session, ensuring the functionality of our services during your visit. We do not persistently store your Google user data beyond your current session.
+-Designera will not share, sell, or distribute your Google user data to any third parties, except when required by law or with your explicit consent. Your data will not be used for marketing, advertising, or any purposes other than facilitating your authentication into our platform.
+-We employ industry-standard security measures to protect your Google user data from unauthorized access, disclosure, or alteration. Your information is encrypted during transmission and storage to ensure its confidentiality and integrity.
 
 We also collect information from mobile devices for a better user experience, although these features are completely optional:
 

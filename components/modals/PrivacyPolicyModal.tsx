@@ -61,14 +61,20 @@ To help explain things as clearly as possible in this Privacy Policy, every time
 
 What Information Do We Collect?
 
+Via Email Registiration:
+
 We collect information from you when you visit our website, register on our site, place an order, subscribe to our newsletter, respond to a survey or fill out a form.
 
 -Name / Username
 -Email Addresses
--Billing Addresses
--Debit/credit card numbers
 -Password
 
+Via Google Login / Register / Authentication:
+
+-When you opt for Google Login on Designera, we request permission to access and use your Google user data solely for the purpose of authentication. This data includes your name, email address, and profile picture. We do not access any other personal information or sensitive data linked to your Google account.
+-Designera stores your Google user data securely on our servers. This information is retained only for the duration of your session, ensuring the functionality of our services during your visit. We do not persistently store your Google user data beyond your current session.
+-Designera will not share, sell, or distribute your Google user data to any third parties, except when required by law or with your explicit consent. Your data will not be used for marketing, advertising, or any purposes other than facilitating your authentication into our platform.
+-We employ industry-standard security measures to protect your Google user data from unauthorized access, disclosure, or alteration. Your information is encrypted during transmission and storage to ensure its confidentiality and integrity.
 
 We also collect information from mobile devices for a better user experience, although these features are completely optional:
 
