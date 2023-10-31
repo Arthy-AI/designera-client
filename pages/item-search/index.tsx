@@ -189,6 +189,11 @@ export default function ItemSearch() {
     photoSelection()
   }, [selectedPhoto])
 
+  useEffect(() => {
+    //for debug
+    console.log(results[0]?.data)
+  }, [results]);
+
   return (
     <main className="flex flex-col bg-[#212121] overflow-hidden" id={"CheckoutPage"}>
       <Head>
@@ -362,7 +367,7 @@ export default function ItemSearch() {
                           console.log(photo.src)
                           window.open(results[index].data.link, '_blank');
                         }}
-                        className={"cursor-pointer flex items-end justify-center"}
+                        className={"cursor-pointer group/bg"}
                         key={index}
                         style={{
                           position: "absolute",
@@ -370,13 +375,21 @@ export default function ItemSearch() {
                           top: top,
                           borderRadius: "10px",
                           overflow: "hidden",
-                          backgroundImage: `url("${photo.src}")`,
-                          backgroundRepeat: "no-repeat",
-                          backgroundSize: "contain",
                           height: photo.height,
                           width: photo.width
                         }}>
-                        <div className={"h-fit w-full bg-white"}>
+                        <div className={'w-full h-[80%]'}>
+                          <img src={photo.src} className={'w-full h-full object-cover transition-transform group-hover/bg:scale-110 duration-500'} alt={results[index].data.title} />
+                        </div>
+                        {
+                          results[index].data.price && (
+                              <div className={'absolute top-5 left-5 rounded-xl bg-black group/price hover:bg-white transition-colors duration-300'}>
+                                <h6 className={'text-white transition-colors duration-300 group-hover/price:text-black py-1 px-2'}>{results[index].data?.price.value}</h6>
+                              </div>
+                          )
+                        }
+                        <div className={'flex flex-row items-center w-full min-h-[20%] bg-white absolute bottom-0 border-t-[1px] border-t-gray-800'}>
+                          <img src={results[index].data?.source_icon ?? ''} className={'w-10 h-10 mx-5'} />
                           <h6 className={"text-center line-clamp-2"}>{results[index].data.title}</h6>
                         </div>
                       </div>
