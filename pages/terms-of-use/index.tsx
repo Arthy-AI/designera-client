@@ -45,11 +45,12 @@ export default function TermsOfUse() {
           <h1
             className={"select-none text-[#AAA7A5] opacity-0 group-hover:opacity-100 transition-all ease-in-out duration-150"}>Back</h1>
         </div>
-
+        <div className="p-4">
+        </div>
         <div
-          className={"w-1/2 flex flex-col gap-6 p-4 bg-[#2b2b2b] designera-rounded designera-box-shadow text-white break-words"}>
+          className={"w-1/2 flex flex-col gap-6 p-4 pr-12 pl-12 bg-[#2b2b2b] designera-rounded designera-box-shadow text-white break-words"}>
           <div className="separator-white text-xl select-none">Terms of Use</div>
-          <div className={"Font-Regular break-words whitespace-break-spaces"}>
+          <div className={"Font-Regular text-xs break-words whitespace-break-spaces"}>
             <div>
               {`
 Terms & Conditions

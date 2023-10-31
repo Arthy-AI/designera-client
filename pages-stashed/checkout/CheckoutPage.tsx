@@ -74,7 +74,7 @@ export default function CheckoutPage() {
       .required("Card CVC: Please enter a valid CVC."),
 
     cardHolderName: Yup.string()
-      .matches(/^[a-zA-Z ]*$/, {message: "Card Holder Name: Please use only letters."})
+      .matches(/^[a-zA-ZçıöğüşÇİÖĞÜŞ ]*$/, {message: "Card Holder Name: Please use only letters."})
       .max(50, "Card Holder Name: Please shorten your input (maximum length: 50).")
       .required("Card Holder Name: Please enter a valid name."),
 
