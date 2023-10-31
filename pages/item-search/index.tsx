@@ -364,8 +364,8 @@ export default function ItemSearch() {
           <div className={"w-7/12 min-h-screen p-5"}>
             {isSearching && (
                 <div className={'animate-pulse w-full h-screen grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4'}>
-                  {[...Array(10).keys()].map(() =>(
-                      <div className={'w-full h-full bg-gray-200 rounded-xl'}></div>
+                  {[...Array(9)].map((v, i) =>(
+                      <div className={`w-full h-full odd:bg-gray-300 bg-gray-200 rounded-xl`}></div>
                   ))}
                 </div>
             )}
