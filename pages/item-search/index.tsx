@@ -39,6 +39,8 @@ export default function ItemSearch() {
   const [boundingBoxes, setBoundingBoxes] = useState([] as any);
   const [currentDimensions, setCurrentDimensions] = useState({} as { width: number, height: number });
 
+  const [isSearching, setIsSearching] = useState<boolean>(false)
+
   useEffect(() => {
     let tempProfileGalleryTab = profileGalleryTab
     tempProfileGalleryTab.trigger = Date.now()
@@ -116,8 +118,10 @@ export default function ItemSearch() {
       let formData = new FormData()
       formData.append("file", blob)
 
+      setIsSearching(true)
       const data = await POST("image/search-item", formData)
       setImages(data)
+      setIsSearching(false)
     })
   }
 
@@ -358,6 +362,13 @@ export default function ItemSearch() {
             </div>
           </div>
           <div className={"w-7/12 min-h-screen p-5"}>
+            {isSearching && (
+                <div className={'animate-pulse w-full h-screen grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4'}>
+                  {[...Array(10).keys()].map(() =>(
+                      <div className={'w-full h-full bg-gray-200 rounded-xl'}></div>
+                  ))}
+                </div>
+            )}
             {results.length &&
                 <Gallery
                     photos={results.length ? results : null} direction={"column"} margin={5}
