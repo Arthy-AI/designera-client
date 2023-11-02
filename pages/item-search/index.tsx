@@ -380,54 +380,54 @@ export default function ItemSearch() {
             formData.append("file", blob)
 
             setIsSearching(true)
-            // const data = await POST("image/search-item", formData)
-            const data = MOCK_DATA
-            await new Promise(resolve => setTimeout(resolve, 500))
+            const data = await POST("image/search-item", formData)
+            // const data = MOCK_DATA
+            // await new Promise(resolve => setTimeout(resolve, 500))
             setImages(data);
             setIsSearching(false)
         })
     }
 
     async function detectObjects() {
-        // const labels = await POST(`image/detect-labels/${selectedPhoto.data.id}`, {})
-        const labels = [
-            {
-                "name": "Plant",
-                "boundingBox": {
-                    "height": 0.1949595808982849,
-                    "width": 0.13668596744537354,
-                    "left": 0.07165519148111343,
-                    "top": 0.3522094190120697
-                }
-            },
-            {
-                "name": "Plant",
-                "boundingBox": {
-                    "height": 0.18720218539237976,
-                    "width": 0.06649597734212875,
-                    "left": 0.4434480369091034,
-                    "top": 0.48148664832115173
-                }
-            },
-            {
-                "name": "Chair",
-                "boundingBox": {
-                    "height": 0.29730817675590515,
-                    "width": 0.14473582804203033,
-                    "left": 0.000007279028523043962,
-                    "top": 0.513412356376648
-                }
-            },
-            {
-                "name": "Chair",
-                "boundingBox": {
-                    "height": 0.25633299350738525,
-                    "width": 0.13786061108112335,
-                    "left": 0.30423620343208313,
-                    "top": 0.44493961334228516
-                }
-            }
-        ]
+        const labels = await POST(`image/detect-labels/${selectedPhoto.data.id}`, {})
+        // const labels = [
+        //     {
+        //         "name": "Plant",
+        //         "boundingBox": {
+        //             "height": 0.1949595808982849,
+        //             "width": 0.13668596744537354,
+        //             "left": 0.07165519148111343,
+        //             "top": 0.3522094190120697
+        //         }
+        //     },
+        //     {
+        //         "name": "Plant",
+        //         "boundingBox": {
+        //             "height": 0.18720218539237976,
+        //             "width": 0.06649597734212875,
+        //             "left": 0.4434480369091034,
+        //             "top": 0.48148664832115173
+        //         }
+        //     },
+        //     {
+        //         "name": "Chair",
+        //         "boundingBox": {
+        //             "height": 0.29730817675590515,
+        //             "width": 0.14473582804203033,
+        //             "left": 0.000007279028523043962,
+        //             "top": 0.513412356376648
+        //         }
+        //     },
+        //     {
+        //         "name": "Chair",
+        //         "boundingBox": {
+        //             "height": 0.25633299350738525,
+        //             "width": 0.13786061108112335,
+        //             "left": 0.30423620343208313,
+        //             "top": 0.44493961334228516
+        //         }
+        //     }
+        // ]
         let data = [] as any;
 
         for await (let item of labels as any[]) {
