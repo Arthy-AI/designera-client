@@ -274,6 +274,7 @@ export const Sidemenu = ({ children, isOpen, onClose, onOpen, ...props }: Sideme
                                                     return (
                                                         <>
                                                             <div
+                                                                key={i}
                                                                 className={`Font-Medium cursor-pointer border-white text-stone-300 ${i == 0 ? "p-4 pt-0" : "p-4"}`}
                                                                 onClick={(e) => {
                                                                     typeof menu.currentMenu[v] == "function" ? triggerFunction(v) : changeMenu(v)
