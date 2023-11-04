@@ -34,6 +34,19 @@ export const SampleCommunityGalleryImages = ({ images }: SampleCommunityGalleryI
             likes: null
         }
     }] as any)
+
+    const calculateColumns = (containerWidth: number) => {
+        if (containerWidth < 600) {
+            return 1;
+        } else if (containerWidth < 900) {
+            return 2;
+        } else if (containerWidth < 1200) {
+            return 4;
+        } else {
+            return 5;
+        }
+    };
+
     const [lightboxPhotos, setLightboxPhotos] = useState([] as any[])
     const [currentImage, setCurrentImage] = useState(0);
     const [viewerIsOpen, setViewerIsOpen] = useState(false);
@@ -142,7 +155,7 @@ export const SampleCommunityGalleryImages = ({ images }: SampleCommunityGalleryI
     // @ts-ignore
     return (
         <div>
-            <Gallery photos={photos} direction={"column"} margin={5}
+            <Gallery photos={photos} direction={"column"} margin={5} columns={calculateColumns}
                 renderImage={({ index, left, top, photo }) => {
                     return photo.src ? (
                         <div key={index}
@@ -157,7 +170,7 @@ export const SampleCommunityGalleryImages = ({ images }: SampleCommunityGalleryI
                                 left: left,
                                 top: top,
                                 borderRadius: "10px",
-                                overflow: "hidden"
+                                overflow: "hidden",
                             }}
                         >
                             {/* @ts-ignore */}

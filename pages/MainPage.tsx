@@ -344,7 +344,7 @@ export default function MainPage() {
         </div>
       </Heading>
       <div className="flex justify-center items-center">
-        <div className="w-full md:w-4/5 flex flex-col items-center">
+        <div className="w-4/5 flex flex-col items-center">
           <div className="w-full">
             <StandardLayout>
               <SideMenu>
@@ -837,7 +837,7 @@ export default function MainPage() {
             <AnimatedSimpleInput
               labelText={"Search Designs"}
               placeholderText={"Ex. Ikea, Scandinavian, Kitchen, Batcave, Garden"}
-              className={"w-full md:w-4/5 lg:w-4/5 xl:w-2/5"}
+              className={"w-full md:w-4/5 lg:w-4/5 xl:w-3/5"}
               inputClassname={"bg-[#1E1E1E] hover:bg-[#242424] focus:bg-[#242424] pl-7 pt-6 rounded-full"}
               labelClassname={"ml-5 text-white text-base"}
               onValueChange={(text) => text.length < 1 ? setSearch("") : setSearchTemp(text)}
