@@ -15,6 +15,7 @@ import useAuth from "../../../hooks/auth/useAuth";
 import useAsTheme from "../../../hooks/themes/useAsTheme";
 import { ImageWithFallback } from "../ImageWithFallback";
 import { useRouter } from "next/router";
+import zIndex from "@mui/material/styles/zIndex";
 
 interface SampleCommunityGalleryImages extends ReactProps {
     images: any[]
@@ -136,7 +137,7 @@ export const SampleCommunityGalleryImages = ({ images }: SampleCommunityGalleryI
             upvoteImageUpdate(images[index], vote ? "unvote" : "vote")
         }
     }
-
+    
     function themeAdd(id: string, url: string, style: string) {
         if (themes.findIndex((v) => v.id == id) == -1) {
             imagesGlobalStore.dispatch(imagesGlobal.actions.addTheme({
@@ -234,7 +235,7 @@ export const SampleCommunityGalleryImages = ({ images }: SampleCommunityGalleryI
                                                 changeSection("login");
                                                 toggleModal(true);
                                             } else {
-                                                router.push("/item-search");
+                                                router.push(`/item-search`);
                                             }
                                         }}
                                         icon={

@@ -11,12 +11,14 @@ import { ImageWithBlur } from '../images/ImageWithBlur';
 import useSubscription from "../../hooks/subscription/useSubscription";
 import toast from "react-hot-toast";
 import {useAxios} from "../../hooks/useAxios";
+import { useRouter } from "next/router";
 
 export const Header = ({children, ...props}: ReactProps) => {
   const { GET } = useAxios()
   const {isLoggedIn, toggleModal, changeSection, userData} = useAuth()
   const {isOpen: SidemenuIsOpen, onOpen: SidemenuOnOpen, onClose: SidemenuOnClose} = useDisclosure()
   const { toggleModal: subscriptionToggleModal } = useSubscription()
+  const router = useRouter()
 
   return (
     <div
@@ -24,7 +26,7 @@ export const Header = ({children, ...props}: ReactProps) => {
       className="h-10 w-full fixed top-0 flex items-center pl-3 pr-4 designera-box-shadow z-50"
       style={{ backgroundColor: "rgba(43, 43, 43, 0.9)", backdropFilter: "blur(10px)" }}>
       <div id={"HeaderContainer"} className={"w-full flex justify-between items-center"}>
-        <div className={"ml-2 mt-1 cursor-pointer"} id={"HeaderLogoContainer"} style={{height: "fit-content"}} onClick={() => window.location.reload()}>
+        <div className={"ml-2 mt-1 cursor-pointer"} id={"HeaderLogoContainer"} style={{height: "fit-content"}} onClick={() => router.push("/")}>
           <DesigneraTitleLarge/>
         </div>
         <div id={"HeaderButtonGroup"} className={`flex flex-row ${isLoggedIn ? "gap-3" : "md:gap-6 gap-4"} items-center`}>

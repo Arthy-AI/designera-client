@@ -75,7 +75,7 @@ export const SampleProfileGalleryImages = ({tab, trigger, large, onClick}: { tab
         <>
             {photos?.map((v: any, index: number) => {
                 return (
-                    <div key={index} className={`${large ? "w-36 h-36" : "w-16 h-16"} overflow-hidden object-contain cursor-pointer`} style={{
+                    <div key={index} className={`${large ? "w-16 h-16" : "w-16 h-16"} overflow-hidden object-contain cursor-pointer`} style={{
                         backgroundImage: `url(${v.src})`,
                         backgroundSize: `cover`,
                         backgroundPosition: `center`

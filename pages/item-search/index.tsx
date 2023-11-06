@@ -540,53 +540,58 @@ export default function ItemSearch() {
                         <div
                             className={"w-full flex flex-col gap-2 h-full bg-[#212121] designera-rounded text-white overflow-hidden"}>
                             <div className={"flex flex-col p-3"}>
-                                <div className={"flex justify-between pb-4"}>
+                                <div className="flex pb-4 justify-between items-center">
                                     <div
-                                        className={"group flex flex-row gap-2 items-center cursor-pointer"}
+                                        className="cursor-pointer"
                                         onClick={() => {
-                                            router.push("/")
-                                        }}>
-                                        <button className={"bg-transparent block"}>
+                                            router.push("/");
+                                        }}
+                                    >
+                                        <button className="p-2 block bg-[#5D5D5D] rounded-full">
                                             <FontAwesomeIcon
                                                 icon={faArrowLeft}
-                                                color={"#AAA7A5"}
-                                                size={"xl"}
-                                                style={{ width: 20, height: 20 }} />
+                                                color="#D9D9D9"
+                                                size="xl"
+                                                style={{ width: 20, height: 20 }}
+                                            />
                                         </button>
-                                        <h1
-                                            className={"select-none text-[#AAA7A5] opacity-0 group-hover:opacity-100 transition-all ease-in-out duration-150"}>Back</h1>
                                     </div>
-                                    <div className={"flex items-center justify-between text-[#979797] gap-1"}>
-                                        <span
-                                            className={"mb-1"}>Search</span></div>
-                                    <div className={"flex gap-2"}>
-                                        {
-                                            Object.keys(selectedPhoto).length > 0 && !selectedPhoto?.data?.hasDetectedLabels &&
-                                            <button onClick={() => detectObjects()}
-                                                className={"p-2 bg-[#5D5D5D] rounded-full text-sm"}>
+                                    <div className="group-items center-div text-[#979797] text-xl">
+                                    <span>Where to buy?</span>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        {Object.keys(selectedPhoto).length > 0 && !selectedPhoto?.data?.hasDetectedLabels && (
+                                            <button
+                                                onClick={() => detectObjects()}
+                                                className="p-2 bg-[#5D5D5D] rounded-full text-sm"
+                                            >
                                                 Detect Objects
                                             </button>
-                                        }
-                                        <button onClick={() => imageSearch()}
-                                            className={"p-2 bg-[#5D5D5D] rounded-full flex justify-center items-center"}>
-                                            <FontAwesomeIcon icon={faSearch} color={"#D9D9D9"}
+                                        )}
+                                        <button
+                                            onClick={() => imageSearch()}
+                                            className="p-2.5 bg-[#5D5D5D] rounded-full flex justify-center items-center"
+                                        >
+                                            <FontAwesomeIcon
+                                                icon={faSearch}
+                                                color="#D9D9D9"
                                                 style={{
-                                                    width: 20,
-                                                    height: 20,
-                                                    color: "#D9D9D9"
-                                                }} />
+                                                    width: 18,
+                                                    height: 18,
+                                                    color: "#D9D9D9",
+                                                }}
+                                            />
                                         </button>
                                     </div>
                                 </div>
                                 <div
-                                    className={"flex justify-center items-center bg-stone-600 designera-rounded-2"}
+                                    className={"flex justify-center items-center"}
                                     style={{
-                                        minHeight: 300,
                                         maxHeight: 540,
                                     }}
                                 >
                                     {selectedPhoto?.src &&
-                                        <ReactCrop
+                                        <ReactCrop className="ReactCrop--no-animate ReactCrop--circular-crop"
                                             crop={crop}
                                             maxWidth={500}
                                             maxHeight={500}
@@ -611,31 +616,40 @@ export default function ItemSearch() {
                                                                         delayShow={500}
                                                                     />
                                                                     <div
-                                                                        id={String(i)}
-                                                                        key={i}
-                                                                        className={"absolute"}
+                                                                    //    id={String(i)}
+                                                                    //    key={i}
+                                                                    //    className={"absolute"}
+                                                                    //    style={{
+                                                                    //        top: v.boundingBox.top,
+                                                                    //        left: v.boundingBox.left,
+                                                                    //        height: v.boundingBox.height,
+                                                                    //        width: v.boundingBox.width,
+                                                                    //        pointerEvents: activeImageIndex === v.zIndex ? "none" : "auto", // Disable pointer events when active
+                                                                    //        zIndex: activeImageIndex === v.zIndex ? v.zIndex : "auto", // Apply zIndex when active
+                                                                    //        border: activeImageIndex === v.zIndex ? "2px solid rgba(255, 255, 255, 0.6)" : "none", // Apply border when active
+                                                                    //        borderRadius: activeImageIndex === v.zIndex ? 5 : 0, // Apply border-radius when active
+                                                                    //        transformOrigin: "center", // Set the transform origin to the center
+                                                                    //        transform: activeImageIndex === v.zIndex ? "scale(1)" : "scale(0.8)", // Apply initial scale (adjust as needed)
+                                                                    //        transition: "transform 0.3s ease-in-out", // Add a transition for smooth animation
+                                                                    //   }}
+                                                                    ></div>
+                                                                    <div
+                                                                        onClick={() => onClickImage(v.zIndex)}
                                                                         style={{
-                                                                            top: v.boundingBox.top,
-                                                                            left: v.boundingBox.left,
-                                                                            cursor: "pointer",
-                                                                            height: v.boundingBox.height,
-                                                                            width: v.boundingBox.width,
-                                                                            ...(activeImageIndex === v.zIndex && {
-                                                                                zIndex: v.zIndex,
-                                                                                border: "2px solid white",
-                                                                                borderRadius: 5,
-                                                                            })
+                                                                            left: v.boundingBox.left + v.boundingBox.width / 2 - (15 / 2),
+                                                                            top: v.boundingBox.top + v.boundingBox.height / 2 - (15 / 2),
+                                                                            width: '15px',
+                                                                            height: '15px',
+                                                                            borderRadius: '50%',
+                                                                            backgroundColor: 'white',
+                                                                            zIndex: v.zIndex,
+                                                                            opacity: 0.85,
+                                                                            outline: '6px solid rgba(255, 255, 255, 0.25)',
+                                                                            animation: 'pulse 2s ease',
+
                                                                         }}
-                                                                    >
-                                                                    </div>
-                                                                    <div onClick={() => onClickImage(v.zIndex)} style={{
-                                                                        left: v.boundingBox.left + v.boundingBox.width / 2 - (15 / 2),
-                                                                        top: v.boundingBox.top + v.boundingBox.height / 2 - (15 / 2),
-                                                                        width: '15px',
-                                                                        height: '15px',
-                                                                        borderRadius: 15 / 2,
-                                                                        zIndex: v.zIndex
-                                                                    }} className={'absolute bg-white cursor-pointer'} />
+                                                                        className={'absolute cursor-pointer'}
+                                                                    />
                                                                 </>
                                                             )
                                                         })
@@ -649,7 +663,7 @@ export default function ItemSearch() {
                                     {Object.keys(selectedPhoto).length < 1 && "Select an Image"}
                                 </div>
                             </div>
-                            <div className={"h-1/2 pt-2 designera-rounded overflow-y-scroll"} style={{
+                            <div className={"h-full pt-2 designera-rounded"} style={{
                                 backgroundColor: "rgba(0, 0, 0, 0.3)"
                             }}>
                                 <div className={"flex flex-row justify-center items-center gap-4"}>
@@ -676,11 +690,12 @@ export default function ItemSearch() {
                                     </span>
                                 </div>
                                 <hr className={"bg-stone-400 border-none h-[1px]"} />
-                                <div className={"flex flex-row flex-wrap p-2 gap-2 justify-left"}
-                                style={{
-                                    minHeight: 80,
-                                    maxHeight: 240,
-                                }}>
+                                <div className="pb-2"></div>
+                                <div className={"flex flex-row flex-wrap p-2 pt-0 gap-2 justify-left overflow-y-scroll"}
+                                    style={{
+                                        minHeight: 80,
+                                        maxHeight: 1080,
+                                    }}>
                                     <SampleProfileGalleryImages tab={profileGalleryTab.tab}
                                         trigger={profileGalleryTab.trigger} large
                                         onClick={selectPhoto} />
@@ -688,7 +703,7 @@ export default function ItemSearch() {
                             </div>
                         </div>
                     </div>
-                    <div className={"w-2/3 min-h-screen p-5"}>
+                    <div className={"w-2/3 min-h-screen p-5 overflow-y-scroll"}>
                         {isSearching && (
                             <div
                                 className={'animate-pulse w-full h-screen grid grid-cols-5 gap-8'}>
@@ -726,7 +741,7 @@ export default function ItemSearch() {
                                         {
                                             results[index].data.price && (
                                                 <div
-                                                    className={'absolute top-5 left-5 rounded-xl bg-black group/price hover:bg-white transition-colors duration-300'}>
+                                                    className={'absolute top-3 left-3 rounded-xl bg-black group/price hover:bg-white transition-colors duration-300'}>
                                                     <div className={'flex flex-row items-center gap-x-1 px-2 py-1'}>
                                                         <FontAwesomeIcon icon={faTag}
                                                             className={'w-4 h-4 text-white group-hover/price:text-black transition-colors duration-300'} />
