@@ -272,7 +272,7 @@ const settingsSlice = createSlice({
         case "Manage Plan":
           const response = axios.get(NetworkConfig.API_URL + 'network-health').then((data) => {
             if (data.status == 200) {
-              window.open("https://billing.stripe.com/p/login/test_14k5mLaWn3J72Oc4gg", "_blank");
+              window.open("https://billing.stripe.com/p/login/4gw3eg3Dlg1T78QfYY", "_blank");
             } else {
               toast.error("An error occurred.")
             }
