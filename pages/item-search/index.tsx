@@ -24,6 +24,7 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import { GetMeta } from "../../constants/GetMeta";
 import zIndex from "@mui/material/styles/zIndex";
 import { kMaxLength } from "buffer";
+import { color } from "@chakra-ui/react";
 
 const TO_RADIANS = Math.PI / 180
 
@@ -513,7 +514,7 @@ export default function ItemSearch() {
     }
 
     return (
-        <main className="flex flex-col bg-[#2a2a2a] overflow-hidden">
+        <main className="flex flex-col lg:flex-row bg-[#2a2a2a] overflow-hidden">
             <Head>
                 <title>Designera | Create AI-Powered Design Ideas in Seconds</title>
                 <meta name="description"
@@ -529,239 +530,248 @@ export default function ItemSearch() {
                 <link rel="shortcut icon" href="/assets/site/favicon.ico" />
                 <meta name="theme-color" content="#FF9900" />
             </Head>
-
-            <div className={"flex flex-col min-h-screen"}>
-                <Header />
+            <Header />
+            <div className={"flex flex-col w-full lg:w-1/3"}>
                 <div className={"h-screen flex pt-12"}>
-                    <div className={"flex flex-col items-center w-1/3 p-5"}
-                        style={{
-                            minWidth: 300,
-                        }}>
+                    <div className={"flex flex-col items-center pl-5 pt-4 pb-5 pr-2"}
+                    style={{
+                        minWidth: 375,
+                    }}
+                    >
                         <div
-                            className={"w-full flex flex-col gap-2 h-full bg-[#212121] designera-rounded text-white overflow-hidden"}>
-                            <div className={"flex flex-col p-3"}>
-                                <div className="flex pb-4 justify-between items-center">
-                                    <div
-                                        className="cursor-pointer"
-                                        onClick={() => {
-                                            router.push("/");
-                                        }}
-                                    >
-                                        <button className="p-2 block bg-[#5D5D5D] rounded-full">
-                                            <FontAwesomeIcon
-                                                icon={faArrowLeft}
-                                                color="#D9D9D9"
-                                                size="xl"
-                                                style={{ width: 20, height: 20 }}
-                                            />
-                                        </button>
-                                    </div>
-                                    <div className="group-items center-div text-[#979797] text-xl">
-                                    <span>Where to buy?</span>
-                                    </div>
-                                    <div className="flex gap-2">
-                                        {Object.keys(selectedPhoto).length > 0 && !selectedPhoto?.data?.hasDetectedLabels && (
-                                            <button
-                                                onClick={() => detectObjects()}
-                                                className="p-2 bg-[#5D5D5D] rounded-full text-sm"
-                                            >
-                                                Detect Objects
-                                            </button>
-                                        )}
-                                        <button
-                                            onClick={() => imageSearch()}
-                                            className="p-2.5 bg-[#5D5D5D] rounded-full flex justify-center items-center"
-                                        >
-                                            <FontAwesomeIcon
-                                                icon={faSearch}
-                                                color="#D9D9D9"
-                                                style={{
-                                                    width: 18,
-                                                    height: 18,
-                                                    color: "#D9D9D9",
-                                                }}
-                                            />
-                                        </button>
-                                    </div>
-                                </div>
+                            className={"w-full flex flex-col gap-2 bg-[#212121] designera-rounded text-white"}
+                        >
+                            <div className="flex p-3 justify-between items-center">
                                 <div
-                                    className={"flex justify-center items-center"}
-                                    style={{
-                                        maxHeight: 540,
+                                    className="cursor-pointer"
+                                    onClick={() => {
+                                        router.push("/");
                                     }}
                                 >
-                                    {selectedPhoto?.src &&
-                                        <ReactCrop className="ReactCrop--no-animate ReactCrop--circular-crop"
-                                            crop={crop}
-                                            maxWidth={500}
-                                            maxHeight={500}
-                                            minHeight={40}
-                                            minWidth={40}
-                                            onChange={(_, percentCrop) => setCrop(_)}
-                                            onComplete={(c) => setCompletedCrop(c)}
-                                        >
-                                            <div>
-                                                <div className={"absolute select-none"} style={{
-                                                    width: currentDimensions.width,
-                                                    height: currentDimensions.height,
-                                                }}>{
-                                                        boundingBoxes.map((v: any, i: number) => {
-                                                            // console.log(v)
-                                                            return (
-                                                                <>
-                                                                    <ReactTooltip
-                                                                        anchorId={String(i)}
-                                                                        place="top"
-                                                                        content={v.name}
-                                                                        delayShow={500}
-                                                                    />
-                                                                    <div
-                                                                    //    id={String(i)}
-                                                                    //    key={i}
-                                                                    //    className={"absolute"}
-                                                                    //    style={{
-                                                                    //        top: v.boundingBox.top,
-                                                                    //        left: v.boundingBox.left,
-                                                                    //        height: v.boundingBox.height,
-                                                                    //        width: v.boundingBox.width,
-                                                                    //        pointerEvents: activeImageIndex === v.zIndex ? "none" : "auto", // Disable pointer events when active
-                                                                    //        zIndex: activeImageIndex === v.zIndex ? v.zIndex : "auto", // Apply zIndex when active
-                                                                    //        border: activeImageIndex === v.zIndex ? "2px solid rgba(255, 255, 255, 0.6)" : "none", // Apply border when active
-                                                                    //        borderRadius: activeImageIndex === v.zIndex ? 5 : 0, // Apply border-radius when active
-                                                                    //        transformOrigin: "center", // Set the transform origin to the center
-                                                                    //        transform: activeImageIndex === v.zIndex ? "scale(1)" : "scale(0.8)", // Apply initial scale (adjust as needed)
-                                                                    //        transition: "transform 0.3s ease-in-out", // Add a transition for smooth animation
-                                                                    //   }}
-                                                                    ></div>
-                                                                    <div
-                                                                        onClick={() => onClickImage(v.zIndex)}
-                                                                        style={{
-                                                                            left: v.boundingBox.left + v.boundingBox.width / 2 - (15 / 2),
-                                                                            top: v.boundingBox.top + v.boundingBox.height / 2 - (15 / 2),
-                                                                            width: '15px',
-                                                                            height: '15px',
-                                                                            borderRadius: '50%',
-                                                                            backgroundColor: 'white',
-                                                                            zIndex: v.zIndex,
-                                                                            opacity: 0.85,
-                                                                            outline: '6px solid rgba(255, 255, 255, 0.25)',
-                                                                            animation: 'pulse 2s ease',
-
-                                                                        }}
-                                                                        className={'absolute cursor-pointer'}
-                                                                    />
-                                                                </>
-                                                            )
-                                                        })
-                                                    }</div>
-                                                <img crossOrigin="anonymous" ref={imgRef}
-                                                    className={"block object-cover"}
-                                                    src={selectedPhoto?.src} alt={"cropImage"} />
-                                            </div>
-                                        </ReactCrop>
+                                    <button className="p-2 block bg-[#5D5D5D] rounded-full">
+                                        <FontAwesomeIcon
+                                            icon={faArrowLeft}
+                                            color="#D9D9D9"
+                                            size="xl"
+                                            style={{ width: 20, height: 20 }}
+                                        />
+                                    </button>
+                                </div>
+                                <div className="group-items center-div text-[#979797] text-xl">
+                                    <span>Where to buy?</span>
+                                </div>
+                                <div className="flex gap-2">
+                                    {Object.keys(selectedPhoto).length > 0 && !selectedPhoto?.data?.hasDetectedLabels
+                                        // </div>&& (
+                                        //<button
+                                        //    onClick={() => detectObjects()}
+                                        //    className="p-2 bg-[#5D5D5D] rounded-full text-sm"
+                                        //>
+                                        //</div>    Detect Objects
+                                        //</button>
+                                        //)
                                     }
-                                    {Object.keys(selectedPhoto).length < 1 && "Select an Image"}
-                                </div>
-                            </div>
-                            <div className={"h-full pt-2 designera-rounded"} style={{
-                                backgroundColor: "rgba(0, 0, 0, 0.3)"
-                            }}>
-                                <div className={"flex flex-row justify-center items-center gap-4"}>
-                                    <span className={"cursor-pointer font-semibold"}
-                                        style={{ color: profileGalleryTab.tab == "Images" ? "white" : "#333333" }}
-                                        onClick={() => {
-                                            changeTab("Images")
-                                        }}>
-                                        Images
-                                    </span>
-                                    <span className={"cursor-pointer font-semibold"}
-                                        style={{ color: profileGalleryTab.tab == "Likes" ? "white" : "#333333" }}
-                                        onClick={() => {
-                                            changeTab("Likes")
-                                        }}>
-                                        Likes
-                                    </span>
-                                    <span className={"cursor-pointer font-semibold"}
-                                        style={{ color: profileGalleryTab.tab == "Publishes" ? "white" : "#333333" }}
-                                        onClick={() => {
-                                            changeTab("Publishes")
-                                        }}>
-                                        Publishes
-                                    </span>
-                                </div>
-                                <hr className={"bg-stone-400 border-none h-[1px]"} />
-                                <div className="pb-2"></div>
-                                <div className={"flex flex-row flex-wrap p-2 pt-0 gap-2 justify-left overflow-y-scroll"}
-                                    style={{
-                                        minHeight: 80,
-                                        maxHeight: 1080,
-                                    }}>
-                                    <SampleProfileGalleryImages tab={profileGalleryTab.tab}
-                                        trigger={profileGalleryTab.trigger} large
-                                        onClick={selectPhoto} />
+                                    <button
+                                        onClick={() => imageSearch()}
+                                        className="p-2.5 bg-[#5D5D5D] rounded-full flex justify-center items-center"
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faSearch}
+                                            color="#D9D9D9"
+                                            style={{
+                                                width: 18,
+                                                height: 18,
+                                                color: "#D9D9D9",
+                                            }}
+                                        />
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className={"w-2/3 min-h-screen p-5 overflow-y-scroll"}>
-                        {isSearching && (
-                            <div
-                                className={'animate-pulse w-full h-screen grid grid-cols-5 gap-8'}>
-                                {[...Array(20)].map((v, i) => (
-                                    <div key={i}
-                                        className={`w-full h-full odd:bg-neutral-700 bg-neutral-700 rounded-xl`}></div>
-                                ))}
-                            </div>
-                        )}
-                        {results.length &&
-                            <Gallery
-                                photos={results.length ? results : null} direction={"column"} margin={12} columns={calculateColumns}
-                                renderImage={({ index, left, top, photo }) => {
-                                    return <div
-                                        onClick={() => {
-                                            console.log(photo.src)
-                                            window.open(results[index].data.link, '_blank');
-                                        }}
-                                        className={"cursor-pointer group/bg"}
-                                        key={index}
-                                        style={{
-                                            position: "absolute",
-                                            left: left,
-                                            top: top,
-                                            borderRadius: "10px",
-                                            overflow: "hidden",
-                                            height: photo.height,
-                                            width: photo.width
-                                        }}>
-                                        <div className={'w-full h-full'}>
-                                            <img src={photo.src}
-                                                className={'w-full h-full object-cover transition-transform group-hover/bg:scale-110 duration-500'}
-                                                alt={results[index].data.title} />
+                        <div className={"w-full flex flex-col p-3 bg-[#212121]"}
+                            style={{
+                                overflow: 'visible',
+                                padding: '10px',
+                                margin: '-10px',
+                            }}>
+                            <div className="flex justify-center items-center" style={{ minHeight: 60 }}>
+                                {selectedPhoto?.src ? (
+                                    <ReactCrop
+                                        className="ReactCrop--no-animate ReactCrop--circular-crop designera-rounded-3"
+                                        crop={crop}
+                                        maxWidth={500}
+                                        maxHeight={500}
+                                        minHeight={40}
+                                        minWidth={40}
+                                        onChange={(_, percentCrop) => setCrop(_)}
+                                        onComplete={(c) => setCompletedCrop(c)}
+                                    >
+                                        <div>
+                                            <div className={"absolute select-none"} style={{
+                                                width: currentDimensions.width,
+                                                height: currentDimensions.height,
+                                            }}>{
+                                                    boundingBoxes.map((v: any, i: number) => {
+                                                        // console.log(v)
+                                                        return (
+                                                            <>
+                                                                <ReactTooltip
+                                                                    anchorId={String(i)}
+                                                                    place="top"
+                                                                    content={v.name}
+                                                                    delayShow={500}
+                                                                />
+                                                                <div
+                                                                //    id={String(i)}
+                                                                //    key={i}
+                                                                //    className={"absolute"}
+                                                                //    style={{
+                                                                //        top: v.boundingBox.top,
+                                                                //        left: v.boundingBox.left,
+                                                                //        height: v.boundingBox.height,
+                                                                //        width: v.boundingBox.width,
+                                                                //        pointerEvents: activeImageIndex === v.zIndex ? "none" : "auto", // Disable pointer events when active
+                                                                //        zIndex: activeImageIndex === v.zIndex ? v.zIndex : "auto", // Apply zIndex when active
+                                                                //        border: activeImageIndex === v.zIndex ? "2px solid rgba(255, 255, 255, 0.6)" : "none", // Apply border when active
+                                                                //        borderRadius: activeImageIndex === v.zIndex ? 5 : 0, // Apply border-radius when active
+                                                                //        transformOrigin: "center", // Set the transform origin to the center
+                                                                //        transform: activeImageIndex === v.zIndex ? "scale(1)" : "scale(0.8)", // Apply initial scale (adjust as needed)
+                                                                //        transition: "transform 0.3s ease-in-out", // Add a transition for smooth animation
+                                                                //   }}
+                                                                ></div>
+                                                                <div
+                                                                    onClick={() => onClickImage(v.zIndex)}
+                                                                    style={{
+                                                                        left: v.boundingBox.left + v.boundingBox.width / 2 - (15 / 2),
+                                                                        top: v.boundingBox.top + v.boundingBox.height / 2 - (15 / 2),
+                                                                        width: '15px',
+                                                                        height: '15px',
+                                                                        borderRadius: '50%',
+                                                                        backgroundColor: 'white',
+                                                                        zIndex: v.zIndex,
+                                                                        opacity: 0.85,
+                                                                        outline: '6px solid rgba(255, 255, 255, 0.25)',
+                                                                        animation: 'pulse 2s ease',
+
+                                                                    }}
+                                                                    className={'absolute cursor-pointer'}
+                                                                />
+                                                            </>
+                                                        )
+                                                    })
+                                                }</div>
+                                            <img crossOrigin="anonymous" ref={imgRef}
+                                                className={"block object-cover"}
+                                                src={selectedPhoto?.src} alt={"cropImage"} />
                                         </div>
-                                        {
-                                            results[index].data.price && (
-                                                <div
-                                                    className={'absolute top-3 left-3 rounded-xl bg-black group/price hover:bg-white transition-colors duration-300'}>
-                                                    <div className={'flex flex-row items-center gap-x-1 px-2 py-1'}>
-                                                        <FontAwesomeIcon icon={faTag}
-                                                            className={'w-4 h-4 text-white group-hover/price:text-black transition-colors duration-300'} />
-                                                        <p className={'text-white text-xs transition-colors duration-300 group-hover/price:text-black'}>{results[index].data?.price.value}</p>
-                                                    </div>
-                                                </div>
-                                            )
-                                        }
-                                        <div
-                                            className={'flex flex-row gap-x-2 px-4 justify-between items-center w-full min-h-[3rem] bg-white absolute bottom-0 '}>
-                                            <img src={results[index].data?.source_icon ?? ''}
-                                                className={'flex-shrink-0 w-5 h-5'} />
-                                            <p className={"flex-1 text-center line-clamp-2 text-xs"}>{results[index].data.title}</p>
-                                        </div>
+                                    </ReactCrop>
+                                ) : (
+                                    <div>
+                                        <p style={{ color: 'white' }}>Select an Image</p>
                                     </div>
-                                }}
-                            />
-                        }
+                                )}
+                            </div>
+                        </div>
+                        <div className={"h-full w-full pt-2 designera-rounded bg-[#1d1d1d]"}>
+                            <div className={"flex flex-row justify-center items-center gap-4"}>
+                                <span className={"cursor-pointer font-semibold"}
+                                    style={{ color: profileGalleryTab.tab == "Images" ? "white" : "#333333" }}
+                                    onClick={() => {
+                                        changeTab("Images")
+                                    }}>
+                                    Images
+                                </span>
+                                <span className={"cursor-pointer font-semibold"}
+                                    style={{ color: profileGalleryTab.tab == "Likes" ? "white" : "#333333" }}
+                                    onClick={() => {
+                                        changeTab("Likes")
+                                    }}>
+                                    Likes
+                                </span>
+                                <span className={"cursor-pointer font-semibold"}
+                                    style={{ color: profileGalleryTab.tab == "Publishes" ? "white" : "#333333" }}
+                                    onClick={() => {
+                                        changeTab("Publishes")
+                                    }}>
+                                    Publishes
+                                </span>
+                            </div>
+                            <hr className={"bg-stone-400 border-none h-[1px]"} />
+                            <div className="pb-2"></div>
+                            <div className={"flex flex-row flex-wrap p-2 pt-0 gap-2 justify-left"}
+                                style={{
+                                    minHeight: 80,
+                                    maxHeight: 1080,
+                                }}>
+                                <SampleProfileGalleryImages tab={profileGalleryTab.tab}
+                                    trigger={profileGalleryTab.trigger} large
+                                    onClick={selectPhoto} />
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
+            <div className={"flex flex-col w-full lg:w-2/3 pl-5 pt-16 pb-5 pr-5"}>
+                {isSearching && (
+                    <div
+                        className={'animate-pulse w-full h-screen grid grid-cols-5 gap-8'}>
+                        {[...Array(20)].map((v, i) => (
+                            <div key={i}
+                                className={`w-full h-full odd:bg-neutral-700 bg-neutral-700 rounded-xl`}></div>
+                        ))}
+                    </div>
+                )}
+                {results.length > 0 && (
+                    <Gallery
+                        photos={results}
+                        direction={"column"}
+                        margin={12}
+                        columns={calculateColumns}
+                        renderImage={({ index, left, top, photo }) => (
+                            <div
+                                onClick={() => {
+                                    console.log(photo.src);
+                                    window.open(results[index].data.link, '_blank');
+                                }}
+                                className={"cursor-pointer group/bg"}
+                                key={index}
+                                style={{
+                                    position: "absolute",
+                                    left: left,
+                                    top: top,
+                                    borderRadius: "10px",
+                                    overflow: "hidden",
+                                    height: photo.height,
+                                    width: photo.width
+                                }}
+                            >
+                                <div className={'w-full h-full'}>
+                                    <img src={photo.src}
+                                        className={'w-full h-full object-cover transition-transform group-hover/bg:scale-110 duration-500'}
+                                        alt={results[index].data.title} />
+                                </div>
+                                {
+                                    results[index].data.price && (
+                                        <div
+                                            className={'absolute top-3 left-3 rounded-xl bg-black group/price hover:bg-white transition-colors duration-300'}>
+                                            <div className={'flex flex-row items-center gap-x-1 px-2 py-1'}>
+                                                <FontAwesomeIcon icon={faTag}
+                                                    className={'w-4 h-4 text-white group-hover/price:text-black transition-colors duration-300'} />
+                                                <p className={'text-white text-xs transition-colors duration-300 group-hover/price:text-black'}>{results[index].data?.price.value}</p>
+                                            </div>
+                                        </div>
+                                    )
+                                }
+                                <div
+                                    className={'flex flex-row gap-x-2 px-4 justify-between items-center w-full min-h-[3rem] bg-white absolute bottom-0 '}>
+                                    <img src={results[index].data?.source_icon ?? ''}
+                                        className={'flex-shrink-0 w-5 h-5'} />
+                                    <p className={"flex-1 text-center line-clamp-2 text-xs"}>{results[index].data.title}</p>
+                                </div>
+                            </div>
+                        )}
+                    />
+                )}
             </div>
 
             <Toaster containerStyle={{ zIndex: 999999 }}
@@ -778,7 +788,7 @@ export default function ItemSearch() {
                     }}
                 />
             </div>
-        </main>
+        </main >
     );
 }
 
