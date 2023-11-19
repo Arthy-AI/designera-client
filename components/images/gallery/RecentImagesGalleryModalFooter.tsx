@@ -1,32 +1,32 @@
-import React, {useEffect, useState} from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import React, { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleDown,
   faHeart, faWandMagicSparkles, faEye, faMagnifyingGlassDollar
 } from "@fortawesome/free-solid-svg-icons";
-import {IconButton} from "../../button/IconButton";
+import { IconButton } from "../../button/IconButton";
 import moment from "moment/moment";
-import {imagesGlobal, imagesGlobalStore} from "../../../globals/images/images";
-import {DynamicObject} from "../../../constants/DynamicObject";
-import {ImageWithBlur} from "../ImageWithBlur";
-import {ForceDownload} from "../../../constants/ForceDownload";
-import {useAxios} from "../../../hooks/useAxios";
+import { imagesGlobal, imagesGlobalStore } from "../../../globals/images/images";
+import { DynamicObject } from "../../../constants/DynamicObject";
+import { ImageWithBlur } from "../ImageWithBlur";
+import { ForceDownload } from "../../../constants/ForceDownload";
+import { useAxios } from "../../../hooks/useAxios";
 import toast from "react-hot-toast";
 import useAsTheme from "../../../hooks/themes/useAsTheme";
 import useAuth from "../../../hooks/auth/useAuth";
-import {CustomDateFormat} from "../../../constants/CustomDateFormat";
-import {ImageWithFallback} from "../ImageWithFallback";
+import { CustomDateFormat } from "../../../constants/CustomDateFormat";
+import { ImageWithFallback } from "../ImageWithFallback";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-export const RecentImagesGalleryModalFooter = ({innerProps, isModal, currentIndex}: DynamicObject) => {
-  const {userData, upvoteImageUpdate} = useAuth()
+export const RecentImagesGalleryModalFooter = ({ innerProps, isModal, currentIndex }: DynamicObject) => {
+  const { userData, upvoteImageUpdate } = useAuth()
   const { decrementCreditBalance, isLoggedIn, toggleModal, changeSection } = useAuth()
   const router = useRouter()
   const [photos, setPhotos] = useState([] as any[])
   const [nullPhotos, setNullPhotos] = useState([] as any[])
-  const {themesSectionToggle, themes, removeImageById} = useAsTheme()
-  const {PATCH} = useAxios()
+  const { themesSectionToggle, themes, removeImageById } = useAsTheme()
+  const { PATCH } = useAxios()
 
   useEffect(() => {
     setPhotos(imagesGlobalStore.getState().recentImages)
@@ -105,8 +105,8 @@ export const RecentImagesGalleryModalFooter = ({innerProps, isModal, currentInde
         <div className={"flex items-end flex-row flex-wrap gap-2"}>
           <IconButton description={"Download"} icon={
             <FontAwesomeIcon icon={faCircleDown} color={"#AAA7A5"} size={"xl"}
-                             style={{width: 25, height: 25}}
-                             onClick={() => ForceDownload(photos[currentIndex]?.src, "designera-" + photos[currentIndex]?.data?.id)}/>
+              style={{ width: 25, height: 25 }}
+              onClick={() => ForceDownload(photos[currentIndex]?.src, "designera-" + photos[currentIndex]?.data?.id)} />
           }
           />
           <IconButton
@@ -114,7 +114,7 @@ export const RecentImagesGalleryModalFooter = ({innerProps, isModal, currentInde
             icon={
               <FontAwesomeIcon icon={faHeart} color={
                 userData?.upvotedImages?.findIndex((v: any) => v.id == photos[currentIndex]?.data?.id) == -1 ? "#AAA7A5" : "#FF6363"
-              } size={"xl"} style={{width: 25, height: 25}}/>
+              } size={"xl"} style={{ width: 25, height: 25 }} />
             }
             onClick={() => {
               vote(true)
@@ -126,7 +126,7 @@ export const RecentImagesGalleryModalFooter = ({innerProps, isModal, currentInde
               <FontAwesomeIcon icon={faWandMagicSparkles} color={
                 themes.findIndex((v) => v.id == photos[currentIndex]?.data?.id) == -1 ? "#AAA7A5" : "#61A0FF"
               } size={"xl"}
-                               style={{width: 25, height: 25}}/>
+                style={{ width: 25, height: 25 }} />
             }
             onClick={() => themeAdd(photos[currentIndex]?.data?.id, photos[currentIndex]?.src, photos[currentIndex]?.data?.style)}
           />
@@ -137,7 +137,14 @@ export const RecentImagesGalleryModalFooter = ({innerProps, isModal, currentInde
                 changeSection("login");
                 toggleModal(true);
               } else {
-                router.push("/item-search");
+                const imageData = {
+                  id: photos[currentIndex]?.data?.id,
+                  // include other image data properties as needed
+                };
+                router.push({
+                  pathname: "/item-search",
+                  query: imageData,
+                });
               }
             }}
             icon={
@@ -154,11 +161,11 @@ export const RecentImagesGalleryModalFooter = ({innerProps, isModal, currentInde
             className={`${photos[currentIndex]?.src?.includes("reference") ? "bg-[#ffffff]" : ""}`}
             icon={
               <FontAwesomeIcon icon={faEye}
-                               color={photos[currentIndex]?.src?.includes("generate") ? "#AAA7A5" : "black"} size={"xl"}
-                               style={{
-                                 width: 25,
-                                 height: 25,
-                               }}/>
+                color={photos[currentIndex]?.src?.includes("generate") ? "#AAA7A5" : "black"} size={"xl"}
+                style={{
+                  width: 25,
+                  height: 25,
+                }} />
             }
             onClick={() => {
               if (photos[currentIndex]?.src?.includes("generate")) {
@@ -203,7 +210,7 @@ export const RecentImagesGalleryModalFooter = ({innerProps, isModal, currentInde
                         "/assets/images/unknown.png"
                     }
                     alt={photos[currentIndex]?.data?.userAvatar || "No info found"}
-                    style={{objectFit: 'contain'}}
+                    style={{ objectFit: 'contain' }}
                     placeholder={"blur"}
                     blurDataURL={"/assets/images/unknown.png"}
                     onError={() => {
@@ -224,7 +231,7 @@ export const RecentImagesGalleryModalFooter = ({innerProps, isModal, currentInde
           {photos[currentIndex]?.data?.title}
           <small className={"font-thin"}>By {photos[currentIndex]?.data?.username}</small>
           <small
-            className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[currentIndex]?.data?.createdAt))?.valueOf()).format(CustomDateFormat, {trim: "both"})} Ago</small>
+            className={"Font-Light font-thin text-stone-400"}>{moment.duration(new Date().valueOf() - (new Date(photos[currentIndex]?.data?.createdAt))?.valueOf()).format(CustomDateFormat, { trim: "both" })} Ago</small>
         </div>
         <div className={"absolute w-60 h-32 bottom-0 right-0 z-0"} style={{
           backgroundImage: 'url("/assets/images/Rectangle_9.png")',
@@ -232,7 +239,7 @@ export const RecentImagesGalleryModalFooter = ({innerProps, isModal, currentInde
           rotate: "-10deg",
           bottom: -20,
           right: -5
-        }}/>
+        }} />
       </div>
     </div>
   ) : null

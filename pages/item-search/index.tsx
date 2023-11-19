@@ -317,6 +317,7 @@ export default function ItemSearch() {
         }
     };
 
+
     useEffect(() => {
         let tempProfileGalleryTab = profileGalleryTab
         tempProfileGalleryTab.trigger = Date.now()
@@ -382,6 +383,18 @@ export default function ItemSearch() {
     )
 
     async function imageSearch() {
+        async function imageSearch() {
+            try {
+              setIsSearching(true);
+              // Perform search logic...
+              // ... 
+            } catch (error) {
+              toast.error('Something went wrong! Please try again.');
+            } finally {
+              setIsSearching(false); // Ensure isSearching is set to false when done
+            }
+          }
+        
         if (!previewCanvasRef.current) {
             toast.error('Crop canvas does not exist.')
         }
@@ -514,7 +527,7 @@ export default function ItemSearch() {
     }
 
     return (
-        <main className="flex flex-col lg:flex-row bg-[#2a2a2a] overflow-hidden">
+        <main className="h-screen flex flex-col lg:flex-row bg-[#2a2a2a] overflow-hidden overflow-y-scroll pt-10">
             <Head>
                 <title>Designera | Create AI-Powered Design Ideas in Seconds</title>
                 <meta name="description"
@@ -531,12 +544,12 @@ export default function ItemSearch() {
                 <meta name="theme-color" content="#FF9900" />
             </Head>
             <Header />
-            <div className={"flex flex-col w-full lg:w-1/3"}>
-                <div className={"h-screen flex pt-12"}>
-                    <div className={"flex flex-col items-center pl-5 pt-4 pb-5 pr-2"}
-                    style={{
-                        minWidth: 375,
-                    }}
+            <div className={"flex-col w-full lg:w-1/3"}>
+                <div className={"flex"}>
+                    <div className={"flex flex-col items-center pl-5 pt-6 pb-5 pr-5"}
+                        style={{
+                            minWidth: 375,
+                        }}
                     >
                         <div
                             className={"w-full flex flex-col gap-2 bg-[#212121] designera-rounded text-white"}
@@ -594,10 +607,10 @@ export default function ItemSearch() {
                                 padding: '10px',
                                 margin: '-10px',
                             }}>
-                            <div className="flex justify-center items-center" style={{ minHeight: 60 }}>
+                            <div className="flex justify-center items-center" style={{ minHeight: '30vh' }}>
                                 {selectedPhoto?.src ? (
                                     <ReactCrop
-                                        className="ReactCrop--no-animate ReactCrop--circular-crop designera-rounded-3"
+                                        className="ReactCrop--no-animate ReactCrop--circular-crop designera-rounded flex"
                                         crop={crop}
                                         maxWidth={500}
                                         maxHeight={500}
@@ -607,12 +620,12 @@ export default function ItemSearch() {
                                         onComplete={(c) => setCompletedCrop(c)}
                                     >
                                         <div>
-                                            <div className={"absolute select-none"} style={{
+                                            <div className={"absolute select-none flex"} style={{
                                                 width: currentDimensions.width,
                                                 height: currentDimensions.height,
                                             }}>{
                                                     boundingBoxes.map((v: any, i: number) => {
-                                                        // console.log(v)
+                                                        console.log(v)
                                                         return (
                                                             <>
                                                                 <ReactTooltip
@@ -654,7 +667,7 @@ export default function ItemSearch() {
                                                                         animation: 'pulse 2s ease',
 
                                                                     }}
-                                                                    className={'absolute cursor-pointer'}
+                                                                    className={"absolute cursor-pointer"}
                                                                 />
                                                             </>
                                                         )
@@ -671,6 +684,7 @@ export default function ItemSearch() {
                                     </div>
                                 )}
                             </div>
+                            <div className="pb-2"></div>
                         </div>
                         <div className={"h-full w-full pt-2 designera-rounded bg-[#1d1d1d]"}>
                             <div className={"flex flex-row justify-center items-center gap-4"}>
@@ -698,10 +712,10 @@ export default function ItemSearch() {
                             </div>
                             <hr className={"bg-stone-400 border-none h-[1px]"} />
                             <div className="pb-2"></div>
-                            <div className={"flex flex-row flex-wrap p-2 pt-0 gap-2 justify-left"}
+                            <div className={"flex flex-row flex-wrap p-2 pt-0 gap-2 justify-left overflow-y-scroll"}
                                 style={{
-                                    minHeight: 80,
-                                    maxHeight: 1080,
+                                    minHeight: '30vh',
+                                    maxHeight: '50vh'
                                 }}>
                                 <SampleProfileGalleryImages tab={profileGalleryTab.tab}
                                     trigger={profileGalleryTab.trigger} large
@@ -711,17 +725,15 @@ export default function ItemSearch() {
                     </div>
                 </div>
             </div>
-            <div className={"flex flex-col w-full lg:w-2/3 pl-5 pt-16 pb-5 pr-5"}>
-                {isSearching && (
-                    <div
-                        className={'animate-pulse w-full h-screen grid grid-cols-5 gap-8'}>
-                        {[...Array(20)].map((v, i) => (
-                            <div key={i}
-                                className={`w-full h-full odd:bg-neutral-700 bg-neutral-700 rounded-xl`}></div>
+            <div className="flex flex-col w-full lg:w-2/3 pl-5 pt-6 pb-5 pr-5">
+                {isSearching ? (
+                    // Loading animation - grid pulse animation
+                    <div className='animate-pulse flex-1 grid grid-cols-5 gap-8'>
+                        {[...Array(20)].map((_, i) => (
+                            <div key={i} className='w-full h-full bg-neutral-700 rounded-xl'></div>
                         ))}
                     </div>
-                )}
-                {results.length > 0 && (
+                ) : (results.length > 0 && (
                     <Gallery
                         photos={results}
                         direction={"column"}
@@ -729,12 +741,8 @@ export default function ItemSearch() {
                         columns={calculateColumns}
                         renderImage={({ index, left, top, photo }) => (
                             <div
-                                onClick={() => {
-                                    console.log(photo.src);
-                                    window.open(results[index].data.link, '_blank');
-                                }}
-                                className={"cursor-pointer group/bg"}
                                 key={index}
+                                className="cursor-pointer group"
                                 style={{
                                     position: "absolute",
                                     left: left,
@@ -744,47 +752,47 @@ export default function ItemSearch() {
                                     height: photo.height,
                                     width: photo.width
                                 }}
+                                onClick={() => window.open(results[index].data.link, '_blank')}
                             >
-                                <div className={'w-full h-full'}>
-                                    <img src={photo.src}
-                                        className={'w-full h-full object-cover transition-transform group-hover/bg:scale-110 duration-500'}
-                                        alt={results[index].data.title} />
+                                <img
+                                    src={photo.src}
+                                    alt={results[index].data.title}
+                                    className='w-full h-full object-cover group-hover:scale-110 transition-transform duration-500'
+                                />
+                                {results[index].data.price && (
+                                    <div
+                                    className={'absolute top-3 left-3 rounded-xl bg-black group/price hover:bg-white transition-colors duration-300'}>
+                                    <div className={'flex flex-row items-center gap-x-1 px-2 py-1'}>
+                                        <FontAwesomeIcon icon={faTag}
+                                            className={'w-4 h-4 text-white group-hover/price:text-black transition-colors duration-300'} />
+                                        <p className={'text-white text-xs transition-colors duration-300 group-hover/price:text-black'}>{results[index].data?.price.value}</p>
+                                    </div>
                                 </div>
-                                {
-                                    results[index].data.price && (
-                                        <div
-                                            className={'absolute top-3 left-3 rounded-xl bg-black group/price hover:bg-white transition-colors duration-300'}>
-                                            <div className={'flex flex-row items-center gap-x-1 px-2 py-1'}>
-                                                <FontAwesomeIcon icon={faTag}
-                                                    className={'w-4 h-4 text-white group-hover/price:text-black transition-colors duration-300'} />
-                                                <p className={'text-white text-xs transition-colors duration-300 group-hover/price:text-black'}>{results[index].data?.price.value}</p>
-                                            </div>
-                                        </div>
-                                    )
-                                }
-                                <div
-                                    className={'flex flex-row gap-x-2 px-4 justify-between items-center w-full min-h-[3rem] bg-white absolute bottom-0 '}>
-                                    <img src={results[index].data?.source_icon ?? ''}
-                                        className={'flex-shrink-0 w-5 h-5'} />
-                                    <p className={"flex-1 text-center line-clamp-2 text-xs"}>{results[index].data.title}</p>
+                                )}
+                                <div className='flex flex-row gap-x-2 p-4 justify-between items-center w-full bg-white absolute bottom-0'>
+                                    <img
+                                        src={results[index].data?.source_icon ?? ''}
+                                        alt="Source Icon"
+                                        className='flex-shrink-0 w-5 h-5'
+                                    />
+                                    <p className="flex-1 text-center text-xs line-clamp-2">{results[index].data.title}</p>
                                 </div>
                             </div>
                         )}
                     />
+                )
                 )}
             </div>
 
             <Toaster containerStyle={{ zIndex: 999999 }}
                 toastOptions={{ style: { backgroundColor: "#2b2b2b", color: "#fff" } }} />
 
-            <div className={"h-0 w-0"}>
+            <div className={"h-0 w-0 overflow-hidden"}>
                 <canvas
                     ref={previewCanvasRef}
                     style={{
-                        border: '1px solid black',
-                        objectFit: 'contain',
-                        width: completedCrop?.width,
-                        height: completedCrop?.height,
+                        width: 0,
+                        height: 0,
                     }}
                 />
             </div>
