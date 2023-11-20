@@ -543,7 +543,7 @@ export default function MainPage() {
                     >
                       Artistic Freedom
                     </span>
-                    <Slider defaultValue={0.55} value={imageDependency} min={0.4} max={0.7} step={0.05}
+                    <Slider defaultValue={0.6} value={imageDependency} min={0.45} max={0.75} step={0.05}
                       marginBottom={0.4}
                       onChange={(val) => setImageDependency(val)}
                     >
