@@ -543,7 +543,7 @@ export default function MainPage() {
                     >
                       Artistic Freedom
                     </span>
-                    <Slider defaultValue={0.6} value={imageDependency} min={0.45} max={0.75} step={0.05}
+                    <Slider defaultValue={0.7} value={imageDependency} min={0.45} max={0.75} step={0.05}
                       marginBottom={0.4}
                       isReversed={true}
                       onChange={(val) => setImageDependency(val)}
@@ -557,11 +557,11 @@ export default function MainPage() {
                         textColor={"gray.100"}>
                         Balanced
                       </SliderMark>
-                      <SliderMark value={0.45} mt='1.5' ml='0' fontStyle='Inter-Medium' fontSize='14px'
+                      <SliderMark value={0.7} mt='1.5' ml='-14' fontStyle='Inter-Medium' fontSize='14px'
                         textColor={"gray.100"}>
                         Weak
                       </SliderMark>
-                      <SliderMark value={0.75} mt='1.5' ml='-12' fontStyle='Inter-Medium' fontSize='14px'
+                      <SliderMark value={0.45} mt='1.5' ml='-12' fontStyle='Inter-Medium' fontSize='14px'
                         textColor={"gray.100"}>
                         Strong
                       </SliderMark>
