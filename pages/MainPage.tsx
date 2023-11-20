@@ -545,6 +545,7 @@ export default function MainPage() {
                     </span>
                     <Slider defaultValue={0.6} value={imageDependency} min={0.45} max={0.75} step={0.05}
                       marginBottom={0.4}
+                      isReversed={true}
                       onChange={(val) => setImageDependency(val)}
                     >
                       <SliderTrack borderRadius='full' height='8px' bg='#3e3e3e'>
@@ -552,15 +553,15 @@ export default function MainPage() {
                         <SliderFilledTrack borderRadius='full' height='8px' bg='#3e3e3e' />
                       </SliderTrack>
                       <SliderThumb boxSize={4} />
-                      <SliderMark value={0.55} mt='1.5' ml='-8' fontStyle='Inter-Medium' fontSize='14px'
+                      <SliderMark value={0.6} mt='1.5' ml='-8' fontStyle='Inter-Medium' fontSize='14px'
                         textColor={"gray.100"}>
                         Balanced
                       </SliderMark>
-                      <SliderMark value={0.4} mt='1.5' ml='0' fontStyle='Inter-Medium' fontSize='14px'
+                      <SliderMark value={0.45} mt='1.5' ml='0' fontStyle='Inter-Medium' fontSize='14px'
                         textColor={"gray.100"}>
                         Weak
                       </SliderMark>
-                      <SliderMark value={0.7} mt='1.5' ml='-12' fontStyle='Inter-Medium' fontSize='14px'
+                      <SliderMark value={0.75} mt='1.5' ml='-12' fontStyle='Inter-Medium' fontSize='14px'
                         textColor={"gray.100"}>
                         Strong
                       </SliderMark>
