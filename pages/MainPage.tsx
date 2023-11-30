@@ -320,13 +320,18 @@ export default function MainPage() {
 
   //Credits Suffixes
   function formatCredits(credits: number): string {
-    const suffixes = ["", "K", "M", "B", "T"]; // Add more suffixes if needed
+    const suffixes = ["", "K", "M", "B", "T"];
     const suffixIndex = Math.floor(Math.log10(credits) / 3);
     const scaledValue = credits / Math.pow(10, suffixIndex * 3);
-    const formattedValue = scaledValue.toFixed(1);
+    
+    if (scaledValue % 1 === 0) {
+        return scaledValue + suffixes[suffixIndex];
+    } else {
+      const truncatedValue = Math.floor(scaledValue);
+        return truncatedValue + suffixes[suffixIndex];
+    }
+}
 
-    return formattedValue + suffixes[suffixIndex];
-  }
 
   return (
     <main className="flex flex-col user-scalable=no" id={"MainPage"}>
