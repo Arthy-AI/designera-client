@@ -577,7 +577,7 @@ export default function MainPage() {
                       (
                         <div className={"flex flex-row gap-2"}>
                           {(!userData?.plan && userData?.credits && userData.credits <= 10) && (
-                            <div className="flex flex-row bg-stone-700 text-white designera-rounded designera-box-shadow items-center justify-center gap-2 p-2 h-16 w-fit">
+                            <div className="flex flex-row bg-stone-700 text-white designera-rounded designera-box-shadow items-center justify-center gap-2 p-2 h-12 w-fit">
                               <div className="flex justify-center items-center font-bold text-4xl select-none">
                                 <span className="h-max">
                                   {formatCredits(userData.credits)}
