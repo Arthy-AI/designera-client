@@ -131,7 +131,7 @@ export const GalleryModalFooter = ({ innerProps, isModal, currentIndex }: Dynami
             onClick={() => themeAdd(photos[currentIndex]?.data?.id, photos[currentIndex]?.src, photos[currentIndex]?.data?.style)}
           />
           <IconButton
-            description="Item Search"
+            description="Where to Buy?"
             onClick={() => {
               if (!isLoggedIn) {
                 changeSection("login");

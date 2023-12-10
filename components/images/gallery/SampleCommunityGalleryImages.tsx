@@ -229,7 +229,7 @@ export const SampleCommunityGalleryImages = ({ images }: SampleCommunityGalleryI
                                         onClick={() => themeAdd(photos[index]?.data?.id, photos[index]?.src, photos[index]?.data?.style)}
                                     />
                                     <IconButton
-                                        description="Item Search"
+                                        description="Where to Buy?"
                                         onClick={() => {
                                             if (!isLoggedIn) {
                                                 changeSection("login");

@@ -12,6 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import * as Scroll from 'react-scroll';
+import { debounce } from 'lodash';
 
 import { Heading } from "../components/heading/Heading";
 import { Small } from "../components/text/small/Small";
@@ -54,7 +55,6 @@ import { useBottomScrollListener } from "react-bottom-scroll-listener";
 import { useRouter } from "next/router";
 
 
-
 export default function MainPage() {
   const router = useRouter()
   const { GET, FILEPOST, POST, PATCH } = useAxios()
@@ -75,6 +75,7 @@ export default function MainPage() {
   const [publisheds, setPublisheds] = useState([] as String[]);
   const [imageDependency, setImageDependency] = useState(0.55);
   const [blockPagination, setBlockPagination] = useState(false);
+  const debouncedSearch = debounce((query) => setSearch(query), 500);
 
   const [styleSuggestionPills, setStyleSuggestionPills] = useState(StyleSuggestionPills);
 
@@ -115,27 +116,40 @@ export default function MainPage() {
   useEffect(() => {
     async function fetchImages() {
       if (blockPagination) return;
-      setLoadingImages(true)
-      let recentImagesResponse = await GET("image/filter", {
-        query: null,
-        pageIndex: 0,
-        pageSize: 6,
-        orderBy: "createdAt"
-      })
-      setRecentImages(recentImagesResponse.items)
 
+      // Set loading state to true at the beginning of the fetch process
+      setLoadingImages(true);
 
-      let data = await GET("image/filter", paginationData)
-      if (data.items.length < 20) {
-        setBlockPagination(true)
+      try {
+        // Fetch recent images
+        let recentImagesResponse = await GET("image/filter", {
+          query: null,
+          pageIndex: 0,
+          pageSize: 6,
+          orderBy: "createdAt"
+        });
+        setRecentImages(recentImagesResponse.items);
+
+        // Fetch main images based on pagination data
+        let data = await GET("image/filter", paginationData);
+        if (data.items.length < 20) {
+          setBlockPagination(true);
+        }
+
+        // Combine new images with existing ones
+        let newImages = [...images, ...data.items];
+        setImages(newImages);
+      } catch (error) {
+        console.error("Error fetching images:", error);
+        // Handle any errors here
+      } finally {
+        // Set loading state to false once fetching is complete or if an error occurs
+        setLoadingImages(false);
       }
-      let newImages = [...(images), ...(data.items)]
-      setImages([...newImages])
-      setLoadingImages(false)
     }
 
-    fetchImages()
-  }, [paginationData]);
+    fetchImages();
+  }, [paginationData]); // Dependency array for useEffect
 
   useEffect(() => {
     dispatch(authGlobalInitiate({}))
@@ -323,18 +337,18 @@ export default function MainPage() {
     const suffixes = ["", "K", "M", "B", "T"];
     const suffixIndex = Math.floor(Math.log10(credits) / 3);
     const scaledValue = credits / Math.pow(10, suffixIndex * 3);
-    
+
     if (scaledValue % 1 === 0) {
-        return scaledValue + suffixes[suffixIndex];
+      return scaledValue + suffixes[suffixIndex];
     } else {
       const truncatedValue = Math.floor(scaledValue);
-        return truncatedValue + suffixes[suffixIndex];
+      return truncatedValue + suffixes[suffixIndex];
     }
-}
+  }
 
 
   return (
-    <main className="flex flex-col user-scalable=no" id={"MainPage"}>
+    <main className="flex flex-col" id={"MainPage"}>
       <Header />
       <div className="hidden h-3">
       </div>
@@ -350,7 +364,7 @@ export default function MainPage() {
       </Heading>
       <div className="flex justify-center items-center">
         <div className="w-4/5 flex flex-col items-center">
-          <div className="w-full">
+          <div className="w-full flex">
             <StandardLayout>
               <SideMenu>
                 <div className="h-full flex flex-col justify-between">
@@ -735,7 +749,7 @@ export default function MainPage() {
                                 }}
                               />
                               <IconButton
-                                description={"Item Search"}
+                                description={"Where to Buy?"}
                                 onClick={() => router.push("/item-search")}
                                 icon={<FontAwesomeIcon icon={faMagnifyingGlassDollar} color={"#AAA7A5"}
                                   size={"xl"}
@@ -750,7 +764,7 @@ export default function MainPage() {
                         {!(selectedResult?.url?.includes("reference") || publisheds.includes(selectedResult.id)) &&
                           <div className={"w-11/12 xl:w-2/3 flex justify-center"}>
                             <AnimatedSimpleInput
-                              labelText={"Give your design a name"}
+                              labelText={"Name your design to publish"}
                               className={"w-8/12 xl:w-9/12"}
                               labelClassname={"ml-5 text-white text-base"}
                               inputClassname={"bg-[#1E1E1E] hover:bg-[#242424] focus:bg-[#242424] opacity-90 pl-7 pt-6"}
@@ -847,10 +861,12 @@ export default function MainPage() {
               inputClassname={"bg-[#1E1E1E] hover:bg-[#242424] focus:bg-[#242424] pl-7 pt-6 rounded-full"}
               labelClassname={"ml-5 text-white text-base"}
               onValueChange={(text) => text.length < 1 ? setSearch("") : setSearchTemp(text)}
-              onSubmit={() => setSearch(searchTemp)}
+              onSubmit={() => {
+                setSearch(searchTemp); // Trigger the search
+              }}
             />
           </div>
-          <div className="w-4/5 sm:w-3/5 md:w-2/5 xl:w-1/6">
+          <div className="w-3/5 sm:w-2/5 md:w-2/5 xl:w-1/6">
             <RadioButtons
               title={"Tabs"}
               choices={["Most Liked", "Recent"]}
@@ -863,6 +879,9 @@ export default function MainPage() {
               }}
             />
           </div>
+          {loadingImages && <CircularProgress isIndeterminate 
+          color={"#FF9900"}
+          paddingTop={"6"} />}
           <div className="w-full designera-rounded-lg mt-10">
             <SampleCommunityGalleryImages images={images} />
           </div>

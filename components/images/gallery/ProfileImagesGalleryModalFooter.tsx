@@ -126,7 +126,7 @@ export const ProfileImagesGalleryModalFooter = ({
             onClick={() => themeAdd(photos[currentIndex]?.data?.id, photos[currentIndex]?.src, photos[currentIndex]?.data?.style)}
           />
           <IconButton
-            description="Item Search"
+            description="Where to Buy?"
             onClick={() => {
               if (!isLoggedIn) {
                 changeSection("login");

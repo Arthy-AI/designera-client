@@ -195,7 +195,7 @@ export const SampleRecentGalleryImages = ({ images }: SampleRecentGalleryImages)
                     onClick={() => themeAdd(photos[0]?.data?.id, photos[0]?.src, photos[0]?.data?.style)}
                   />
                   <IconButton
-                    description="Item Search"
+                    description="Where to Buy?"
                     onClick={() => {
                       if (!isLoggedIn) {
                         changeSection("login");
@@ -294,7 +294,7 @@ export const SampleRecentGalleryImages = ({ images }: SampleRecentGalleryImages)
                     onClick={() => themeAdd(photos[1]?.data?.id, photos[1]?.src, photos[1]?.data?.style)}
                   />
                   <IconButton
-                    description="Item Search"
+                    description="Where to Buy?"
                     onClick={() => {
                       if (!isLoggedIn) {
                         changeSection("login");
@@ -397,7 +397,7 @@ export const SampleRecentGalleryImages = ({ images }: SampleRecentGalleryImages)
                     onClick={() => themeAdd(photos[2]?.data?.id, photos[2]?.src, photos[2]?.data?.style)}
                   />
                   <IconButton
-                    description="Item Search"
+                    description="Where to Buy?"
                     onClick={() => {
                       if (!isLoggedIn) {
                         changeSection("login");
@@ -496,7 +496,7 @@ export const SampleRecentGalleryImages = ({ images }: SampleRecentGalleryImages)
                     onClick={() => themeAdd(photos[3]?.data?.id, photos[3]?.src, photos[3]?.data?.style)}
                   />
                   <IconButton
-                    description="Item Search"
+                    description="Where to Buy?"
                     onClick={() => {
                       if (!isLoggedIn) {
                         changeSection("login");
@@ -599,7 +599,7 @@ export const SampleRecentGalleryImages = ({ images }: SampleRecentGalleryImages)
                     onClick={() => themeAdd(photos[4]?.data?.id, photos[4]?.src, photos[4]?.data?.style)}
                   />
                   <IconButton
-                    description="Item Search"
+                    description="Where to Buy?"
                     onClick={() => {
                       if (!isLoggedIn) {
                         changeSection("login");
@@ -698,7 +698,7 @@ export const SampleRecentGalleryImages = ({ images }: SampleRecentGalleryImages)
                     onClick={() => themeAdd(photos[5]?.data?.id, photos[5]?.src, photos[5]?.data?.style)}
                   />
                   <IconButton
-                    description="Item Search"
+                    description="Where to Buy?"
                     onClick={() => {
                       if (!isLoggedIn) {
                         changeSection("login");
