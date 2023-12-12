@@ -27,6 +27,7 @@ import { useAxios } from "../../hooks/useAxios";
 import toast from 'react-hot-toast';
 import { NetworkConfig } from '../../hooks/useAxios';
 import useSubscription from "../../hooks/subscription/useSubscription";
+import loadImage from 'blueimp-load-image';
 
 interface Sidemenu extends ReactProps {
     isOpen: boolean,
@@ -154,38 +155,50 @@ export const Sidemenu = ({ children, isOpen, onClose, onOpen, ...props }: Sideme
                         paddingRight: settingsIsOpen ? 0 : "0.375rem"
                     }}>
                         <div className={"flex flex-col gap-4"}>
-                            <div id={"DrawerPersonalInfos"} className={"flex flex-col items-center gap-4"}>
-                                <input
-                                    onChange={(e) => {
-                                        // Get the image and upload it to the server using multipart/form-data
+    <div id={"DrawerPersonalInfos"} className={"flex flex-col items-center gap-4"}>
+        <input
+            onChange={(e) => {
+                if (!e.target.files || e.target.files.length === 0) {
+                    return;
+                }
 
-                                        if (!e.target.files || e.target.files.length === 0) {
-                                            return;
+                const file = e.target.files[0];
+
+                loadImage(
+                    file,
+                    (canvasOrImage) => {
+                        if (canvasOrImage instanceof HTMLCanvasElement) {
+                            canvasOrImage.toBlob((blob: Blob | null) => {
+                                if (blob) {
+                                    const processedFile = new File([blob], file.name, {
+                                        type: file.type,
+                                        lastModified: file.lastModified,
+                                    });
+
+                                    // Now proceed with the upload as before
+                                    const formData = new FormData();
+                                    formData.append('file', processedFile);
+                                    axios.put(NetworkConfig.API_URL + 'user/avatar', formData, {
+                                        headers: {
+                                            'Content-Type': 'multipart/form-data',
+                                            Authorization: `Bearer ${localStorage.getItem('token')}`
                                         }
-
-                                        const file = e.target.files[0]
-                                        const formData = new FormData()
-                                        formData.append('file', file)
-                                        axios.put(NetworkConfig.API_URL + 'user/avatar', formData, {
-                                            headers: {
-                                                'Content-Type': 'multipart/form-data',
-                                                Authorization: `Bearer ${localStorage.getItem('token')}`
-                                            }
-                                        }).then((res) => {
-                                            toast.success('Profile picture updated successfully');
-                                            setTimeout(() => {
-                                                router.reload()
-                                            }, 1000)
-                                        }).catch((err) => {
-                                            toast.error('An error occurred while updating your profile picture')
-                                            setTimeout(() => {
-                                                router.reload()
-                                            }
-                                                , 1000)
-                                        })
-                                    }}
-                                    type="file" id="avatar-file-input" style={{ display: 'none' }} />
-                                <div className={'rounded-full flex justify-center items-center overflow-hidden w-[116px] h-[116px] border-4 border-gray-600 hover:border-white cursor-pointer'}>
+                                    }).then((res) => {
+                                        toast.success('Profile picture updated successfully');
+                                        setTimeout(() => router.reload(), 1000);
+                                    }).catch((err) => {
+                                        toast.error('An error occurred while updating your profile picture');
+                                        setTimeout(() => router.reload(), 1000);
+                                    });
+                                }
+                            }, file.type);
+                        }
+                    },
+                    { orientation: true, canvas: true }
+                );
+            }}
+            type="file" id="avatar-file-input" style={{ display: 'none' }} />
+        <div className={'rounded-full flex justify-center items-center overflow-hidden w-[116px] h-[116px] border-4 border-gray-600 hover:border-white cursor-pointer'}>
                                     <ImageWithBlur
                                         onClick={() => {
                                             document.getElementById('avatar-file-input')?.click()

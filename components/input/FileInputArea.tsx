@@ -1,20 +1,42 @@
-import {ReactProps} from "../../interfaces/ReactProps";
-import React, {ReactElement} from "react";
+import React, { ReactElement } from "react";
+import loadImage from 'blueimp-load-image';
 
-interface FileInputArea extends ReactProps {
+interface FileInputAreaProps {
     body: ReactElement;
     id: string;
-    onValueChange?: (files?: FileList) => void;
+    onValueChange?: (file?: File) => void;
 }
 
-export const FileInputArea = ({ children, body, id, onValueChange, ...props }: FileInputArea) => {
+export const FileInputArea = ({ body, id, onValueChange }: FileInputAreaProps) => {
+    const processImage = (file: File) => {
+        loadImage(
+            file,
+            (eventOrImage: HTMLCanvasElement | Event | HTMLImageElement) => {
+                if (eventOrImage instanceof HTMLCanvasElement) {
+                    eventOrImage.toBlob((blob: Blob | null) => {
+                        if (blob && onValueChange) {
+                            onValueChange(new File([blob], file.name, { type: file.type }));
+                        }
+                    }, file.type);
+                }
+                // Optionally handle other cases (Event or HTMLImageElement) if needed
+            },
+            { orientation: true, canvas: true }
+        );
+    };
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files;
+        if (files && files[0]) {
+            processImage(files[0]);
+        }
+    };
+
     return (
         <div className="relative">
             <div
                 className="h-72 w-full bg-[#5E5E5E] designera-rounded designera-box-shadow flex items-center justify-center cursor-pointer overflow-hidden"
-                onClick={(e) => {
-                    document.getElementById(id)?.click();
-                }}
+                onClick={() => document.getElementById(id)?.click()}
             >
                 {body}
             </div>
@@ -24,10 +46,8 @@ export const FileInputArea = ({ children, body, id, onValueChange, ...props }: F
                 id={id}
                 multiple={false}
                 accept="image/png, image/jpeg"
-                onChange={(e) => {
-                    return onValueChange && onValueChange(e.target.files || undefined);
-                }}
+                onChange={handleFileChange}
             />
         </div>
-    )
-}
+    );
+};

@@ -230,16 +230,20 @@ export default function MainPage() {
     setViewerIsOpen(false);
   };
 
-  async function selectImage(files: FileList | undefined) {
-    if (files) {
-      if (!["png", "jfif", "jpg", "jpeg", "pjpeg"].includes(String(files[0]?.name?.split(".")?.pop()))) {
-        return toast.error("Please upload supported file types like png, jpeg etc.")
-      }
-      let photo = await GetBase64(files[0])
-      setSelectedImageObject(files[0])
-      setSelectedImage(photo)
+  async function selectImage(file: File | undefined) {
+    if (file) {
+      const fileExtension = file.name.split('.').pop()?.toLowerCase() || '';
+        
+        if (!["png", "jfif", "jpg", "jpeg", "pjpeg"].includes(fileExtension)) {
+            return toast.error("Please upload supported file types like png, jpeg etc.")
+        }
+
+        let photo = await GetBase64(file)
+        setSelectedImageObject(file)
+        setSelectedImage(photo)
     }
   }
+
 
   function switchImage(id: string, e: React.MouseEvent<HTMLDivElement>, index: number) {
     setSelectedResult({
@@ -390,7 +394,7 @@ export default function MainPage() {
                           </div>
                       }
 
-                      onValueChange={(files) => selectImage(files)}
+                      onValueChange={(file) => selectImage(file)}
                       id={"fileupload1"}
                     />
                     <Small className={"py-2"}>
@@ -879,9 +883,9 @@ export default function MainPage() {
               }}
             />
           </div>
-          {loadingImages && <CircularProgress isIndeterminate 
-          color={"#FF9900"}
-          paddingTop={"6"} />}
+          {loadingImages && <CircularProgress isIndeterminate
+            color={"#FF9900"}
+            paddingTop={"6"} />}
           <div className="w-full designera-rounded-lg mt-10">
             <SampleCommunityGalleryImages images={images} />
           </div>
