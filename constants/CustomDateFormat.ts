@@ -4,34 +4,24 @@
 
 import moment from 'moment';
 
-export function CustomDateFormat(this: { duration: number }) {
+export function CustomDateFormat(this: any) {
   const duration = moment.duration(this.duration);
 
-  const formatTimeUnit = (value: number, singular: string, plural: string): string => {
-    return value === 1 ? `1 [${singular}]` : `${value} [${plural}]`;
-  };
-
   if (duration.asSeconds() < 60) {
-    return formatTimeUnit(duration.seconds(), 'Second', 'Seconds');
+    return "s [Seconds]";
+  } else if (duration.asMinutes() < 10) {
+    return "m [Minutes], s [Seconds]";
   } else if (duration.asMinutes() < 60) {
-    let formatted = formatTimeUnit(duration.minutes(), 'Minute', 'Minutes');
-    if (duration.asMinutes() >= 10) {
-      formatted += `, ${formatTimeUnit(duration.seconds(), 'Second', 'Seconds')}`;
-    }
-    return formatted;
+    return "m [Minutes]";
+  } else if (duration.asHours() < 6) {
+    return "H [Hours], m [Minutes]";
   } else if (duration.asHours() < 24) {
-    let formatted = formatTimeUnit(duration.hours(), 'Hour', 'Hours');
-    if (duration.asHours() < 6) {
-      formatted += `, ${formatTimeUnit(duration.minutes(), 'Minute', 'Minutes')}`;
-    }
-    return formatted;
+    return "H [Hours]";
+  } else if (duration.asDays() < 7) {
+    return "d [Days]";
   } else if (duration.asDays() < 30) {
-    let formatted = formatTimeUnit(duration.days(), 'Day', 'Days');
-    if (duration.asDays() < 7) {
-      formatted += `, ${formatTimeUnit(duration.hours(), 'Hour', 'Hours')}`;
-    }
-    return formatted;
+    return "w [Weeks]";
   } else {
-    return formatTimeUnit(duration.months(), 'Month', 'Months');
+    return "M [Months]";
   }
 }
