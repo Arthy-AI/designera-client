@@ -93,7 +93,7 @@ export const GeneratedImageModalFooter = ({ innerProps, isModal, currentIndex }:
         <div className={"w-full flex justify-center"}>
           <div className={"w-full flex flex-row absolute bottom-5 justify-center"}>
             <AnimatedSimpleInput
-              labelText={"Give your design a name"}
+              labelText={"Name your design to publish"}
               className={"w-2/12 xl:w-3/12 alwaysOnTop"}
               labelClassname={"ml-5 text-white text-base"}
               inputClassname={"bg-[#1E1E1E] hover:bg-[#242424] focus:bg-[#242424] opacity-90 pl-7 pt-6"}
@@ -113,9 +113,6 @@ export const GeneratedImageModalFooter = ({ innerProps, isModal, currentIndex }:
               onClick={() => {
                 if (publishDescription.length >= 6 && publishDescription.length <= 50) {
                   publish();
-                } else {
-                  closeLB();
-                  subscriptionToggleModal(true);
                 }
               }}
               disabled={publishDescription.length < 6 || publishDescription.length > 50}

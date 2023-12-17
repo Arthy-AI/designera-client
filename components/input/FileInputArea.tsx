@@ -33,9 +33,9 @@ export const FileInputArea = ({ body, id, onValueChange }: FileInputAreaProps) =
     };
 
     return (
-        <div className="relative">
+        <div className="relative designera-rounded bg-[#5E5E5E] hover:bg-[#6E6E6E]">
             <div
-                className="h-72 w-full bg-[#5E5E5E] designera-rounded designera-box-shadow flex items-center justify-center cursor-pointer overflow-hidden"
+                className="h-72 w-full designera-rounded designera-box-shadow flex items-center justify-center cursor-pointer overflow-hidden"
                 onClick={() => document.getElementById(id)?.click()}
             >
                 {body}

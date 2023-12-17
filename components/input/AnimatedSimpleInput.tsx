@@ -21,20 +21,7 @@ export const AnimatedSimpleInput = ({ children, labelText, placeholderText, clas
   return (
     <div className={className}>
       <div className="relative">
-        <FontAwesomeIcon
-          icon={faMagnifyingGlass}
-          size="xs"
-          flip="horizontal"
-          style={{
-            width: 30,
-            height: 30,
-            position: "absolute",
-            color: "gray-500",
-            pointerEvents: "none",
-          }}
-          className="flex items-center right-5 top-3 text-gray-500"
-        />
-        <input type="text" id={labelText.toLowerCase().replaceAll(" ", "_")}
+                <input type="text" id={labelText.toLowerCase().replaceAll(" ", "_")}
           value={value}
           className={`Font-Medium block ${inputClassname?.includes("rounded") ? "" : "designera-rounded"} ${inputClassname?.includes("bg-") ? "" : "bg-[#3E3E3E]"} border border-[#6F6B6A] px-2.5 pb-2.5 pt-3 h-14 w-full text-sm text-gray-900 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-gray-500 focus:outline-none focus:ring-0 peer ${inputClassname}`}
           placeholder=" "

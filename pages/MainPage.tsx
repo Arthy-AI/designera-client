@@ -233,14 +233,14 @@ export default function MainPage() {
   async function selectImage(file: File | undefined) {
     if (file) {
       const fileExtension = file.name.split('.').pop()?.toLowerCase() || '';
-        
-        if (!["png", "jfif", "jpg", "jpeg", "pjpeg"].includes(fileExtension)) {
-            return toast.error("Please upload supported file types like png, jpeg etc.")
-        }
 
-        let photo = await GetBase64(file)
-        setSelectedImageObject(file)
-        setSelectedImage(photo)
+      if (!["png", "jfif", "jpg", "jpeg", "pjpeg"].includes(fileExtension)) {
+        return toast.error("Please upload supported file types like png, jpeg etc.")
+      }
+
+      let photo = await GetBase64(file)
+      setSelectedImageObject(file)
+      setSelectedImage(photo)
     }
   }
 
@@ -359,10 +359,10 @@ export default function MainPage() {
       <div className="h-4">
       </div>
       <Heading>
-        <div className={"hidden md:block mt-5 mb-0"}><span className="text-[#FFFFFF]">Design</span> your room
-          in seconds
-          <div>
-            with <span className="text-[#FF9900]">AI</span> Architect 🏠
+        <div className="flex flex-col justfy-between mt-5 mb-3 hidden md:block">
+          <div>🏠</div>
+          <div><span className="text-[#FFFFFF]">Create</span> <span className="text-[#FF9900]">Design Ideas</span>
+            <div><span className="text-[#FFFFFF]">Specialized</span> to Your Interior</div>
           </div>
         </div>
       </Heading>
