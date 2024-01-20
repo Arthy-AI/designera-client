@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleDown,
-  faHeart, faWandMagicSparkles, faEye, faMagnifyingGlassDollar
+  faBookmark, faWandMagicSparkles, faEye, faMagnifyingGlassDollar
 } from "@fortawesome/free-solid-svg-icons";
 import { IconButton } from "../../button/IconButton";
 import moment from "moment/moment";
@@ -112,8 +112,8 @@ export const RecentImagesGalleryModalFooter = ({ innerProps, isModal, currentInd
           <IconButton
             description={"Like"}
             icon={
-              <FontAwesomeIcon icon={faHeart} color={
-                userData?.upvotedImages?.findIndex((v: any) => v.id == photos[currentIndex]?.data?.id) == -1 ? "#AAA7A5" : "#FF6363"
+              <FontAwesomeIcon icon={faBookmark} color={
+                userData?.upvotedImages?.findIndex((v: any) => v.id == photos[currentIndex]?.data?.id) == -1 ? "#AAA7A5" : "#FFD966"
               } size={"xl"} style={{ width: 25, height: 25 }} />
             }
             onClick={() => {

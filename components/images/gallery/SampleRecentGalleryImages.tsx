@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { IconButton } from "../../button/IconButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faWandMagicSparkles, faMagnifyingGlassDollar } from "@fortawesome/free-solid-svg-icons";
+import { faBookmark, faWandMagicSparkles, faMagnifyingGlassDollar } from "@fortawesome/free-solid-svg-icons";
 import Carousel, { Modal, ModalGateway } from "react-images";
 import { ReactProps } from "../../../interfaces/ReactProps";
 import moment from "moment";
@@ -165,7 +165,7 @@ export const SampleRecentGalleryImages = ({ images }: SampleRecentGalleryImages)
                 </div>
                 <div className={"black-zone flex flex-col w-1/2 items-end gap-2"}>
                   <IconButton
-                    description="Like"
+                    description="Save"
                     onClick={() => {
                       if (!isLoggedIn) {
                         changeSection("login");
@@ -176,14 +176,14 @@ export const SampleRecentGalleryImages = ({ images }: SampleRecentGalleryImages)
                     }}
                     icon={
                       <FontAwesomeIcon
-                        icon={faHeart}
+                        icon={faBookmark}
                         color={
                           userData?.upvotedImages?.findIndex((v: any) => v.id == photos[0]?.data?.id) == -1
                             ? "#AAA7A5"
-                            : "#FF6363"
+                            : "#FFD966"
                         }
                         size="xl"
-                        style={{ width: 22, height: 22 }}
+                        style={{ width: 18, height: 18 }}
                       />
                     }
                   />
@@ -264,7 +264,7 @@ export const SampleRecentGalleryImages = ({ images }: SampleRecentGalleryImages)
                 </div>
                 <div className={"black-zone flex flex-col w-1/2 items-end gap-2"}>
                 <IconButton
-                    description="Like"
+                    description="Save"
                     onClick={() => {
                       if (!isLoggedIn) {
                         changeSection("login");
@@ -275,14 +275,14 @@ export const SampleRecentGalleryImages = ({ images }: SampleRecentGalleryImages)
                     }}
                     icon={
                       <FontAwesomeIcon
-                        icon={faHeart}
+                        icon={faBookmark}
                         color={
                           userData?.upvotedImages?.findIndex((v: any) => v.id == photos[1]?.data?.id) == -1
                             ? "#AAA7A5"
-                            : "#FF6363"
+                            : "#FFD966"
                         }
                         size="xl"
-                        style={{ width: 22, height: 22 }}
+                        style={{ width: 18, height: 18 }}
                       />
                     }
                   />
@@ -367,7 +367,7 @@ export const SampleRecentGalleryImages = ({ images }: SampleRecentGalleryImages)
                 </div>
                 <div className={"black-zone flex flex-col w-1/2 items-end gap-2"}>
                 <IconButton
-                    description="Like"
+                    description="Save"
                     onClick={() => {
                       if (!isLoggedIn) {
                         changeSection("login");
@@ -378,14 +378,14 @@ export const SampleRecentGalleryImages = ({ images }: SampleRecentGalleryImages)
                     }}
                     icon={
                       <FontAwesomeIcon
-                        icon={faHeart}
+                        icon={faBookmark}
                         color={
                           userData?.upvotedImages?.findIndex((v: any) => v.id == photos[2]?.data?.id) == -1
                             ? "#AAA7A5"
-                            : "#FF6363"
+                            : "#FFD966"
                         }
                         size="xl"
-                        style={{ width: 22, height: 22 }}
+                        style={{ width: 18, height: 18 }}
                       />
                     }
                   />
@@ -466,7 +466,7 @@ export const SampleRecentGalleryImages = ({ images }: SampleRecentGalleryImages)
                 </div>
                 <div className={"black-zone flex flex-col w-1/2 items-end gap-2"}>
                 <IconButton
-                    description="Like"
+                    description="Save"
                     onClick={() => {
                       if (!isLoggedIn) {
                         changeSection("login");
@@ -477,14 +477,14 @@ export const SampleRecentGalleryImages = ({ images }: SampleRecentGalleryImages)
                     }}
                     icon={
                       <FontAwesomeIcon
-                        icon={faHeart}
+                        icon={faBookmark}
                         color={
                           userData?.upvotedImages?.findIndex((v: any) => v.id == photos[3]?.data?.id) == -1
                             ? "#AAA7A5"
-                            : "#FF6363"
+                            : "#FFD966"
                         }
                         size="xl"
-                        style={{ width: 22, height: 22 }}
+                        style={{ width: 18, height: 18 }}
                       />
                     }
                   />
@@ -569,7 +569,7 @@ export const SampleRecentGalleryImages = ({ images }: SampleRecentGalleryImages)
                 </div>
                 <div className={"black-zone flex flex-col w-1/2 items-end gap-2"}>
                 <IconButton
-                    description="Like"
+                    description="Save"
                     onClick={() => {
                       if (!isLoggedIn) {
                         changeSection("login");
@@ -580,14 +580,14 @@ export const SampleRecentGalleryImages = ({ images }: SampleRecentGalleryImages)
                     }}
                     icon={
                       <FontAwesomeIcon
-                        icon={faHeart}
+                        icon={faBookmark}
                         color={
                           userData?.upvotedImages?.findIndex((v: any) => v.id == photos[4]?.data?.id) == -1
                             ? "#AAA7A5"
-                            : "#FF6363"
+                            : "#FFD966"
                         }
                         size="xl"
-                        style={{ width: 22, height: 22 }}
+                        style={{ width: 18, height: 18 }}
                       />
                     }
                   />
@@ -668,7 +668,7 @@ export const SampleRecentGalleryImages = ({ images }: SampleRecentGalleryImages)
                 </div>
                 <div className={"black-zone flex flex-col w-1/2 items-end gap-2"}>
                 <IconButton
-                    description="Like"
+                    description="Save"
                     onClick={() => {
                       if (!isLoggedIn) {
                         changeSection("login");
@@ -679,14 +679,14 @@ export const SampleRecentGalleryImages = ({ images }: SampleRecentGalleryImages)
                     }}
                     icon={
                       <FontAwesomeIcon
-                        icon={faHeart}
+                        icon={faBookmark}
                         color={
                           userData?.upvotedImages?.findIndex((v: any) => v.id == photos[5]?.data?.id) == -1
                             ? "#AAA7A5"
-                            : "#FF6363"
+                            : "#FFD966"
                         }
                         size="xl"
-                        style={{ width: 22, height: 22 }}
+                        style={{ width: 18, height: 18 }}
                       />
                     }
                   />

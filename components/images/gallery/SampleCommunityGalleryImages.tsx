@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import Gallery from "react-photo-gallery";
 import { IconButton } from "../../button/IconButton";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMagnifyingGlassDollar, faHeart, faWandMagicSparkles } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlassDollar, faBookmark, faWandMagicSparkles } from "@fortawesome/free-solid-svg-icons";
 import Carousel, { Modal, ModalGateway } from "react-images";
 import { GalleryModalFooter } from "./GalleryModalFooter";
 import { ReactProps } from "../../../interfaces/ReactProps";
@@ -200,7 +200,7 @@ export const SampleCommunityGalleryImages = ({ images }: SampleCommunityGalleryI
                                 </div>
                                 <div className={"black-zone flex flex-col w-1/2 items-end gap-0.5 md:gap-2"}>
                                     <IconButton
-                                        description="Like"
+                                        description="Save"
                                         onClick={() => {
                                             if (!isLoggedIn) {
                                                 changeSection("login");
@@ -211,14 +211,14 @@ export const SampleCommunityGalleryImages = ({ images }: SampleCommunityGalleryI
                                         }}
                                         icon={
                                             <FontAwesomeIcon
-                                                icon={faHeart}
+                                                icon={faBookmark}
                                                 color={
                                                     userData?.upvotedImages?.findIndex((v: any) => v.id == photos[index]?.data?.id) == -1
                                                         ? "#AAA7A5"
-                                                        : "#FF6363"
+                                                        : "#FFD966"
                                                 }
                                                 size="xl"
-                                                style={{ width: 22, height: 22 }}
+                                                style={{ width: 18, height: 18 }}
                                             />
                                         }
                                     />
@@ -251,7 +251,6 @@ export const SampleCommunityGalleryImages = ({ images }: SampleCommunityGalleryI
                                         <div className="sticky text-white z-10 text-right flex flex-col text-xs leading-3">
                                             <small style={{ fontSize: '1.1em', textTransform: 'capitalize' }}>{photos[index].data.title}</small>
                                             <small className="font-thin mt-1" style={{ textTransform: 'capitalize' }}>By {photos[index].data.username}</small>
-                                            <small className="Font-Light font-thin text-stone-400">{photos[index].data.likes} likes</small>
                                         </div>
                                         <div className={"black-zone absolute w-60 h-32 bottom-0 right-0 z-0"}
                                             style={{

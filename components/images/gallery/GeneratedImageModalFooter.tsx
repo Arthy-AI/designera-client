@@ -4,7 +4,7 @@ import {
   faArrowRotateLeft,
   faArrowUpRightFromSquare, faCopy,
   faCircleDown,
-  faHeart,
+  faBookmark,
   faPaperPlane, faWandMagicSparkles
 } from "@fortawesome/free-solid-svg-icons";
 import { IconButton } from "../../button/IconButton";
@@ -137,8 +137,8 @@ export const GeneratedImageModalFooter = ({ innerProps, isModal, currentIndex }:
         <IconButton
           description={"Like"}
           icon={
-            <FontAwesomeIcon icon={faHeart} color={
-              userData?.upvotedImages?.findIndex((v: any) => v.id == photos[currentIndex].id) == -1 ? "#AAA7A5" : "#FF6363"
+            <FontAwesomeIcon icon={faBookmark} color={
+              userData?.upvotedImages?.findIndex((v: any) => v.id == photos[currentIndex].id) == -1 ? "#AAA7A5" : "#FFD966"
             } size={"xl"} style={{ width: 25, height: 25 }} />
           }
           onClick={() => vote(true)}

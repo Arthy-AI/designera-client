@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faArrowLeft,
     faCircleDown,
-    faHeart,
+    faBookmark,
     faSearch,
     faWandMagicSparkles,
     faTag

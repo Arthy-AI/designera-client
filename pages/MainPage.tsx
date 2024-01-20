@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCopy,
   faCircleDown,
-  faHeart,
+  faBookmark,
   faImage,
   faPaperPlane,
   faPlus, faWandMagicSparkles,
@@ -685,7 +685,7 @@ export default function MainPage() {
                                     ForceDownload(selectedResult.url, "designera-" + selectedResult.id)
                                   }} />
                               <IconButton
-                                description="Like"
+                                description="Save"
                                 onClick={() => {
                                   if (!isLoggedIn) {
                                     changeSection("login");
@@ -696,14 +696,14 @@ export default function MainPage() {
                                 }}
                                 icon={
                                   <FontAwesomeIcon
-                                    icon={faHeart}
+                                    icon={faBookmark}
                                     color={
                                       userData?.upvotedImages?.findIndex((v: any) => v.id == selectedResult.id) == -1
                                         ? "#AAA7A5"
-                                        : "#FF6363"
+                                        : "#FFD966"
                                     }
                                     size="xl"
-                                    style={{ width: 22, height: 22 }}
+                                    style={{ width: 18, height: 18 }}
                                   />
                                 }
                               />
