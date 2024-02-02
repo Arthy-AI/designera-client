@@ -38,13 +38,13 @@ export const SampleCommunityGalleryImages = ({ images }: SampleCommunityGalleryI
 
     const calculateColumns = (containerWidth: number) => {
         if (containerWidth < 600) {
-            return 1;
-        } else if (containerWidth < 900) {
             return 2;
+        } else if (containerWidth < 900) {
+            return 3;
         } else if (containerWidth < 1200) {
             return 4;
         } else {
-            return 5;
+            return 6;
         }
     };
 
@@ -66,7 +66,7 @@ export const SampleCommunityGalleryImages = ({ images }: SampleCommunityGalleryI
                     height: photo.height,
                     data: {
                         id: image.id,
-                        title: image.description,
+                        title: image.description || "",
                         username: image.user.firstName + ' ' + image.user.lastName,
                         createdAt: image.createdAt,
                         userAvatar: image.user.id,
@@ -137,7 +137,7 @@ export const SampleCommunityGalleryImages = ({ images }: SampleCommunityGalleryI
             upvoteImageUpdate(images[index], vote ? "unvote" : "vote")
         }
     }
-    
+
     function themeAdd(id: string, url: string, style: string) {
         if (themes.findIndex((v) => v.id == id) == -1) {
             imagesGlobalStore.dispatch(imagesGlobal.actions.addTheme({
@@ -156,7 +156,7 @@ export const SampleCommunityGalleryImages = ({ images }: SampleCommunityGalleryI
     // @ts-ignore
     return (
         <div>
-            <Gallery photos={photos} direction={"column"} margin={5} columns={calculateColumns}
+            <Gallery photos={photos} direction={"column"} margin={2} columns={calculateColumns}
                 renderImage={({ index, left, top, photo }) => {
                     return photo.src ? (
                         <div key={index}
@@ -249,8 +249,9 @@ export const SampleCommunityGalleryImages = ({ images }: SampleCommunityGalleryI
                                     />
                                     <div className={"absolute right-0 bottom-0 pr-2 pb-2"}>
                                         <div className="sticky text-white z-10 text-right flex flex-col text-xs leading-3">
-                                            <small style={{ fontSize: '1.1em', textTransform: 'capitalize' }}>{photos[index].data.title}</small>
-                                            <small className="font-thin mt-1" style={{ textTransform: 'capitalize' }}>By {photos[index].data.username}</small>
+                                            {/* Handle images without a title gracefully */}
+                                            <small style={{ fontSize: '1.1em', textTransform: 'capitalize' }}>{photos[index]?.data?.title || 'Untitled'}</small>
+                                            <small className="font-thin mt-1" style={{ textTransform: 'capitalize' }}>By {photos[index]?.data?.username}</small>
                                         </div>
                                         <div className={"black-zone absolute w-60 h-32 bottom-0 right-0 z-0"}
                                             style={{

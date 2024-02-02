@@ -50,7 +50,7 @@ import { UseAsThemeFlatLogo } from "../assets/svg/UseAsThemeFlatLogo";
 import { SubscriptionModal } from "../components/subscription/SubscriptionModal";
 import useSubscription from "../hooks/subscription/useSubscription";
 import { Box, CircularProgress } from "@chakra-ui/react";
-import { Slider, SliderTrack, SliderFilledTrack, SliderThumb, SliderMark } from "@chakra-ui/react";
+import { Slider, SliderTrack, SliderFilledTrack, SliderThumb, SliderMark, SkeletonCircle, Stack } from "@chakra-ui/react";
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
 import { useRouter } from "next/router";
 
@@ -367,7 +367,7 @@ export default function MainPage() {
         </div>
       </Heading>
       <div className="flex justify-center items-center">
-        <div className="w-4/5 flex flex-col items-center">
+        <div className="w-4/5 w-4k flex flex-col items-center">
           <div className="w-full flex">
             <StandardLayout>
               <SideMenu>
@@ -379,9 +379,9 @@ export default function MainPage() {
                       {
                         selectedImage ?
                           <img src={selectedImage} alt={"Chosen Image"}
-                            style={{ objectFit: "contain" }}
+                            style={{ objectFit: "contain", height: "calc(100vh / 4)"}}
                             width={"480"} /> :
-                          <div className={"flex flex-col items-center gap-2"}>
+                          <div className={"flex flex-col items-center justify-center gap-2"} style={{ height: "calc(100vh / 4)"}}>
                             <FontAwesomeIcon icon={faImage} style={{ height: 30, width: 30 }}
                               color={"#fff"} />
                             <span
@@ -849,7 +849,7 @@ export default function MainPage() {
         </div>
       </div>
 
-      <div className="flex justify-center min-h-screen">
+      <div className="flex justify-center min-h-screen flex-col items-center">
         <div className="w-4/5 flex flex-col items-center">
           <Heading>
             <div className="mt-4 mb-3">
@@ -870,7 +870,7 @@ export default function MainPage() {
               }}
             />
           </div>
-          <div className="w-3/5 sm:w-2/5 md:w-2/5 xl:w-1/6">
+          {/*<div className="w-3/5 sm:w-2/5 md:w-2/5 xl:w-1/6">
             <RadioButtons
               title={"Tabs"}
               choices={["Most Liked", "Recent"]}
@@ -882,13 +882,18 @@ export default function MainPage() {
                 setGalleryOrderBy(index);
               }}
             />
-          </div>
-          {loadingImages && <CircularProgress isIndeterminate
-            color={"#FF9900"}
-            paddingTop={"6"} />}
+            </div>*/}
+        </div>
+        <div className="w-full pr-6 pl-6 flex flex-col items-center">
           <div className="w-full designera-rounded-lg mt-10">
             <SampleCommunityGalleryImages images={images} />
           </div>
+          {loadingImages &&
+            <Stack direction={['row']} className="pb-20 pt-5">
+              <SkeletonCircle color={"#FF9900"} paddingTop={"0"} size={"3"} />
+              <SkeletonCircle color={"#FF9900"} paddingTop={"0"} size={"3"} />
+              <SkeletonCircle color={"#FF9900"} paddingTop={"0"} size={"3"} />
+            </Stack>}
           {/*<div
                         className="h-15 pt-2 w-full designera-rounded-lg flex justify-center items-center bg-gray-700 block text-white font-bold designera-box-shadow cursor-pointer mb-10"
                         onClick={() => {

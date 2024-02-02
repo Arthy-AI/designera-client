@@ -246,21 +246,21 @@ export const Sidemenu = ({ children, isOpen, onClose, onOpen, ...props }: Sideme
                                                 onClick={() => {
                                                     changeTab("Images")
                                                 }}>
-                                                Images
+                                                Generated
                                             </span>
                                             <span className={"cursor-pointer font-semibold"}
                                                 style={{ color: profileGalleryTab.tab == "Likes" ? "white" : "#333333" }}
                                                 onClick={() => {
                                                     changeTab("Likes")
                                                 }}>
-                                                Likes
+                                                Saved
                                             </span>
                                             <span className={"cursor-pointer font-semibold"}
                                                 style={{ color: profileGalleryTab.tab == "Publishes" ? "white" : "#333333" }}
                                                 onClick={() => {
                                                     changeTab("Publishes")
                                                 }}>
-                                                Publishes
+                                                Published
                                             </span>
                                         </div>
                                         <hr className={"bg-stone-400 border-none h-px"} />

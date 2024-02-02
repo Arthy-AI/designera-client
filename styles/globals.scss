@@ -268,7 +268,11 @@ button:disabled {
 }
 
 
-
+@media (min-width: 3840px) {
+  .w-4k {
+    width: 60%;
+  }
+}
 
 
 

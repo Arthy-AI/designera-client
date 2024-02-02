@@ -115,7 +115,7 @@ export const GalleryModalFooter = ({ innerProps, isModal, currentIndex }: Dynami
             icon={
               <FontAwesomeIcon icon={faBookmark} color={
                 userData?.upvotedImages?.findIndex((v: any) => v.id == photos[currentIndex]?.data?.id) == -1 ? "#AAA7A5" : "#FFD966"
-              } size={"xl"} style={{ width: 25, height: 25 }} />
+              } size={"xl"} style={{ width: 18, height: 18 }} />
             }
             onClick={() => {
               vote(true)
