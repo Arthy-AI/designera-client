@@ -43,8 +43,12 @@ export const SampleCommunityGalleryImages = ({ images }: SampleCommunityGalleryI
             return 3;
         } else if (containerWidth < 1200) {
             return 4;
-        } else {
+        } else if (containerWidth < 1600) {
+            return 5;
+        } else if (containerWidth < 2000) {
             return 6;
+        } else {
+            return 8;
         }
     };
 
