@@ -73,7 +73,7 @@ export default function MainPage() {
   const [selectedImage, setSelectedImage] = useState("");
   const [selectedImageObject, setSelectedImageObject] = useState({} as DynamicObject);
   const [publisheds, setPublisheds] = useState([] as String[]);
-  const [imageDependency, setImageDependency] = useState(0.55);
+  const [imageDependency, setImageDependency] = useState(0.6);
   const [blockPagination, setBlockPagination] = useState(false);
   const debouncedSearch = debounce((query) => setSearch(query), 500);
 
@@ -90,7 +90,7 @@ export default function MainPage() {
   const [paginationData, setPaginationData] = useState({
     query: null,
     pageIndex: 0,
-    pageSize: 20,
+    pageSize: 12,
     orderBy: galleryOrderBy == 0 ? 'upvoteCount' : 'createdAt'
   });
 
@@ -132,7 +132,7 @@ export default function MainPage() {
 
         // Fetch main images based on pagination data
         let data = await GET("image/filter", paginationData);
-        if (data.items.length < 20) {
+        if (data.items.length < 12) {
           setBlockPagination(true);
         }
 
@@ -594,7 +594,7 @@ export default function MainPage() {
                     {isLoggedIn ?
                       (
                         <div className={"flex flex-row gap-2"}>
-                          {(!userData?.plan && userData?.credits && userData.credits <= 10) && (
+                          {(!userData?.plan && userData?.credits && userData.credits <= 9) && (
                             <div className="flex flex-row bg-stone-700 text-white designera-rounded designera-box-shadow items-center justify-center gap-2 p-2 h-12 w-fit">
                               <div className="flex justify-center items-center font-bold text-4xl select-none">
                                 <span className="h-max">
@@ -654,7 +654,7 @@ export default function MainPage() {
                 <div className={"hidden md:block"}>
                   <SubHeading>Recent Designs</SubHeading>
                 </div>
-                <div className={"block mt-2 md:hidden"}>
+                <div className={"block mt-2 hidden"}>
                   <SubHeading>Generated Image</SubHeading>
                 </div>
                 {resulted ?
@@ -788,7 +788,7 @@ export default function MainPage() {
                               onClick={() => {
                                 publish()
                               }}
-                              disabled={publishDescription.length < 6 || publishDescription.length > 50}
+                              disabled={publishDescription.length < 3 || publishDescription.length > 50}
                               className="xl:w-1/12 block text-stone-400 p-2 bg-[#1E1E1E] hover:bg-[#242424] focus:bg-[#242424] opacity-90 border border-[#6F6B6A] font-semibold hover:text-white designera-rounded ml-2 flex items-center justify-center"
                               style={{ height: 56, width: 56 }}
                             >
@@ -837,10 +837,6 @@ export default function MainPage() {
                       <div className={"h-full hidden md:block"}>
                         <SampleRecentGalleryImages images={recentImages} />
                       </div>
-                      <div
-                        className={"w-full h-96 flex items-center justify-center font-semibold bg-stone-600 designera-rounded text-white md:hidden"}>
-                        Waiting for the prompt...
-                      </div>
                     </div>
                 }
               </Content>
@@ -849,7 +845,7 @@ export default function MainPage() {
         </div>
       </div>
 
-      <div className="flex justify-center min-h-screen flex-col items-center">
+      <div className="flex min-h-screen flex-col items-center">
         <div className="w-4/5 flex flex-col items-center">
           <Heading>
             <div className="mt-4 mb-3">
@@ -890,9 +886,9 @@ export default function MainPage() {
           </div>
           {loadingImages &&
             <Stack direction={['row']} className="pb-20 pt-5">
-              <SkeletonCircle color={"#FF9900"} paddingTop={"0"} size={"3"} />
-              <SkeletonCircle color={"#FF9900"} paddingTop={"0"} size={"3"} />
-              <SkeletonCircle color={"#FF9900"} paddingTop={"0"} size={"3"} />
+              <SkeletonCircle color={"#FF9900"} paddingTop={"0"} size={"3"} transitionDelay={"0"} />
+              <SkeletonCircle color={"#FF9900"} paddingTop={"0"} size={"3"} transitionDelay={"100"}/>
+              <SkeletonCircle color={"#FF9900"} paddingTop={"0"} size={"3"} transitionDelay={"200"}/>
             </Stack>}
           {/*<div
                         className="h-15 pt-2 w-full designera-rounded-lg flex justify-center items-center bg-gray-700 block text-white font-bold designera-box-shadow cursor-pointer mb-10"

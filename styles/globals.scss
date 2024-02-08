@@ -25,14 +25,16 @@ body {
 
 #MainPage {
   background-image: url("../assets/images/background.png") !important;
-  background-size: cover !important;
-  background-repeat: repeat !important;
+  background-size: 100% auto !important; /* Cover the width of the screen */
+  background-repeat: repeat-y !important; /* Prevent repeating */
+  background-position: top center !important; /* Center the background image */
 }
 
 #CheckoutPage {
   background-image: url("../assets/images/background2.png") !important;
-  background-size: cover !important;
-  background-repeat: repeat !important;
+  background-size: 100% auto !important; /* Cover the width of the screen */
+  background-repeat: repeat !important; /* Prevent repeating */
+  background-position: top center !important; /* Center the background image */
 }
 
 .separator {

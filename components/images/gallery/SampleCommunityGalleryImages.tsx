@@ -232,25 +232,6 @@ export const SampleCommunityGalleryImages = ({ images }: SampleCommunityGalleryI
                                         style={{ width: 25, height: 25 }} />}
                                         onClick={() => themeAdd(photos[index]?.data?.id, photos[index]?.src, photos[index]?.data?.style)}
                                     />
-                                    <IconButton
-                                        description="Where to Buy?"
-                                        onClick={() => {
-                                            if (!isLoggedIn) {
-                                                changeSection("login");
-                                                toggleModal(true);
-                                            } else {
-                                                router.push(`/item-search`);
-                                            }
-                                        }}
-                                        icon={
-                                            <FontAwesomeIcon
-                                                icon={faMagnifyingGlassDollar}
-                                                color="#AAA7A5"
-                                                size="xl"
-                                                style={{ width: 25, height: 25 }}
-                                            />
-                                        }
-                                    />
                                     <div className={"absolute right-0 bottom-0 pr-2 pb-2"}>
                                         <div className="sticky text-white z-10 text-right flex flex-col text-xs leading-3">
                                             {/* Handle images without a title gracefully */}
