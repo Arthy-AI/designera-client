@@ -652,7 +652,7 @@ export default function MainPage() {
               </SideMenu>
               <Content>
                 <div className={"hidden md:block"}>
-                  <SubHeading>Recent Designs</SubHeading>
+                  <SubHeading>Top Designs</SubHeading>
                 </div>
                 <div className={"block mt-2 hidden"}>
                   <SubHeading>Generated Image</SubHeading>
