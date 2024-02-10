@@ -69,6 +69,21 @@ export default function VerifyEmail() {
         <link rel="shortcut icon" href="/assets/site/favicon.ico"/>
         <meta name="theme-color" content="#FF9900"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+        <script
+                async
+                src="https://www.googletagmanager.com/gtag/js?id=G-EFF12QCM8Q">
+              </script>
+              <script
+                dangerouslySetInnerHTML={{
+                  __html: `
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+
+                    gtag('config', 'G-EFF12QCM8Q');
+                  `,
+                }}
+              />
       </Head>
 
       <div className={"flex flex-col justify-center items-center min-h-screen"}>

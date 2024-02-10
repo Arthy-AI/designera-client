@@ -20,10 +20,27 @@ export default function Main() {
               <link rel="shortcut icon" href="/assets/site/favicon.ico"/>
               <meta name="theme-color" content="#FF9900"/>
               <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+              {/* Google Analytics 4 (GA4) script */}
+              <script
+                async
+                src="https://www.googletagmanager.com/gtag/js?id=G-EFF12QCM8Q">
+              </script>
+              <script
+                dangerouslySetInnerHTML={{
+                  __html: `
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+
+                    gtag('config', 'G-EFF12QCM8Q');
+                  `,
+                }}
+              />
               <script
                 async
                 src="https://js.stripe.com/v3/pricing-table.js">
               </script>
+              
             </Head>
             <MainPage/>
         </div>
