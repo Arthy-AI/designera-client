@@ -175,17 +175,24 @@ export const SampleCommunityGalleryImages = ({ images }: SampleCommunityGalleryI
                                 left: left,
                                 top: top,
                                 borderRadius: "10px",
-                                overflow: "hidden",
+                                overflow: "hidden"
                             }}
                         >
-                            {/* @ts-ignore */}
-                            <img
-                                alt={"Gallery Image"}
-                                {...photo}
-                            />
+                            {/* Animation wrapper */}
+                            <div style={{
+                                animation: `fadeInAnimation 0.1s ${index * 0.1}s ease-out forwards`,
+                                opacity: 0 // Start with opacity 0 to ensure fade-in effect
+                            }}>
+                                {/* @ts-ignore */}
+                                <img
+                                    alt={"Gallery Image"}
+                                    {...photo}
+                                />
+                            </div>
                             <div
                                 className={"top-0 absolute w-full h-full p-2 flex flex-row opacity-0 hover:opacity-100 transition duration-300 ease-in-out"}
-                                style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}>
+                                style={{
+                                    backgroundColor: "rgba(0, 0, 0, 0.2)"}}>
                                 <div className={"black-zone flex flex-col w-1/2 items-start"}>
                                     <IconButton
                                         icon={
