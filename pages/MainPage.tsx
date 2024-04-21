@@ -885,7 +885,7 @@ export default function MainPage() {
             <SampleCommunityGalleryImages images={images} />
           </div>
           {loadingImages &&
-            <Stack direction={['row']} className="pb-20 pt-5">
+            <Stack direction={['row']} className="pt-5 h-20">
               <SkeletonCircle color={"#FF9900"} paddingTop={"0"} size={"3"} transitionDelay={"0"} />
               <SkeletonCircle color={"#FF9900"} paddingTop={"0"} size={"3"} transitionDelay={"100"}/>
               <SkeletonCircle color={"#FF9900"} paddingTop={"0"} size={"3"} transitionDelay={"200"}/>
