@@ -117,11 +117,6 @@ input::placeholder {
   border-radius: 10px;
 }
 
-.fade-in {
-  opacity: 0;
-  animation: fadeInAnimation 0.1s ease-out forwards;
-}
-
 @keyframes fadeInAnimation {
   from { opacity: 0; }
   to { opacity: 1; }

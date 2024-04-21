@@ -884,12 +884,15 @@ export default function MainPage() {
           <div className="w-full designera-rounded-lg mt-10">
             <SampleCommunityGalleryImages images={images} />
           </div>
+          <div
+          className="p-5 h-20">
           {loadingImages &&
-            <Stack direction={['row']} className="pt-5 h-20">
+            <Stack direction={['row']}>
               <SkeletonCircle color={"#FF9900"} paddingTop={"0"} size={"3"} transitionDelay={"0"} />
               <SkeletonCircle color={"#FF9900"} paddingTop={"0"} size={"3"} transitionDelay={"100"}/>
               <SkeletonCircle color={"#FF9900"} paddingTop={"0"} size={"3"} transitionDelay={"200"}/>
             </Stack>}
+          </div>
           {/*<div
                         className="h-15 pt-2 w-full designera-rounded-lg flex justify-center items-center bg-gray-700 block text-white font-bold designera-box-shadow cursor-pointer mb-10"
                         onClick={() => {
