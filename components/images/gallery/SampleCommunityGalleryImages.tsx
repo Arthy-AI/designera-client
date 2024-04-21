@@ -164,7 +164,7 @@ export const SampleCommunityGalleryImages = ({ images }: SampleCommunityGalleryI
             <Gallery photos={photos} direction={"column"} margin={2} columns={calculateColumns}
                 renderImage={({ index, left, top, photo }) => {
                     return photo.src ? (
-                        
+
                         <div key={index}
                             onClick={(e: any) => {
                                 if ([...e.target.classList].includes("black-zone")) return openLightbox(e, {
@@ -181,26 +181,27 @@ export const SampleCommunityGalleryImages = ({ images }: SampleCommunityGalleryI
                             }}
                         >
                             {/* Animation wrapper */}
-<div style={{
-    animation: `fadeInAnimation 0.1s ${index * 0.05}s ease-out forwards`,
-    opacity: 0 // Start with opacity 0 to ensure fade-in effect
-}}>
-    {/* @ts-ignore */}
-    <Image
-        src={photo.src} // Dynamically provided URL
-        alt={"Gallery Image"}
-        width={photo.width} // Correctly assign width from your photo object
-        height={photo.height} // Correctly assign height from your photo object
-        layout="none" // Adjust layout as necessary, could be 'fill' depending on your CSS setup
-        placeholder="blur" // Optionally use a small image base64 URL for blur effect
-        blurDataURL="/path/to/low-res-version.jpg" // Provide a low-res placeholder
-        priority={index < 3} // Prioritize loading first 3 images
-    />
-</div>
+                            <div style={{
+                                animation: `fadeInAnimation 0.1s ${index * 0.05}s ease-out forwards`,
+                                opacity: 0 // Start with opacity 0 to ensure fade-in effect
+                            }}>
+                                {/* @ts-ignore */}
+                                <Image
+                                    src={photo.src} // Dynamically provided URL
+                                    alt={"Gallery Image"}
+                                    width={photo.width} // Correctly assign width from your photo object
+                                    height={photo.height} // Correctly assign height from your photo object
+                                    layout="none" // Adjust layout as necessary, could be 'fill' depending on your CSS setup
+                                    placeholder="blur" // Optionally use a small image base64 URL for blur effect
+                                    blurDataURL="/path/to/low-res-version.jpg" // Provide a low-res placeholder
+                                    priority={index < 3} // Prioritize loading first 3 images
+                                />
+                            </div>
                             <div
                                 className={"top-0 absolute w-full h-full p-2 flex flex-row opacity-0 hover:opacity-100 transition duration-300 ease-in-out"}
                                 style={{
-                                    backgroundColor: "rgba(0, 0, 0, 0.2)"}}>
+                                    backgroundColor: "rgba(0, 0, 0, 0.2)"
+                                }}>
                                 <div className={"black-zone flex flex-col w-1/2 items-start"}>
                                     <IconButton
                                         icon={

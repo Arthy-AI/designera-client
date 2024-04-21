@@ -37,6 +37,12 @@ body {
   background-position: top center !important; /* Center the background image */
 }
 
+.headblur {
+  background-color: rgba(43, 43, 43, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* for Safari */
+}
+
 .separator {
   display: flex;
   align-items: center;

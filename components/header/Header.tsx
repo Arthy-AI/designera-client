@@ -23,8 +23,7 @@ export const Header = ({children, ...props}: ReactProps) => {
   return (
     <div
       id="Header"
-      className="h-10 w-full fixed top-0 flex items-center pl-3 pr-4 designera-box-shadow z-50"
-      style={{ backgroundColor: "rgba(43, 43, 43, 0.9)", backdropFilter: "blur(10px)" }}>
+      className="h-10 w-full fixed top-0 flex items-center pl-3 pr-4 designera-box-shadow z-50 headblur">
       <div id={"HeaderContainer"} className={"w-full flex justify-between items-center"}>
         <div className={"ml-2 mt-1 cursor-pointer"} id={"HeaderLogoContainer"} style={{height: "fit-content"}} onClick={() => router.push("/")}>
           <DesigneraTitleLarge/>
