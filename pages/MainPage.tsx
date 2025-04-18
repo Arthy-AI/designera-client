@@ -363,6 +363,7 @@ export default function MainPage() {
           <div>🏠</div>
           <div><span className="text-[#FFFFFF]">Create</span> <span className="text-[#FF9900]">Design Ideas</span>
             <div><span className="text-[#FFFFFF]">Specialized</span> to Your Interior</div>
+            <div> by <span className="font-extralight text-[#FF9900]"> OSN Global </span> </div>
           </div>
         </div>
       </Heading>
@@ -379,9 +380,9 @@ export default function MainPage() {
                       {
                         selectedImage ?
                           <img src={selectedImage} alt={"Chosen Image"}
-                            style={{ objectFit: "contain", height: "calc(100vh / 4)"}}
+                            style={{ objectFit: "contain", height: "calc(100vh / 4)" }}
                             width={"480"} /> :
-                          <div className={"flex flex-col items-center justify-center gap-2"} style={{ height: "calc(100vh / 4)"}}>
+                          <div className={"flex flex-col items-center justify-center gap-2"} style={{ height: "calc(100vh / 4)" }}>
                             <FontAwesomeIcon icon={faImage} style={{ height: 30, width: 30 }}
                               color={"#fff"} />
                             <span
@@ -638,7 +639,7 @@ export default function MainPage() {
                     }
                   </div>
                   <small className="Font-Light text-gray-400 text-center leading-3 pt-2 italic" style={{ fontSize: "0.70rem" }}>
-                    Check our{' '}
+                    An OSN Global subsidiary. Check our{' '}
                     <small className="hover:text-[#c7c7c7] cursor-pointer" onClick={() => { router.push('/privacy-policy') }}>
                       <u>Privacy Policy</u>
                     </small>{' '}
@@ -885,13 +886,13 @@ export default function MainPage() {
             <SampleCommunityGalleryImages images={images} />
           </div>
           <div
-          className="p-5 h-20">
-          {loadingImages &&
-            <Stack direction={['row']}>
-              <SkeletonCircle color={"#FF9900"} paddingTop={"0"} size={"3"} transitionDelay={"0"} />
-              <SkeletonCircle color={"#FF9900"} paddingTop={"0"} size={"3"} transitionDelay={"100"}/>
-              <SkeletonCircle color={"#FF9900"} paddingTop={"0"} size={"3"} transitionDelay={"200"}/>
-            </Stack>}
+            className="p-5 h-20">
+            {loadingImages &&
+              <Stack direction={['row']}>
+                <SkeletonCircle color={"#FF9900"} paddingTop={"0"} size={"3"} transitionDelay={"0"} />
+                <SkeletonCircle color={"#FF9900"} paddingTop={"0"} size={"3"} transitionDelay={"100"} />
+                <SkeletonCircle color={"#FF9900"} paddingTop={"0"} size={"3"} transitionDelay={"200"} />
+              </Stack>}
           </div>
           {/*<div
                         className="h-15 pt-2 w-full designera-rounded-lg flex justify-center items-center bg-gray-700 block text-white font-bold designera-box-shadow cursor-pointer mb-10"
